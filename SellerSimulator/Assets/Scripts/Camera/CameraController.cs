@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
@@ -11,29 +12,36 @@ public class CameraController : MonoBehaviour
     public Vector3 maxBounds; // макс граница координат
     private bool isButtonPressed = false;
 
-    public void SetButtonPressed(bool pressed)
-    {
-        isButtonPressed = pressed;
-    }
-
     private void Update()
     {
-        if (isButtonPressed)
-        {
-            return; // Прекратить выполнение метода, если кнопка нажата
-        }
-
         if (Input.GetMouseButtonDown(0))
         {
-            touchStart = GetWorldPosition(groundZ);
-        }
-        if (Input.GetMouseButton(0))
-        {
-            Vector3 direction = touchStart - GetWorldPosition(groundZ);
-            cam.transform.position += direction;
+            // Проверяем, нажал ли игрок на какой-нибудь UI-элемент
+            if (EventSystem.current.IsPointerOverGameObject())
+                isButtonPressed = true;
         }
 
-        LimitCameraPosition();
+        if (Input.GetMouseButtonUp(0))
+        {
+            isButtonPressed = false;
+        }
+
+        // Если никакой UI-элемент не нажат, то двигаем камеру
+        if (!isButtonPressed)
+        {
+            if (Input.GetMouseButtonDown(0))
+            {
+                touchStart = GetWorldPosition(groundZ);
+            }
+
+            if (Input.GetMouseButton(0))
+            {
+                Vector3 direction = touchStart - GetWorldPosition(groundZ);
+                cam.transform.position += direction;
+            }
+
+            LimitCameraPosition();
+        }
     }
 
     private Vector3 GetWorldPosition(float z)
