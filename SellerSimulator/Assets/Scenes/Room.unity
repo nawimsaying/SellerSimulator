@@ -1023,8 +1023,8 @@ Camera:
     height: 1
   near clip plane: 0.3
   far clip plane: 1000
-  field of view: 18.9
-  orthographic: 1
+  field of view: 18
+  orthographic: 0
   orthographic size: 7.36
   m_Depth: -1
   m_CullingMask:
@@ -1048,14 +1048,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: 0.0542727, y: 0.926342, z: -0.34266424, w: 0.1467182}
-  m_LocalPosition: {x: -11.560059, y: 33.460022, z: 33.600018}
+  m_LocalRotation: {x: 0.061183862, y: 0.911995, z: -0.37776068, w: 0.14771092}
+  m_LocalPosition: {x: -10.9, y: 34.66, z: 31.2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1996263341}
   m_RootOrder: -1
-  m_LocalEulerAnglesHint: {x: 40.6, y: 162, z: 0}
+  m_LocalEulerAnglesHint: {x: 45, y: 161.6, z: 0}
 --- !u!114 &963194229
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1065,15 +1065,13 @@ MonoBehaviour:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c54a3156f03fcda4fa3d2471ccf62af5, type: 3}
+  m_Script: {fileID: 11500000, guid: 47796a035fd728b498d4405ed58c5242, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cam: {fileID: 963194227}
-  groundZ: 0
-  minBounds: {x: -17.56, y: 28.46, z: 20}
-  maxBounds: {x: -5.56, y: 38.46, z: 50}
-  zoomOutMin: 4
-  zoomOutMax: 8
+  smooth: 10
+  movementSpeed: 15
+  mouseWheelSpeed: 5
+  zoomLevel: 3
 --- !u!1 &1060193430
 GameObject:
   m_ObjectHideFlags: 0
