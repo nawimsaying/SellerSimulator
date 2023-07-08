@@ -1,89 +1,150 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
-    private Vector3 touchStart; // ÐºÐ°ÑÐ°Ð½Ð¸Ðµ ÑÐºÑ€Ð°Ð½Ð°
-    public Camera cam;
-    public float groundZ = 0; // Ð½Ð°Ñ‡Ð°Ð»ÑŒÐ½Ð°Ñ Ñ‚Ð¾Ñ‡ÐºÐ° Ð¿Ñ€Ð¸ Ð¿ÐµÑ€ÐµÐ¼ÐµÑ‰ÐµÐ½Ð¸Ð¸ ÐºÐ°Ð¼ÐµÑ€Ñ‹
-    public Vector3 minBounds; // Ð¼Ð¸Ð½ Ð³Ñ€Ð°Ð½Ð¸Ñ†Ð° ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚ 
-    public Vector3 maxBounds; // Ð¼Ð°ÐºÑ Ð³Ñ€Ð°Ð½Ð¸Ñ†Ð° ÐºÐ¾Ð¾Ñ€Ð´Ð¸Ð½Ð°Ñ‚
-    public float zoomOutMin = 1;
-    public float zoomOutMax = 8;
-    private bool isButtonPressed = false;
+    [SerializeField] private float smooth = 10f;
+    [SerializeField] private float movementSpeed = 1f;
+    [SerializeField] private float firstBorder = -6f;
+    [SerializeField] private float secondBorder = 6f;
+    //[SerializeField] private float rotationSpeed = 0.2f;
+
+    [NonSerialized] static public bool isButtonPressed = false;
+
+    private Camera camera;
+    private Transform cameraRig;
+
+    private Vector3 position; // Ïîçèöèÿ
+    private Quaternion rotation; // Âðàùåíèå
+    private Vector3 localPosition; // Ïðèáëåæåíèå
+
+    private Vector3 startPosition;
+    private Vector3 startPositionRig;
+    private Vector3 startRotation;
+
+    private float yCamLimit;
+    private float zCamLimit;
+
+    private float xRotation = 45;
+    private float yRotation = 161.6f;
+    private int xRotationCurrent;
+
+    void Start()
+    {
+        camera = Camera.main;
+        cameraRig = transform.parent;
+
+        position = cameraRig.position;
+        rotation = cameraRig.rotation;
+        localPosition = transform.localPosition;
+
+        yCamLimit = transform.position.y;
+        zCamLimit = transform.position.z;
+
+        startPositionRig = cameraRig.transform.position;
+    }
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(0))
-        {
-            // ÐŸÑ€Ð¾Ð²ÐµÑ€ÑÐµÐ¼, Ð½Ð°Ð¶Ð°Ð» Ð»Ð¸ Ð¸Ð³Ñ€Ð¾Ðº Ð½Ð° ÐºÐ°ÐºÐ¾Ð¹-Ð½Ð¸Ð±ÑƒÐ´ÑŒ UI-ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚
-            if (EventSystem.current.IsPointerOverGameObject())
-                isButtonPressed = true;
-        }
+        // Ñãëàæèâàíèå
+        float lerp = smooth * Time.deltaTime;
 
-        if (Input.GetMouseButtonUp(0))
-        {
-            isButtonPressed = false;
-        }
-
-        // Ð•ÑÐ»Ð¸ Ð½Ð¸ÐºÐ°ÐºÐ¾Ð¹ UI-ÑÐ»ÐµÐ¼ÐµÐ½Ñ‚ Ð½Ðµ Ð½Ð°Ð¶Ð°Ñ‚, Ñ‚Ð¾ Ð´Ð²Ð¸Ð³Ð°ÐµÐ¼ ÐºÐ°Ð¼ÐµÑ€Ñƒ
         if (!isButtonPressed)
         {
-            if (Input.GetMouseButtonDown(0))
+            // Äâèãàåì êàìåðó
+            Movement();
+            // Åñëè èãðîê êîñíóëñÿ äâóìÿ ïàëüöàìè, ïåðåíîñèì êàìåðó íà íà÷àëüíóþ ïîçèöèþ
+            if (Input.touchCount > 1)
             {
-                touchStart = GetWorldPosition(groundZ);
-                touchStart = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+                StartCoroutine(MoveCameraToSatrt(startPositionRig, lerp));
+                ResetTouchInput();
             }
-
-            if (Input.GetMouseButton(0))
+            else
             {
-                Vector3 direction = touchStart - GetWorldPosition(groundZ);
-                cam.transform.position += direction;
+                // Ñãëàæèâàåì äâèæåíèå êàìåðû
+                cameraRig.position = Vector3.Lerp(cameraRig.position, position, lerp);
             }
+            // Çàäàåì ãðàíèöû äëÿ êàìåðû
+            position.x = Mathf.Clamp(position.x, firstBorder, secondBorder);
+            position.z = Mathf.Clamp(position.z, firstBorder, secondBorder);
 
-            if(Input.touchCount == 2){
-                Touch touchZero = Input.GetTouch(0);
-                Touch touchOne = Input.GetTouch(1);
-
-                Vector2 touchZeroPrevPos = touchZero.position - touchZero.deltaPosition;
-                Vector2 touchOnePrevPos = touchOne.position - touchOne.deltaPosition;
-
-                float prevMagnitude = (touchZeroPrevPos - touchOnePrevPos).magnitude;
-                float currentMagnitude = (touchZero.position - touchOne.position).magnitude;
-                float difference = currentMagnitude - prevMagnitude;
-
-                zoom(difference * 0.01f);
-            }else if(Input.GetMouseButton(0)){
-                Vector3 direction = touchStart - Camera.main.ScreenToWorldPoint(Input.mousePosition);
-                Camera.main.transform.position += direction;
-            }
-             zoom(Input.GetAxis("Mouse ScrollWheel"));
-
-            LimitCameraPosition();
+            // Âðàùàåì êàìåðó
+            /*Rotation();
+            cameraRig.rotation = Quaternion.Lerp(cameraRig.rotation, rotation, lerp);*/
         }
     }
 
-    private void zoom(float increment){
-        Camera.main.orthographicSize = Mathf.Clamp(Camera.main.orthographicSize - increment, zoomOutMin, zoomOutMax);
+    private void Movement()
+    {
+        if (Input.touchCount > 1)
+        {
+            position = startPositionRig;
+        }
+        else if (Input.GetMouseButtonDown(0))
+        {
+            startPosition = GetNormalizedCameraInput();
+        }
+        else if (Input.GetMouseButton(0))
+        {
+            position = cameraRig.position;
+            Vector3 targetPosition = GetNormalizedCameraInput() - startPosition;
+            position.x -= targetPosition.x;
+            position.z -= targetPosition.z;
+        }
     }
 
-    private Vector3 GetWorldPosition(float z)
+    private IEnumerator MoveCameraToSatrt(Vector3 target, float lerp)
     {
-        float distance;
-        Ray mousePos = cam.ScreenPointToRay(Input.mousePosition);
-        Plane ground = new Plane(Vector3.forward, new Vector3(0, 0, z));
-        ground.Raycast(mousePos, out distance);
-        return mousePos.GetPoint(distance);
+        cameraRig.position = Vector3.Lerp(cameraRig.position, target, lerp);
+        yield return null;
     }
 
-    private void LimitCameraPosition()
+    private void ResetTouchInput()
     {
-        Vector3 newPosition = cam.transform.position;
-        newPosition.x = Mathf.Clamp(newPosition.x, minBounds.x, maxBounds.x);
-        newPosition.y = Mathf.Clamp(newPosition.y, minBounds.y, maxBounds.y);
-        newPosition.z = Mathf.Clamp(newPosition.z, minBounds.z, maxBounds.z);
-        cam.transform.position = newPosition;
+        for (int i = 0; i < Input.touchCount; i++)
+        {
+            Touch touch = Input.GetTouch(i);
+            if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            {
+                Input.ResetInputAxes();
+                break;
+            }
+        }
     }
+
+    private Vector3 GetNormalizedCameraInput()
+    {
+        if (position.x > 5 || position.x < -5 || position.z > 5 || position.z < -5)
+        {
+            Vector3 screenPosition = Input.mousePosition * movementSpeed;
+            screenPosition.z = camera.nearClipPlane + 1;
+
+            return camera.ScreenToWorldPoint(screenPosition);
+        }
+        else
+        {
+            Vector3 screenPosition = Input.mousePosition * movementSpeed;
+            screenPosition.z = camera.nearClipPlane + 1;
+
+            return camera.ScreenToWorldPoint(screenPosition);
+        }
+    }
+
+    /*private void Rotation()
+    {
+        if (Input.GetMouseButtonDown(1))
+        {
+            startRotation = Input.mousePosition;
+        }
+        else if (Input.GetMouseButton(1))
+        {
+            float yRotation = (Input.mousePosition - startRotation).x * rotationSpeed;
+            rotation *= Quaternion.Euler(new Vector3(0, yRotation, 0));
+            startRotation = Input.mousePosition;
+        }
+    }*/
 }

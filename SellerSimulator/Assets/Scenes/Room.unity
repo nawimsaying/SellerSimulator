@@ -97,7 +97,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 112000000, guid: 0b02b60a85737da4183b37580f9ac616, type: 2}
+  m_LightingDataAsset: {fileID: 112000000, guid: 9988584285ad28f4abbd892412dda3d3, type: 2}
   m_LightingSettings: {fileID: 4890085278179872738, guid: 984f7f8a62d41bc42a81507f73b00c85, type: 2}
 --- !u!196 &4
 NavMeshSettings:
@@ -307,7 +307,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &401358903
 Transform:
@@ -336,7 +336,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 519.4
+  m_Intensity: 1
   m_Range: 14.8
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -375,7 +375,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -401,7 +401,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &412524232
 Transform:
@@ -430,7 +430,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 519.4
+  m_Intensity: 1
   m_Range: 126.2
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -469,7 +469,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1152,13 +1152,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 490930c6b294bfc42a20b283aa43c8f9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  smooth: 10
-  movementSpeed: 30
-  mouseWheelSpeed: 5
-  zoomLevel: 3
-  rotationSpeed: 0.2
-  maxBounds: {x: -17.5, y: 28.5, z: 20}
-  minBounds: {x: -5.5, y: 38.5, z: 50}
+  smooth: 15
+  movementSpeed: 25
+  firstBorder: -6
+  secondBorder: 6
 --- !u!1 &1060193430
 GameObject:
   m_ObjectHideFlags: 0
@@ -1353,7 +1350,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &1274464994
 Transform:
@@ -1382,7 +1379,7 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 519.4
+  m_Intensity: 1
   m_Range: 11.3
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -1421,7 +1418,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1450,8 +1447,8 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_StaticEditorFlags: 2147483647
+  m_IsActive: 0
 --- !u!4 &1310610301
 Transform:
   m_ObjectHideFlags: 0
@@ -1479,8 +1476,8 @@ Light:
   m_Type: 2
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
-  m_Range: 42.5
+  m_Intensity: 0.7
+  m_Range: 44.8
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
   m_CookieSize: 10
@@ -1518,7 +1515,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -2664,7 +2661,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &2081185822
 Transform:
@@ -2693,7 +2690,7 @@ Light:
   m_Type: 1
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 1
+  m_Intensity: 1.5
   m_Range: 10
   m_SpotAngle: 30
   m_InnerSpotAngle: 21.80208
@@ -2732,7 +2729,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
