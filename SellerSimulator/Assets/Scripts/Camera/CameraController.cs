@@ -53,6 +53,20 @@ public class CameraController : MonoBehaviour
         // Сглаживание
         float lerp = smooth * Time.deltaTime;
 
+        // Проверяем, нажал ли игрок на UI-элемент
+        if (Input.touchCount > 0)
+        {
+            Touch touch = Input.GetTouch(0);
+
+            if (touch.phase == TouchPhase.Began)
+            {
+                if (IsTouchOverUIElement(touch.position))
+                    isButtonPressed = true;
+                else
+                    isButtonPressed = false;
+            }
+        }
+
         if (!isButtonPressed)
         {
             // Двигаем камеру
@@ -132,6 +146,22 @@ public class CameraController : MonoBehaviour
 
             return camera.ScreenToWorldPoint(screenPosition);
         }
+    }
+
+    private bool IsTouchOverUIElement(Vector2 touchPosition)
+    {
+        // Создаем eventData для проверки пересечения с UI
+        PointerEventData eventData = new PointerEventData(EventSystem.current);
+        eventData.position = touchPosition;
+
+        // Создаем список результатов пересечения
+        var results = new List<RaycastResult>();
+
+        // Проверяем пересечение луча с UI-элементами
+        EventSystem.current.RaycastAll(eventData, results);
+
+        // Проверяем, есть ли результаты пересечения с UI-элементами
+        return results.Count > 0;
     }
 
     /*private void Rotation()
