@@ -67,9 +67,24 @@ public class _CameraController : MonoBehaviour
             Movement();
             cameraRig.position = Vector3.Lerp(cameraRig.position, position, lerp);
 
-            Zoom();
-            transform.localPosition = Vector3.Lerp(transform.localPosition, localPosition, lerp);
-            transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(new Vector3(xRotation, yRotation, 0)), lerp);
+            if (Input.touchCount == 2 || Input.GetAxis("Mouse ScrollWheel") != 0)
+            {
+                Touch touchFirst = Input.GetTouch(0);
+                Touch touchSecond = Input.GetTouch(1);
+
+                Vector2 touchFirstLastPosition = touchFirst.position - touchFirst.deltaPosition;
+                Vector2 touchSecondLastPosition = touchSecond.position - touchSecond.deltaPosition;
+
+                float distanceTouch = (touchFirstLastPosition - touchSecondLastPosition).magnitude;
+                float currentDistanceTouch = (touchFirst.position - touchSecond.position).magnitude;
+
+                float difference = currentDistanceTouch - distanceTouch;
+
+                Zoom();
+
+                transform.localPosition = Vector3.Lerp(transform.localPosition, localPosition, lerp);
+                transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(new Vector3(xRotation, yRotation, 0)), lerp);
+            }
         }
     }
 
