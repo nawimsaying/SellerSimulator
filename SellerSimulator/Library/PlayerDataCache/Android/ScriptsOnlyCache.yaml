@@ -2,6 +2,7 @@ ScriptsOnlyBuild:
   usedScripts:
     Assembly-CSharp.dll:
     - CameraController
+    - CameraWarehouse
     - SceneSwitcher
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
@@ -63,6 +64,15 @@ ScriptsOnlyBuild:
   - assembly: Assembly-CSharp
     fullTypeName: SceneSwitcher
     methodName: SceneSwitch
+  - assembly: Assembly-CSharp
+    fullTypeName: CameraWarehouse
+    methodName: HoldRight
+  - assembly: Assembly-CSharp
+    fullTypeName: CameraWarehouse
+    methodName: HoldLeft
+  - assembly: Assembly-CSharp
+    fullTypeName: SceneSwitcher
+    methodName: SceneSwitch
   sceneClasses:
     Assets/Scenes/Room.unity:
     - Class: 1
@@ -96,31 +106,31 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 16646}
+      Script: {instanceID: 16866}
     - Class: 114
-      Script: {instanceID: 17222}
+      Script: {instanceID: 17444}
     - Class: 114
-      Script: {instanceID: 17632}
+      Script: {instanceID: 17854}
     - Class: 114
-      Script: {instanceID: 17724}
+      Script: {instanceID: 17946}
     - Class: 114
-      Script: {instanceID: 17832}
+      Script: {instanceID: 18054}
     - Class: 114
-      Script: {instanceID: 18112}
+      Script: {instanceID: 18334}
     - Class: 114
-      Script: {instanceID: 19084}
+      Script: {instanceID: 19306}
     - Class: 114
-      Script: {instanceID: 19330}
+      Script: {instanceID: 19554}
     - Class: 114
-      Script: {instanceID: 20014}
+      Script: {instanceID: 20240}
     - Class: 114
-      Script: {instanceID: 20500}
+      Script: {instanceID: 20728}
     - Class: 114
-      Script: {instanceID: 20556}
+      Script: {instanceID: 20784}
     - Class: 114
-      Script: {instanceID: 20702}
+      Script: {instanceID: 20930}
     - Class: 114
-      Script: {instanceID: 21012}
+      Script: {instanceID: 21240}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -150,7 +160,13 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 21
       Script: {instanceID: 0}
+    - Class: 23
+      Script: {instanceID: 0}
     - Class: 28
+      Script: {instanceID: 0}
+    - Class: 33
+      Script: {instanceID: 0}
+    - Class: 43
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
@@ -162,9 +178,45 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 108
       Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 16866}
+    - Class: 114
+      Script: {instanceID: 17854}
+    - Class: 114
+      Script: {instanceID: 17946}
+    - Class: 114
+      Script: {instanceID: 18054}
+    - Class: 114
+      Script: {instanceID: 18334}
+    - Class: 114
+      Script: {instanceID: 20240}
+    - Class: 114
+      Script: {instanceID: 20784}
+    - Class: 114
+      Script: {instanceID: 20930}
+    - Class: 114
+      Script: {instanceID: 21240}
+    - Class: 114
+      Script: {instanceID: 22086}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
     - Class: 157
       Script: {instanceID: 0}
     - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
+    - Class: 258
+      Script: {instanceID: 0}
+    - Class: 850595691
       Script: {instanceID: 0}
   scriptHashData:
   - hash:
@@ -911,6 +963,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.Timeline
     namespaceName: UnityEngine.Timeline
     className: SignalTrack
+  - hash:
+      serializedVersion: 2
+      Hash: a8b232ff27073f7dbb9a52c27f298793
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: CameraWarehouse
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
