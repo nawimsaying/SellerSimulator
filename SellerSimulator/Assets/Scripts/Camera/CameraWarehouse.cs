@@ -7,69 +7,124 @@ using static UnityEngine.GraphicsBuffer;
 
 public class CameraWarehouse : MonoBehaviour
 {
-    [SerializeField] private float smooth = 10f;
-    [SerializeField] Vector3 holdDistance;
-    [SerializeField] private float moveSpeed = 10f;
+    [SerializeField] private float speed = 2f;
+    [SerializeField] private float totalDuration = 2f;
+    [SerializeField] private GameObject buttonLeft;
+    [SerializeField] private GameObject buttonRight;
 
-    private Camera camera;
-    private Transform cameraRig;
+    private Vector3 moveDistanceLeft = new Vector3(6, 0, 0);
+    private Vector3 moveDistanceRight = new Vector3(-6, 0, 0);
+    private Transform target;
 
-    private Vector3 position; // Позиция
+    private bool isMoving = false;
 
-    private bool isMovingLeft = false;
-    private bool isMovingRight = false;
+    private int[] frame_1 = { 0, 0 };
 
     private void Start()
     {
-        camera = Camera.main;
-        cameraRig = transform.parent;
+        frame_1[0] = 1;
 
-        position = cameraRig.position;
+        buttonLeft.SetActive(false);
     }
 
-    private void Update()
+    private IEnumerator MoveToTarget(Vector3 moveDistance)
     {
-        // Сглаживание
-        float lerp = smooth * Time.deltaTime;
+        isMoving = true;
 
-        if (isMovingLeft)
+        Vector3 startPosition = transform.position;
+        Vector3 targetPosition = startPosition - moveDistance;
+
+        float journeyLength = Vector3.Distance(startPosition, targetPosition);
+        float duration = journeyLength / speed;
+        float startTime = Time.time;
+        float elapsedTime = 0f;
+
+        while (elapsedTime < duration)
         {
-            // Вычисляем прогресс движения от 0 до 1
-            float progress = Mathf.Clamp01(moveSpeed * Time.deltaTime / 6);
+            float normalizedTime = elapsedTime / duration;
+            float easedTime = EaseInOut(normalizedTime);
 
-            // Используем Lerp для плавного сдвига объекта
-            transform.position = Vector3.Lerp(transform.position, transform.position + new Vector3(-6, 0f, 0f), progress);
+            transform.position = Vector3.Lerp(startPosition, targetPosition, easedTime);
 
-            // Проверяем, достиг ли объект целевой дистанции
-            if (progress >= 1.0f)
+            elapsedTime = Time.time - startTime;
+
+            yield return null;
+        }
+
+        ChangeActiveButtons();
+
+        isMoving = false;
+    }
+
+    private float EaseInOut(float t)
+    {
+        return t * t * (3f - 2f * t);
+    }
+
+    private void ChangeActiveButtons()
+    {
+        for (int i = 0; i < frame_1.Length; i++)
+        {
+            if (frame_1[i] == 1)
             {
-                isMovingLeft = false;
+                if (i - 1 >= 0)
+                    buttonLeft.SetActive(true);
+                else
+                    buttonLeft.SetActive(false);
+
+                if (i + 1 < frame_1.Length)
+                    buttonRight.SetActive(true);
+                else 
+                    buttonRight.SetActive(false);
             }
         }
-
-        if (isMovingRight)
-        {
-            // Вычисляем прогресс движения от 0 до 1
-            float progress = Mathf.Clamp01(moveSpeed * Time.deltaTime);
-
-            Vector3 targetPosition = camera.transform.position + holdDistance;
-
-            // Используем Lerp для плавного сдвига объекта
-            transform.position = Vector3.Lerp(transform.position, targetPosition, progress);
-
-            // Проверяем, достиг ли объект целевых координат
-            isMovingRight = false;
-        }
     }
+
     public void HoldLeft()
     {
-        if(!isMovingLeft && !isMovingRight)
-            isMovingLeft = true;
+        // Двигаемся ли мы сейчас
+        if (isMoving)
+            return;
+
+        // Проверяем, можем ли мы двинуться влево
+        for (int i = 0; i < frame_1.Length; i++)
+        {
+            if (frame_1[i] == 1)
+            {
+                if (i - 1 >= 0)
+                {
+                    frame_1[i] = 0;
+                    frame_1[i - 1] = 1;
+
+                    StartCoroutine(MoveToTarget(moveDistanceLeft));
+                }
+                else
+                    return;
+            }
+        }
     }
 
     public void HoldRight()
     {
-        if (!isMovingLeft && !isMovingRight)
-            isMovingRight = true;
+        // Двигаемся ли мы сейчас
+        if (isMoving)
+            return;
+
+        // Проверяем, можем ли мы двинуться вправо
+        for (int i = 0; i < frame_1.Length; i++)
+        {
+            if (frame_1[i] == 1)
+            {
+                if (i + 1 < frame_1.Length)
+                {
+                    frame_1[i] = 0;
+                    frame_1[i + 1] = 1;
+
+                    StartCoroutine(MoveToTarget(moveDistanceRight));
+                }
+                else
+                    return;
+            }
+        }
     }
 }
