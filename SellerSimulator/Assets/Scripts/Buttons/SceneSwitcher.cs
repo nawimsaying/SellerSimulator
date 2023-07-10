@@ -7,8 +7,8 @@ using UnityEngine.SceneManagement;
 public class SceneSwitcher : MonoBehaviour
 {
     // Метод для смена сцен по кнопке
-    public void SceneSwitch(int idScene)
+    public void SceneSwitch(int _idScene)
     {
-        SceneManager.LoadScene(idScene);
+        SceneManager.LoadScene(_idScene);
     }
 }

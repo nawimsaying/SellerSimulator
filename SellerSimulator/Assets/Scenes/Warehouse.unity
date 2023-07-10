@@ -672,13 +672,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6ccaf3b9b74ed64188bd057510931d1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canvasAddPrefab: {fileID: 2068052894}
-  canvasMain: {fileID: 1936927433}
-  buttonAddPrefab: {fileID: 420844957}
-  prefabs:
+  _canvasAddPrefab: {fileID: 2068052894}
+  _canvasMain: {fileID: 1936927433}
+  _buttonAddPrefab: {fileID: 420844957}
+  _prefabs:
   - {fileID: 8818302825640914230, guid: b14bcb9e21a0c62499037580cfdc9818, type: 3}
-  spawnPosition:
-  - {x: 0, y: 0.264, z: 3.91}
+  _spawnPosition:
+  - {x: 0, y: 0.257, z: 3.9}
 --- !u!4 &602097535
 Transform:
   m_ObjectHideFlags: 0
@@ -1094,10 +1094,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 921a3c96d35793d49942b3ec5e019fe7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 10
-  totalDuration: 10
-  buttonLeft: {fileID: 608137297}
-  buttonRight: {fileID: 472309411}
+  _countOfFrames: 2
+  _speed: 10
+  _totalDuration: 10
+  _buttonLeft: {fileID: 608137297}
+  _buttonRight: {fileID: 472309411}
 --- !u!1 &902127791
 GameObject:
   m_ObjectHideFlags: 0

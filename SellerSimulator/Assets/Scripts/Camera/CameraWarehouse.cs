@@ -1,3 +1,5 @@
+using JetBrains.Annotations;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -7,46 +9,59 @@ using static UnityEngine.GraphicsBuffer;
 
 public class CameraWarehouse : MonoBehaviour
 {
-    [SerializeField] private float speed = 2f;
-    [SerializeField] private float totalDuration = 2f;
-    [SerializeField] private GameObject buttonLeft;
-    [SerializeField] private GameObject buttonRight;
+    [NonSerialized] public static int countOfFrames; // Аналог _countOfFrames, только ее мы будем использовать в других классах
 
-    private Vector3 moveDistanceLeft = new Vector3(6, 0, 0);
-    private Vector3 moveDistanceRight = new Vector3(-6, 0, 0);
-    private Transform target;
+    [SerializeField] private int _countOfFrames = 0; // Отвечает за количество фреймов в текущем помещении
+    [SerializeField] private float _speed = 2f; // Отвечает за скорость камеры при передвижении между фреймами
+    [SerializeField] private float _totalDuration = 2f; // Отвечает за меру сглаживания движения камеры между фреймами
+    [SerializeField] private GameObject _buttonLeft; // Указываем кнопку Влево
+    [SerializeField] private GameObject _buttonRight; // Указываем кнопку Вправо
 
-    private bool isMoving = false;
+    private Vector3 _moveDistanceLeft = new Vector3(6, 0, 0);
+    private Vector3 _moveDistanceRight = new Vector3(-6, 0, 0);
 
-    private static int[] frame_1 = { 0, 0 };
+    private bool _isMoving = false;
+
+    private static bool[] _isCameraInFrame; // С помощью этого массива отслеживаем положение камеры и, соответственно, текущего фрейма
 
     private void Start()
     {
-        frame_1[0] = 1;
+        // Кэшируем переменные, чтобы их можно было использовать в других классах
+        countOfFrames = _countOfFrames;
 
-        buttonLeft.SetActive(false);
+        _isCameraInFrame = new bool[countOfFrames];
+
+        // Заполняем массив значениями False, которые означают, что камеры на данном фрейме нет
+        for (int i = 0; i < _isCameraInFrame.Length; i++) 
+            _isCameraInFrame[i] = false;
+
+        // При старте указываем, что камера находится на первом фрейме
+        _isCameraInFrame[0] = true;
+
+        // Сразу деактивируем кнопку Влево, так как находимся на крайнем левом фрейме
+        _buttonLeft.SetActive(false);
     }
 
     private IEnumerator MoveToTarget(Vector3 moveDistance)
     {
-        isMoving = true;
+        _isMoving = true;
 
-        Vector3 startPosition = transform.position;
-        Vector3 targetPosition = startPosition - moveDistance;
+        Vector3 _startPosition = transform.position;
+        Vector3 _targetPosition = _startPosition - moveDistance;
 
-        float journeyLength = Vector3.Distance(startPosition, targetPosition);
-        float duration = journeyLength / speed;
-        float startTime = Time.time;
-        float elapsedTime = 0f;
+        float _journeyLength = Vector3.Distance(_startPosition, _targetPosition);
+        float _duration = _journeyLength / _speed;
+        float _startTime = Time.time;
+        float _elapsedTime = 0f;
 
-        while (elapsedTime < duration)
+        while (_elapsedTime < _duration)
         {
-            float normalizedTime = elapsedTime / duration;
-            float easedTime = EaseInOut(normalizedTime);
+            float _normalizedTime = _elapsedTime / _duration;
+            float _easedTime = EaseInOut(_normalizedTime);
 
-            transform.position = Vector3.Lerp(startPosition, targetPosition, easedTime);
+            transform.position = Vector3.Lerp(_startPosition, _targetPosition, _easedTime);
 
-            elapsedTime = Time.time - startTime;
+            _elapsedTime = Time.time - _startTime;
 
             yield return null;
         }
@@ -54,29 +69,31 @@ public class CameraWarehouse : MonoBehaviour
         ChangeActiveButtons();
         WarehouseButtons.ChangeActiveButtonPlus();
 
-        isMoving = false;
+        _isMoving = false;
     }
 
+    // Метод с математической функцией, которая отвечает за сглаживание движения камеры между фреймами
     private float EaseInOut(float t)
     {
         return t * t * (3f - 2f * t);
     }
 
+    // После движения камеры между фреймами, включаем или выключаем кнопки Влево или Вправо
     private void ChangeActiveButtons()
     {
-        for (int i = 0; i < frame_1.Length; i++)
+        for (int i = 0; i < _isCameraInFrame.Length; i++)
         {
-            if (frame_1[i] == 1)
+            if (_isCameraInFrame[i])
             {
                 if (i - 1 >= 0)
-                    buttonLeft.SetActive(true);
+                    _buttonLeft.SetActive(true);
                 else
-                    buttonLeft.SetActive(false);
+                    _buttonLeft.SetActive(false);
 
-                if (i + 1 < frame_1.Length)
-                    buttonRight.SetActive(true);
+                if (i + 1 < _isCameraInFrame.Length)
+                    _buttonRight.SetActive(true);
                 else 
-                    buttonRight.SetActive(false);
+                    _buttonRight.SetActive(false);
             }
         }
     }
@@ -84,20 +101,21 @@ public class CameraWarehouse : MonoBehaviour
     public void HoldLeft()
     {
         // Двигаемся ли мы сейчас
-        if (isMoving)
+        if (_isMoving)
             return;
 
         // Проверяем, можем ли мы двинуться влево
-        for (int i = 0; i < frame_1.Length; i++)
+        for (int i = 0; i < _isCameraInFrame.Length; i++)
         {
-            if (frame_1[i] == 1)
+            if (_isCameraInFrame[i])
             {
                 if (i - 1 >= 0)
                 {
-                    frame_1[i] = 0;
-                    frame_1[i - 1] = 1;
+                    // Сдвигаем камеру влево
+                    _isCameraInFrame[i] = false;
+                    _isCameraInFrame[i - 1] = true;
 
-                    StartCoroutine(MoveToTarget(moveDistanceLeft));
+                    StartCoroutine(MoveToTarget(_moveDistanceLeft));
                 }
                 else
                     return;
@@ -108,20 +126,21 @@ public class CameraWarehouse : MonoBehaviour
     public void HoldRight()
     {
         // Двигаемся ли мы сейчас
-        if (isMoving)
+        if (_isMoving)
             return;
 
         // Проверяем, можем ли мы двинуться вправо
-        for (int i = 0; i < frame_1.Length; i++)
+        for (int i = 0; i < _isCameraInFrame.Length; i++)
         {
-            if (frame_1[i] == 1)
+            if (_isCameraInFrame[i])
             {
-                if (i + 1 < frame_1.Length)
+                if (i + 1 < _isCameraInFrame.Length)
                 {
-                    frame_1[i] = 0;
-                    frame_1[i + 1] = 1;
+                    // Сдвигаем камеру вправо
+                    _isCameraInFrame[i] = false;
+                    _isCameraInFrame[i + 1] = true;
 
-                    StartCoroutine(MoveToTarget(moveDistanceRight));
+                    StartCoroutine(MoveToTarget(_moveDistanceRight));
                 }
                 else
                     return;
@@ -129,14 +148,15 @@ public class CameraWarehouse : MonoBehaviour
         }
     }
 
+    // Метод, который возвращает текущее положение камеры (то, на каком фрейме сейчас находится игрок)
     public static int GetCameraPosition()
     {
-        for (int i = 0; i < frame_1.Length; i++)
+        for (int i = 0; i < _isCameraInFrame.Length; i++)
         {
-            if (frame_1[i] == 1)
-                return i;
+            if (_isCameraInFrame[i])
+                return i; // Возвращаем индекс активного фрейма
         }
 
-        return -1;
+        return -1; // В случае ошибки возвращаем -1
     }
 }

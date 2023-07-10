@@ -7,84 +7,84 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private float smooth = 10f;
-    [SerializeField] private float movementSpeed = 1f;
-    [SerializeField] private float firstBorder = -6f;
-    [SerializeField] private float secondBorder = 6f;
+    [SerializeField] private float _smooth = 10f;
+    [SerializeField] private float _movementSpeed = 1f;
+    [SerializeField] private float _firstBorder = -6f;
+    [SerializeField] private float _secondBorder = 6f;
     //[SerializeField] private float rotationSpeed = 0.2f;
 
-    [NonSerialized] static public bool isButtonPressed = false;
+    [NonSerialized] static public bool _isButtonPressed = false;
 
-    private Camera camera;
-    private Transform cameraRig;
+    private Camera _camera;
+    private Transform _cameraRig;
 
-    private Vector3 position; // Позиция
-    private Quaternion rotation; // Вращение
-    private Vector3 localPosition; // Приблежение
+    private Vector3 _position; // Позиция
+    private Quaternion _rotation; // Вращение
+    private Vector3 _localPosition; // Приблежение
 
-    private Vector3 startPosition;
-    private Vector3 startPositionRig;
-    private Vector3 startRotation;
+    private Vector3 _startPosition;
+    private Vector3 _startPositionRig;
+    private Vector3 _startRotation;
 
-    private float yCamLimit;
-    private float zCamLimit;
+    private float _yCamLimit;
+    private float _zCamLimit;
 
-    private float xRotation = 45;
-    private float yRotation = 161.6f;
-    private int xRotationCurrent;
+    private float _xRotation = 45;
+    private float _yRotation = 161.6f;
+    private int _xRotationCurrent;
 
     void Start()
     {
-        camera = Camera.main;
-        cameraRig = transform.parent;
+        _camera = Camera.main;
+        _cameraRig = transform.parent;
 
-        position = cameraRig.position;
-        rotation = cameraRig.rotation;
-        localPosition = transform.localPosition;
+        _position = _cameraRig.position;
+        _rotation = _cameraRig.rotation;
+        _localPosition = transform.localPosition;
 
-        yCamLimit = transform.position.y;
-        zCamLimit = transform.position.z;
+        _yCamLimit = transform.position.y;
+        _zCamLimit = transform.position.z;
 
-        startPositionRig = cameraRig.transform.position;
+        _startPositionRig = _cameraRig.transform.position;
     }
 
     private void Update()
     {
         // Сглаживание
-        float lerp = smooth * Time.deltaTime;
+        float _lerp = _smooth * Time.deltaTime;
 
         // Проверяем, нажал ли игрок на UI-элемент
         if (Input.touchCount > 0)
         {
-            Touch touch = Input.GetTouch(0);
+            Touch _touch = Input.GetTouch(0);
 
-            if (touch.phase == TouchPhase.Began)
+            if (_touch.phase == TouchPhase.Began)
             {
-                if (IsTouchOverUIElement(touch.position))
-                    isButtonPressed = true;
+                if (IsTouchOverUIElement(_touch.position))
+                    _isButtonPressed = true;
                 else
-                    isButtonPressed = false;
+                    _isButtonPressed = false;
             }
         }
 
-        if (!isButtonPressed)
+        if (!_isButtonPressed)
         {
             // Двигаем камеру
             Movement();
             // Если игрок коснулся двумя пальцами, переносим камеру на начальную позицию
             if (Input.touchCount > 1)
             {
-                StartCoroutine(MoveCameraToSatrt(startPositionRig, lerp));
+                StartCoroutine(MoveCameraToSatrt(_startPositionRig, _lerp));
                 ResetTouchInput();
             }
             else
             {
                 // Сглаживаем движение камеры
-                cameraRig.position = Vector3.Lerp(cameraRig.position, position, lerp);
+                _cameraRig.position = Vector3.Lerp(_cameraRig.position, _position, _lerp);
             }
             // Задаем границы для камеры
-            position.x = Mathf.Clamp(position.x, firstBorder, secondBorder);
-            position.z = Mathf.Clamp(position.z, firstBorder, secondBorder);
+            _position.x = Mathf.Clamp(_position.x, _firstBorder, _secondBorder);
+            _position.z = Mathf.Clamp(_position.z, _firstBorder, _secondBorder);
 
             // Вращаем камеру
             /*Rotation();
@@ -96,24 +96,24 @@ public class CameraController : MonoBehaviour
     {
         if (Input.touchCount > 1)
         {
-            position = startPositionRig;
+            _position = _startPositionRig;
         }
         else if (Input.GetMouseButtonDown(0))
         {
-            startPosition = GetNormalizedCameraInput();
+            _startPosition = GetNormalizedCameraInput();
         }
         else if (Input.GetMouseButton(0))
         {
-            position = cameraRig.position;
-            Vector3 targetPosition = GetNormalizedCameraInput() - startPosition;
-            position.x -= targetPosition.x;
-            position.z -= targetPosition.z;
+            _position = _cameraRig.position;
+            Vector3 _targetPosition = GetNormalizedCameraInput() - _startPosition;
+            _position.x -= _targetPosition.x;
+            _position.z -= _targetPosition.z;
         }
     }
 
     private IEnumerator MoveCameraToSatrt(Vector3 target, float lerp)
     {
-        cameraRig.position = Vector3.Lerp(cameraRig.position, target, lerp);
+        _cameraRig.position = Vector3.Lerp(_cameraRig.position, target, lerp);
         yield return null;
     }
 
@@ -121,8 +121,8 @@ public class CameraController : MonoBehaviour
     {
         for (int i = 0; i < Input.touchCount; i++)
         {
-            Touch touch = Input.GetTouch(i);
-            if (touch.phase == TouchPhase.Began || touch.phase == TouchPhase.Moved || touch.phase == TouchPhase.Stationary || touch.phase == TouchPhase.Ended || touch.phase == TouchPhase.Canceled)
+            Touch _touch = Input.GetTouch(i);
+            if (_touch.phase == TouchPhase.Began || _touch.phase == TouchPhase.Moved || _touch.phase == TouchPhase.Stationary || _touch.phase == TouchPhase.Ended || _touch.phase == TouchPhase.Canceled)
             {
                 Input.ResetInputAxes();
                 break;
@@ -132,36 +132,36 @@ public class CameraController : MonoBehaviour
 
     private Vector3 GetNormalizedCameraInput()
     {
-        if (position.x > 5 || position.x < -5 || position.z > 5 || position.z < -5)
+        if (_position.x > 5 || _position.x < -5 || _position.z > 5 || _position.z < -5)
         {
-            Vector3 screenPosition = Input.mousePosition * movementSpeed;
-            screenPosition.z = camera.nearClipPlane + 1;
+            Vector3 _screenPosition = Input.mousePosition * _movementSpeed;
+            _screenPosition.z = _camera.nearClipPlane + 1;
 
-            return camera.ScreenToWorldPoint(screenPosition);
+            return _camera.ScreenToWorldPoint(_screenPosition);
         }
         else
         {
-            Vector3 screenPosition = Input.mousePosition * movementSpeed;
-            screenPosition.z = camera.nearClipPlane + 1;
+            Vector3 _screenPosition = Input.mousePosition * _movementSpeed;
+            _screenPosition.z = _camera.nearClipPlane + 1;
 
-            return camera.ScreenToWorldPoint(screenPosition);
+            return _camera.ScreenToWorldPoint(_screenPosition);
         }
     }
 
     private bool IsTouchOverUIElement(Vector2 touchPosition)
     {
         // Создаем eventData для проверки пересечения с UI
-        PointerEventData eventData = new PointerEventData(EventSystem.current);
-        eventData.position = touchPosition;
+        PointerEventData _eventData = new PointerEventData(EventSystem.current);
+        _eventData.position = touchPosition;
 
         // Создаем список результатов пересечения
-        var results = new List<RaycastResult>();
+        var _results = new List<RaycastResult>();
 
         // Проверяем пересечение луча с UI-элементами
-        EventSystem.current.RaycastAll(eventData, results);
+        EventSystem.current.RaycastAll(_eventData, _results);
 
         // Проверяем, есть ли результаты пересечения с UI-элементами
-        return results.Count > 0;
+        return _results.Count > 0;
     }
 
     /*private void Rotation()
