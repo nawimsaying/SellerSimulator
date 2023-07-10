@@ -69,12 +69,17 @@ public class WarehouseButtons : MonoBehaviour
     // —павним шаблон
     public void CreateSample(int idSample)
     {
-        Instantiate(_prefabs[idSample], _spawnPosition[idSample], Quaternion.Euler(0f, -90f, 0f));
+        if (!_isSamplingFrame[CameraWarehouse.GetCameraPosition()])
+        {
+            Instantiate(_prefabs[idSample], _spawnPosition[CameraWarehouse.GetCameraPosition()], Quaternion.Euler(0f, -90f, 0f));
 
-        // ”казываем, что в данном фрейме уже находитс€ какой-то шаблон
-        _isSamplingFrame[CameraWarehouse.GetCameraPosition()] = true;
+            // ”казываем, что в данном фрейме уже находитс€ какой-то шаблон
+            _isSamplingFrame[CameraWarehouse.GetCameraPosition()] = true;
 
-        ChangeActiveButtonPlus();
+            ChangeActiveButtonPlus();
+        }
+        else
+            Debug.Log("This frame already has a template installed.");
     }
 
     // ”бираем кнопку плюсика посередине, если игрок поставил на фрейм шаблон и показываем ее, если он его удалил

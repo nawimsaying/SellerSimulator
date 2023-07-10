@@ -17,12 +17,12 @@ public class CameraWarehouse : MonoBehaviour
     [SerializeField] private GameObject _buttonLeft; // Указываем кнопку Влево
     [SerializeField] private GameObject _buttonRight; // Указываем кнопку Вправо
 
-    private Vector3 _moveDistanceLeft = new Vector3(6, 0, 0);
-    private Vector3 _moveDistanceRight = new Vector3(-6, 0, 0);
+    private Vector3 _moveDistanceLeft = new Vector3(7, 0, 0);
+    private Vector3 _moveDistanceRight = new Vector3(-7, 0, 0);
 
     private bool _isMoving = false;
 
-    private static bool[] _isCameraInFrame; // С помощью этого массива отслеживаем положение камеры и, соответственно, текущего фрейма
+    public static bool[] _isCameraInFrame; // С помощью этого массива отслеживаем положение камеры и, соответственно, текущего фрейма
 
     private void Start()
     {
