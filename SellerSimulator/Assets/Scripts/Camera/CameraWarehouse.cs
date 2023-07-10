@@ -18,7 +18,7 @@ public class CameraWarehouse : MonoBehaviour
 
     private bool isMoving = false;
 
-    private int[] frame_1 = { 0, 0 };
+    private static int[] frame_1 = { 0, 0 };
 
     private void Start()
     {
@@ -52,6 +52,7 @@ public class CameraWarehouse : MonoBehaviour
         }
 
         ChangeActiveButtons();
+        WarehouseButtons.ChangeActiveButtonPlus();
 
         isMoving = false;
     }
@@ -126,5 +127,16 @@ public class CameraWarehouse : MonoBehaviour
                     return;
             }
         }
+    }
+
+    public static int GetCameraPosition()
+    {
+        for (int i = 0; i < frame_1.Length; i++)
+        {
+            if (frame_1[i] == 1)
+                return i;
+        }
+
+        return -1;
     }
 }
