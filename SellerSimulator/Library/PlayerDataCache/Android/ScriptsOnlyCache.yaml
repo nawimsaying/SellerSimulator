@@ -3,7 +3,11 @@ ScriptsOnlyBuild:
     Assembly-CSharp.dll:
     - CameraController
     - CameraWarehouse
+    - ComputerButtons
+    - DragObject
     - SceneSwitcher
+    - WarehouseButtons
+    - WarehouseMechanics
     Unity.Rider.Editor.dll:
     - Packages.Rider.Editor.UnitTesting.CallbackData
     Unity.TextMeshPro:
@@ -65,6 +69,12 @@ ScriptsOnlyBuild:
     fullTypeName: SceneSwitcher
     methodName: SceneSwitch
   - assembly: Assembly-CSharp
+    fullTypeName: SceneSwitcher
+    methodName: SceneSwitch
+  - assembly: Assembly-CSharp
+    fullTypeName: WarehouseButtons
+    methodName: OpenCanvasAddPrefab
+  - assembly: Assembly-CSharp
     fullTypeName: CameraWarehouse
     methodName: HoldRight
   - assembly: Assembly-CSharp
@@ -73,7 +83,79 @@ ScriptsOnlyBuild:
   - assembly: Assembly-CSharp
     fullTypeName: SceneSwitcher
     methodName: SceneSwitch
+  - assembly: Assembly-CSharp
+    fullTypeName: WarehouseButtons
+    methodName: CloseCanvasAddPrefab
+  - assembly: Assembly-CSharp
+    fullTypeName: WarehouseButtons
+    methodName: CreateSample
+  - assembly: Assembly-CSharp
+    fullTypeName: SceneSwitcher
+    methodName: SceneSwitch
+  - assembly: Assembly-CSharp
+    fullTypeName: ComputerButtons
+    methodName: CloseCanvasComputer
+  - assembly: Assembly-CSharp
+    fullTypeName: ComputerButtons
+    methodName: OpenCanvasComputer
   sceneClasses:
+    Assets/Scenes/Computer.unity:
+    - Class: 1
+      Script: {instanceID: 0}
+    - Class: 4
+      Script: {instanceID: 0}
+    - Class: 20
+      Script: {instanceID: 0}
+    - Class: 21
+      Script: {instanceID: 0}
+    - Class: 28
+      Script: {instanceID: 0}
+    - Class: 48
+      Script: {instanceID: 0}
+    - Class: 81
+      Script: {instanceID: 0}
+    - Class: 89
+      Script: {instanceID: 0}
+    - Class: 104
+      Script: {instanceID: 0}
+    - Class: 108
+      Script: {instanceID: 0}
+    - Class: 114
+      Script: {instanceID: 16868}
+    - Class: 114
+      Script: {instanceID: 17856}
+    - Class: 114
+      Script: {instanceID: 17948}
+    - Class: 114
+      Script: {instanceID: 18026}
+    - Class: 114
+      Script: {instanceID: 18060}
+    - Class: 114
+      Script: {instanceID: 18342}
+    - Class: 114
+      Script: {instanceID: 20244}
+    - Class: 114
+      Script: {instanceID: 20786}
+    - Class: 114
+      Script: {instanceID: 20932}
+    - Class: 114
+      Script: {instanceID: 21242}
+    - Class: 115
+      Script: {instanceID: 0}
+    - Class: 128
+      Script: {instanceID: 0}
+    - Class: 157
+      Script: {instanceID: 0}
+    - Class: 196
+      Script: {instanceID: 0}
+    - Class: 213
+      Script: {instanceID: 0}
+    - Class: 222
+      Script: {instanceID: 0}
+    - Class: 223
+      Script: {instanceID: 0}
+    - Class: 224
+      Script: {instanceID: 0}
     Assets/Scenes/Room.unity:
     - Class: 1
       Script: {instanceID: 0}
@@ -106,31 +188,31 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 16866}
+      Script: {instanceID: 16868}
     - Class: 114
-      Script: {instanceID: 17444}
+      Script: {instanceID: 17446}
     - Class: 114
-      Script: {instanceID: 17854}
+      Script: {instanceID: 17856}
     - Class: 114
-      Script: {instanceID: 17946}
+      Script: {instanceID: 17948}
     - Class: 114
-      Script: {instanceID: 18054}
+      Script: {instanceID: 18060}
     - Class: 114
-      Script: {instanceID: 18334}
+      Script: {instanceID: 18342}
     - Class: 114
-      Script: {instanceID: 19306}
+      Script: {instanceID: 19314}
     - Class: 114
-      Script: {instanceID: 19554}
+      Script: {instanceID: 19560}
     - Class: 114
-      Script: {instanceID: 20240}
+      Script: {instanceID: 20244}
     - Class: 114
-      Script: {instanceID: 20728}
+      Script: {instanceID: 20730}
     - Class: 114
-      Script: {instanceID: 20784}
+      Script: {instanceID: 20786}
     - Class: 114
-      Script: {instanceID: 20930}
+      Script: {instanceID: 20932}
     - Class: 114
-      Script: {instanceID: 21240}
+      Script: {instanceID: 21242}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -170,6 +252,8 @@ ScriptsOnlyBuild:
       Script: {instanceID: 0}
     - Class: 48
       Script: {instanceID: 0}
+    - Class: 65
+      Script: {instanceID: 0}
     - Class: 81
       Script: {instanceID: 0}
     - Class: 89
@@ -179,25 +263,31 @@ ScriptsOnlyBuild:
     - Class: 108
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 16866}
+      Script: {instanceID: 16868}
     - Class: 114
-      Script: {instanceID: 17854}
+      Script: {instanceID: 17194}
     - Class: 114
-      Script: {instanceID: 17946}
+      Script: {instanceID: 17856}
     - Class: 114
-      Script: {instanceID: 18054}
+      Script: {instanceID: 17948}
     - Class: 114
-      Script: {instanceID: 18334}
+      Script: {instanceID: 18004}
     - Class: 114
-      Script: {instanceID: 20240}
+      Script: {instanceID: 18060}
     - Class: 114
-      Script: {instanceID: 20784}
+      Script: {instanceID: 18196}
     - Class: 114
-      Script: {instanceID: 20930}
+      Script: {instanceID: 18342}
     - Class: 114
-      Script: {instanceID: 21240}
+      Script: {instanceID: 20244}
     - Class: 114
-      Script: {instanceID: 22086}
+      Script: {instanceID: 20786}
+    - Class: 114
+      Script: {instanceID: 20932}
+    - Class: 114
+      Script: {instanceID: 21242}
+    - Class: 114
+      Script: {instanceID: 22088}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -273,6 +363,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnMouseExitMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 9310db624a5f07ac670612d5b7afee9c
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: DragObject
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
@@ -366,6 +462,18 @@ ScriptsOnlyBuild:
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: WarehouseMechanics
+  - hash:
+      serializedVersion: 2
+      Hash: 0522c400d8e9b38a0c3b6c2ee56b1b82
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: ComputerButtons
+  - hash:
+      serializedVersion: 2
+      Hash: 751e5bae2a317288c2ab58d66687092b
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: CoroutineRunner
@@ -417,6 +525,12 @@ ScriptsOnlyBuild:
     assemblyName: UnityEngine.TestRunner
     namespaceName: UnityEngine.TestTools.TestRunner.Callbacks
     className: TestResultRendererCallback
+  - hash:
+      serializedVersion: 2
+      Hash: 9081e3a2e6e8e481a4bbb5efe98b7c6d
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: WarehouseButtons
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
@@ -773,7 +887,7 @@ ScriptsOnlyBuild:
     className: StateGraphAsset
   - hash:
       serializedVersion: 2
-      Hash: dbae429bdf6559fbfa20de343b86841e
+      Hash: 6a67131530fcb51cc1bceaf44ea54ea0
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: CameraController
@@ -965,7 +1079,7 @@ ScriptsOnlyBuild:
     className: SignalTrack
   - hash:
       serializedVersion: 2
-      Hash: a8b232ff27073f7dbb9a52c27f298793
+      Hash: c276e804a3f63c5e38d6adce419da20d
     assemblyName: Assembly-CSharp
     namespaceName: 
     className: CameraWarehouse
@@ -1063,5 +1177,6 @@ ScriptsOnlyBuild:
   scenePathNames:
   - Assets/Scenes/Room.unity
   - Assets/Scenes/Warehouse.unity
+  - Assets/Scenes/Computer.unity
   playerPath: "C:/Users/dante/OneDrive/\u0420\u0430\u0431\u043E\u0447\u0438\u0439
     \u0441\u0442\u043E\u043B/1.apk"
