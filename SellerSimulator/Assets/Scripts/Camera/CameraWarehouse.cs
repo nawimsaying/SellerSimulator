@@ -17,8 +17,8 @@ public class CameraWarehouse : MonoBehaviour
     [SerializeField] private GameObject _buttonLeft; // ”казываем кнопку ¬лево
     [SerializeField] private GameObject _buttonRight; // ”казываем кнопку ¬право
 
-    private Vector3 _moveDistanceLeft = new Vector3(7, 0, 0);
-    private Vector3 _moveDistanceRight = new Vector3(-7, 0, 0);
+    private Vector3 _moveDistanceLeft = new Vector3(7.2f, 0, 0);
+    private Vector3 _moveDistanceRight = new Vector3(-7.2f, 0, 0);
 
     private bool _isMoving = false;
 
