@@ -6,8 +6,11 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.WareHouse
 {
-    class ModelsWareHouse
+    interface ISellFrame // не доработано, додумать все методы
     {
-        public BoxProductInfo idBoxProduct;
+
+        Result <ModelsSaleFrame>SellItem(); 
+        
+
     }
 }

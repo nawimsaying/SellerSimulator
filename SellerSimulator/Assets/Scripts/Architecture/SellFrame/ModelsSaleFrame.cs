@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Architecture.MainDb.ModelsDb;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,11 +7,8 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.WareHouse
 {
-    interface IWareHouse // не доработано 
+    class ModelsSaleFrame //доделать
     {
-        void getAll();
-        void SellItem(); 
-        
-
+        public ModelBox idBox;
     }
 }

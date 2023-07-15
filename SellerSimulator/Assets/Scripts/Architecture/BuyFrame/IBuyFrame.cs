@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.MainDB
 {
-    interface IMainDbSource // не доработано 
+    interface IBuyFrame // не доработано 
     {
-        void getAll();
-        void BuyItem(int requestBuy);
+        Result<List<ModelsBuyFrame>> GetAll();
+        Result<ModelsBuyFrame> BuyItem(int money);
     }
 }
