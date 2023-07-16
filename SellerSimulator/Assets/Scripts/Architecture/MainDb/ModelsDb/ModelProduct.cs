@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.MainDb.ModelsDb
 {
-    class ModelProduct
+    public class ModelProduct
     {
         public int id;
         public string name;

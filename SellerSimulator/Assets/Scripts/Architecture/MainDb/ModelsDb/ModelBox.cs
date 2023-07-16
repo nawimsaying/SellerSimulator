@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.MainDb.ModelsDb
 {
-    class ModelBox
+    public class ModelBox
     {
         public int id;
         public string nameBox;

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Architecture.MainDb;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,8 +11,12 @@ namespace Assets.Scripts.Architecture.MainDB
     {
         const int originallyCountBox = 1; // При покупки 1 товара, всегда вместе с ним идет 1 коробка
 
-        List<ModelsBuyFrame> listBox = new List<ModelsBuyFrame>();
-      
+        private MainDbMock mainDbMock;
+
+        public BuyFrameDbMock()
+        {
+            mainDbMock = new MainDbMock();
+        }  
            
 
 
@@ -22,7 +27,24 @@ namespace Assets.Scripts.Architecture.MainDB
 
         Result<List<ModelsBuyFrame>> IBuyFrame.GetAll()
         {
-            throw new NotImplementedException();
+            List<ModelsBuyFrame> result = new List<ModelsBuyFrame>();
+
+            foreach (var modelBox in mainDbMock.ListBox)
+            {
+                // Создаем экземпляр ModelsBuyFrame и заполняем его данными из modelBox
+                ModelsBuyFrame modelsBuyFrame = new ModelsBuyFrame()
+                {
+                    idProduct = modelBox.idProduct.id,
+                    productName = modelBox.idProduct.name,
+                    price = modelBox.price,
+                    imageName = modelBox.idProduct.imageName
+                };
+
+                // Добавляем экземпляр ModelsBuyFrame в результирующий лист
+                result.Add(modelsBuyFrame);
+            }
+
+            return Result<List<ModelsBuyFrame>>.Success(result);
         }
     }
 }

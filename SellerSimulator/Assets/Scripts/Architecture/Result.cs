@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture
 {
-    public class Result<T>
+    public class Result<T> //Нужен для обработки и передачи результатов операции
     {
         public T Data { get; private set; }
         public string Exception { get; private set; }

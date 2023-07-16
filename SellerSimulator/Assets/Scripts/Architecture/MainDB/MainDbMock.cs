@@ -7,11 +7,11 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.MainDb
 {
-    class MainDbMock
+    public class MainDbMock
     {
         const int RIGINALLY_COUNT_BOX = 1; // При покупки 1 товара, всегда вместе с ним идет 1 коробка
 
-        List<ModelBox> listBox = new List<ModelBox>()
+        public List<ModelBox> ListBox { get; } = new List<ModelBox>()
         {
             new ModelBox()
             {

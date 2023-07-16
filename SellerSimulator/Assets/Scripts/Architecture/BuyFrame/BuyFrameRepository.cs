@@ -4,17 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
+using UnityEngine;
 
 namespace Assets.Scripts.Architecture.MainDB
 {
-    class BuyFrameRepository // более менее готовый репозиторий
+    public class BuyFrameRepository // более менее готовый репозиторий
     {
         private IBuyFrame _local;
 
-        BuyFrameRepository(IBuyFrame local) => _local = local;
+        public BuyFrameRepository(IBuyFrame local) => _local = local;
 
-        List<ModelsBuyFrame> GetAll()
+        public List<ModelsBuyFrame> GetAll()
         {
+            Debug.Log("Попал");
             var result = _local.GetAll();
 
             if(result.IsSuccess())
@@ -27,7 +29,7 @@ namespace Assets.Scripts.Architecture.MainDB
             }
         }
 
-        ModelsBuyFrame BuyItem(int money)
+        public ModelsBuyFrame BuyItem(int money)
         {
             var result = _local.BuyItem(money);
 
