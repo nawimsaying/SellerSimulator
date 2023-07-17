@@ -25,7 +25,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 1,
                     name = "Iphone 14",
-                    imageName = "None"
+                    imageName = "iconIphone"
                 },
             },
 
@@ -41,7 +41,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 2,
                     name = "AirPods",
-                    imageName = "None"
+                    imageName = "iconIphone"
                 },
             },
 
@@ -57,9 +57,139 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 3,
                     name = "PowerBank",
-                    imageName = "None"
+                    imageName = "iconIphone"
                 },
             },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+          
 
         };
 
