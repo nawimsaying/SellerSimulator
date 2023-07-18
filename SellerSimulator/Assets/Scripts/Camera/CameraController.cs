@@ -7,23 +7,23 @@ using UnityEngine.EventSystems;
 
 public class CameraController : MonoBehaviour
 {
-    [SerializeField] private float _smooth = 10f;
+    public static float smooth = 10f;
     [SerializeField] private float _movementSpeed = 1f;
     [SerializeField] private float _firstBorder = -6f;
     [SerializeField] private float _secondBorder = 6f;
     //[SerializeField] private float rotationSpeed = 0.2f;
 
-    [NonSerialized] static public bool _isButtonPressed = false;
+    [NonSerialized] static public bool isButtonPressed = false;
 
     private Camera _camera;
-    private Transform _cameraRig;
+    private static Transform _cameraRig;
 
     private Vector3 _position; // Позиция
     private Quaternion _rotation; // Вращение
     private Vector3 _localPosition; // Приблежение
 
     private Vector3 _startPosition;
-    private Vector3 _startPositionRig;
+    public static Vector3 startPositionRig;
     private Vector3 _startRotation;
 
     private float _yCamLimit;
@@ -45,13 +45,13 @@ public class CameraController : MonoBehaviour
         _yCamLimit = transform.position.y;
         _zCamLimit = transform.position.z;
 
-        _startPositionRig = _cameraRig.transform.position;
+        startPositionRig = _cameraRig.transform.position;
     }
 
     private void Update()
     {
         // Сглаживание
-        float _lerp = _smooth * Time.deltaTime;
+        float _lerp = smooth * Time.deltaTime;
 
         // Проверяем, нажал ли игрок на UI-элемент
         if (Input.touchCount > 0)
@@ -61,20 +61,24 @@ public class CameraController : MonoBehaviour
             if (_touch.phase == TouchPhase.Began)
             {
                 if (IsTouchOverUIElement(_touch.position))
-                    _isButtonPressed = true;
+                    isButtonPressed = true;
                 else
-                    _isButtonPressed = false;
+                    isButtonPressed = false;
             }
         }
 
-        if (!_isButtonPressed)
+        if (!isButtonPressed)
         {
             // Двигаем камеру
             Movement();
             // Если игрок коснулся двумя пальцами, переносим камеру на начальную позицию
-            if (Input.touchCount > 1)
+            if (Clicker.isClickerModeEnable)
             {
-                StartCoroutine(MoveCameraToSatrt(_startPositionRig, _lerp));
+                StartCoroutine(MoveCameraToStart(startPositionRig, _lerp));
+            }
+            else if (Input.touchCount > 1)
+            {
+                StartCoroutine(MoveCameraToStart(startPositionRig, _lerp));
                 ResetTouchInput();
             }
             else
@@ -96,7 +100,7 @@ public class CameraController : MonoBehaviour
     {
         if (Input.touchCount > 1)
         {
-            _position = _startPositionRig;
+            _position = startPositionRig;
         }
         else if (Input.GetMouseButtonDown(0))
         {
@@ -111,9 +115,10 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveCameraToSatrt(Vector3 target, float lerp)
+    private IEnumerator MoveCameraToStart(Vector3 target, float lerp)
     {
         _cameraRig.position = Vector3.Lerp(_cameraRig.position, target, lerp);
+
         yield return null;
     }
 

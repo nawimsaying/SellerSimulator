@@ -38,7 +38,7 @@ public class SceneSettings : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE
         SetTestPreset();
 #else
-        SetEcoPreset();
+        SetNormalPreset();
 #endif
     }
 
