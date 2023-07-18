@@ -1,73 +1,197 @@
-﻿using System;
+﻿using Assets.Scripts.Architecture.MainDb.ModelsDb;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Assets.Scripts.Architecture.MainDB
+namespace Assets.Scripts.Architecture.MainDb
 {
-    class MainDbMock : IMainDbSource
+    public class MainDbMock
     {
-        const int originallyCountBox = 1; // При покупки 1 товара, всегда вместе с ним идет 1 коробка
+        const int RIGINALLY_COUNT_BOX = 1; // При покупки 1 товара, всегда вместе с ним идет 1 коробка
 
-        List<ModelsDb> listDb = new List<ModelsDb>()
+        public List<ModelBox> ListBox { get; } = new List<ModelBox>()
         {
-            new ModelsDb()
+            new ModelBox()
             {
-                idProduct = 1,
-                productName = "Iphone 14",
-                price = 1000,
-                imageName = "IphoneIcon.png", // Сделать отдельный класс переменных констат которые будут хранить в себе путь к файлу или сам файл
-                idBoxProduct = new BoxProductInfo()
+                id = 1,
+                nameBox = "Коробка с Iphone 14",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
                 {
                     id = 1,
-                    countProduct = 30,
-                    boxName = "Коробка с Iphone 14",
-                    countBox = originallyCountBox
-                },
-
-
-            },
-            new ModelsDb()
-            {
-                idProduct = 2,
-                productName = "headphones pro",
-                price = 800,
-                imageName = "HeadIcon.png", // Сделать отдельный класс переменных констат которые будут хранить в себе путь к файлу или сам файл
-                idBoxProduct = new BoxProductInfo()
-                {
-                    id = 1,
-                    countProduct = 30,
-                    boxName = "Коробка с headphones pro",
-                    countBox = originallyCountBox
+                    name = "Iphone 14",
+                    imageName = "iconIphone"
                 },
             },
-            new ModelsDb()
+
+            new ModelBox()
             {
-                idProduct = 3,
-                productName = "Macbook Pro 14",
-                price = 800,
-                imageName = "MacBookIcon.png", // Сделать отдельный класс переменных констат которые будут хранить в себе путь к файлу или сам файл
-                idBoxProduct = new BoxProductInfo()
+                id = 1,
+                nameBox = "Коробка с AirPods",
+                imageBox = "png file",
+                price = 80000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 40,
+                idProduct = new ModelProduct()
                 {
-                    id = 1,
-                    countProduct = 30,
-                    boxName = "Коробка с Macbook Pro 14",
-                    countBox = originallyCountBox
+                    id = 2,
+                    name = "AirPods",
+                    imageName = "iconIphone"
                 },
-            }
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+            new ModelBox()
+            {
+                id = 1,
+                nameBox = "Коробка с PowerBanks",
+                imageBox = "png file",
+                price = 120000,
+                countBox = RIGINALLY_COUNT_BOX,
+                countProduct = 30,
+                idProduct = new ModelProduct()
+                {
+                    id = 3,
+                    name = "PowerBank",
+                    imageName = "iconIphone"
+                },
+            },
+
+          
+
         };
 
-
-        public void BuyItem(int requestBuy) //Реализовать метод покупки товара
-        {
-            // для начала реализовать перемещение коробок
-            throw new NotImplementedException();
-        }
-
-        public void getAll()
-        {
-            throw new NotImplementedException();
-        }
     }
 }
