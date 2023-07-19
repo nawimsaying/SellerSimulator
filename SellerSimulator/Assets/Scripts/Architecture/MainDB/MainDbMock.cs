@@ -128,7 +128,7 @@ namespace Assets.Scripts.Architecture.MainDb
             new ModelBox()
             {
                 id = 1,
-                nameBox = "Коробка с PowerBanks",
+                nameBox = "Я люблю АНИМЕ",
                 imageBox = "png file",
                 price = 120000,
                 countBox = RIGINALLY_COUNT_BOX,
@@ -136,60 +136,12 @@ namespace Assets.Scripts.Architecture.MainDb
                 idProduct = new ModelProduct()
                 {
                     id = 3,
-                    name = "PowerBank",
+                    name = "Я люблю АНИМЕ",
                     imageName = "iconIphone"
                 },
             },
 
-            new ModelBox()
-            {
-                id = 1,
-                nameBox = "Коробка с PowerBanks",
-                imageBox = "png file",
-                price = 120000,
-                countBox = RIGINALLY_COUNT_BOX,
-                countProduct = 30,
-                idProduct = new ModelProduct()
-                {
-                    id = 3,
-                    name = "PowerBank",
-                    imageName = "iconIphone"
-                },
-            },
 
-            new ModelBox()
-            {
-                id = 1,
-                nameBox = "Коробка с PowerBanks",
-                imageBox = "png file",
-                price = 120000,
-                countBox = RIGINALLY_COUNT_BOX,
-                countProduct = 30,
-                idProduct = new ModelProduct()
-                {
-                    id = 3,
-                    name = "PowerBank",
-                    imageName = "iconIphone"
-                },
-            },
-
-            new ModelBox()
-            {
-                id = 1,
-                nameBox = "Коробка с PowerBanks",
-                imageBox = "png file",
-                price = 120000,
-                countBox = RIGINALLY_COUNT_BOX,
-                countProduct = 30,
-                idProduct = new ModelProduct()
-                {
-                    id = 3,
-                    name = "PowerBank",
-                    imageName = "iconIphone"
-                },
-            },
-
-          
 
         };
 
