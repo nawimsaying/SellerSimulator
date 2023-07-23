@@ -10,8 +10,8 @@ namespace Assets.Scripts.Architecture.MainDb.ModelsDb
     {
         public int id;
         public string name;
-        public int price;
         public string imageName;
-
+        public int lvlUnlock;
+        public bool goldenUnlock;
     }
 }

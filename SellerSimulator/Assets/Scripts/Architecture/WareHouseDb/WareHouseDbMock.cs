@@ -1,16 +1,19 @@
 using Assets.Scripts.Architecture;
+using Assets.Scripts.Architecture.MainDb.ModelsDb;
 using Assets.Scripts.Architecture.WareHouseDb;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.Progress;
 
-public class WareHouseDbMock : IWareHouse
+public class WareHouseDbMock : IWareHouseSource
 {
 
     //Лист в котором будет хранится купленные коробки
-
-    Result<ModelWareHouse> IWareHouse.GetCountBox(int id)
+    private List<ModelBox> purchasedItems = new List<ModelBox>();
+    public void AddPurchasedItem(ModelBox item)
     {
-        throw new System.NotImplementedException();
+        purchasedItems.Add(item);
+        Debug.Log("tut");
     }
 }

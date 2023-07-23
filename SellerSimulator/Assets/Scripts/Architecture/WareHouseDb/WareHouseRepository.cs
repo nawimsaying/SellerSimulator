@@ -9,22 +9,10 @@ namespace Assets.Scripts.Architecture.WareHouseDb
 {
     class WareHouseRepository
     {
-        private IWareHouse _local;
+        private IWareHouseSource _local;
 
-        WareHouseRepository(IWareHouse local) => _local = local;
+        WareHouseRepository(IWareHouseSource local) => _local = local;
 
-        ModelWareHouse GetCountBox(int id)
-        {
-            var result = _local.GetCountBox(id);
-
-            if (result.IsSuccess())
-            {
-                return result.Data;
-            }
-            else
-            {
-                throw new Exception(result.Exception);
-            }
-        }
+       
     }
 }

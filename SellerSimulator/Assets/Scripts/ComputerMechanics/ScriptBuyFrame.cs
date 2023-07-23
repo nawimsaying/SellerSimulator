@@ -13,6 +13,7 @@ public static class ButtonExtension
     {
         button.onClick.AddListener(delegate () {
             OnClick(param);
+            
         });
     }
 }
@@ -47,7 +48,9 @@ public class ScriptBuyFrame : MonoBehaviour
             element.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
 
 
-            element.transform.GetChild(3).GetComponent<Button>().AddEventListener(i, ItemClicked);
+            element.transform.GetChild(3).GetComponent<Button>().AddEventListener(allItems[i].idProduct, ItemClicked);
+
+            
         }
 
 
@@ -58,10 +61,14 @@ public class ScriptBuyFrame : MonoBehaviour
     }
 
     // Сейчас метод проверяет, на ту ли мы кнопку нажимаем. Затем по нажатию кнопка будет покупать товар
-    void ItemClicked(int itemIndex)
+    void ItemClicked(int idProduct)
     {
-        Debug.Log("item " + itemIndex + "clicked");
-        
+        Debug.Log("Item with id " + idProduct + " clicked");
+
+        Debug.Log(_buyFrameRepository.BuyItem(idProduct, 10000));
+
+
+
     }
 
     // Update is called once per frame
