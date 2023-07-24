@@ -9,6 +9,9 @@ ScriptsOnlyBuild:
     - SceneSettings
     - SceneSwitcher
     - ScriptBuyFrame
+    - SettingsButton
+    - StressReceiver
+    - TraumaInducer
     - WarehouseButtons
     - WarehouseMechanics
     Unity.Rider.Editor.dll:
@@ -82,11 +85,17 @@ ScriptsOnlyBuild:
     fullTypeName: SceneSwitcher
     methodName: SceneSwitch
   - assembly: Assembly-CSharp
+    fullTypeName: SettingsButton
+    methodName: OnSettingsExit
+  - assembly: Assembly-CSharp
     fullTypeName: SceneSwitcher
     methodName: SceneSwitch
   - assembly: Assembly-CSharp
     fullTypeName: Clicker
     methodName: ChangeToggleValue
+  - assembly: Assembly-CSharp
+    fullTypeName: SettingsButton
+    methodName: OnSettingsEnter
   - assembly: Assembly-CSharp
     fullTypeName: WarehouseButtons
     methodName: OpenCanvasAddPrefab
@@ -167,9 +176,9 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 21670}
     - Class: 114
-      Script: {instanceID: 22246}
+      Script: {instanceID: 22248}
     - Class: 114
-      Script: {instanceID: 22300}
+      Script: {instanceID: 22302}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -251,6 +260,12 @@ ScriptsOnlyBuild:
       Script: {instanceID: 20956}
     - Class: 114
       Script: {instanceID: 21268}
+    - Class: 114
+      Script: {instanceID: 21992}
+    - Class: 114
+      Script: {instanceID: 23708}
+    - Class: 114
+      Script: {instanceID: 23712}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -331,7 +346,7 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 21268}
     - Class: 114
-      Script: {instanceID: 22118}
+      Script: {instanceID: 22120}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -1117,6 +1132,12 @@ ScriptsOnlyBuild:
     className: EventTrigger
   - hash:
       serializedVersion: 2
+      Hash: 74a9174f473f10501a55bd8dbbe11d31
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: SettingsButton
+  - hash:
+      serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
@@ -1235,6 +1256,18 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnSliderValueChangedMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: b92e64f9629c3445201ff27bf49e4c80
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: StressReceiver
+  - hash:
+      serializedVersion: 2
+      Hash: 2414119d356d28fb4ff8323c5d1817c5
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TraumaInducer
   platform: 13
   scenePathNames:
   - Assets/Scenes/Room.unity

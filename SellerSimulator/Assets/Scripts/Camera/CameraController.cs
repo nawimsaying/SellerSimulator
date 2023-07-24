@@ -128,7 +128,7 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveCameraToStart(Vector3 target, float lerp)
+    public IEnumerator MoveCameraToStart(Vector3 target, float lerp)
     {
         //_cameraRig.position = Vector3.Lerp(_cameraRig.position, target, lerp);
         float elapsedTime = 0f;
@@ -145,17 +145,6 @@ public class CameraController : MonoBehaviour
 
             yield return null;
         }
-    }
-
-    private async void ResetCamera(Vector3 target, float lerp)
-    {
-        _cameraRig.position = Vector3.Lerp(_cameraRig.position, target, lerp);
-
-        while (_cameraRig.position == target)
-            await Task.Yield();
-
-        if (Clicker.isClickerModeEnable)
-            _isClickerModeSwitched = true;
     }
 
     private void ResetTouchInput()
