@@ -105,7 +105,6 @@ public class CameraController : MonoBehaviour
             isButtonPressed = false;
             if (!_isClickerModeSwitched)
                 StartCoroutine(MoveCameraToStart(startPositionRig, _lerp));
-            Debug.Log("asasass");
         }
     }
 

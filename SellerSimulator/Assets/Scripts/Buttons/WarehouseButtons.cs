@@ -8,48 +8,28 @@ public class WarehouseButtons : MonoBehaviour
 {
     [SerializeField] private GameObject _canvasAddPrefab;
     [SerializeField] private GameObject _canvasMain;
-    [SerializeField] private GameObject _buttonAddPrefab;
+    [SerializeField] private GameObject _buttonEdit;
     [SerializeField] private GameObject[] _prefabs;
     [SerializeField] private Vector3[] _spawnPosition;
 
-    private static bool[] _isSamplingFrame; // Отвечает за то, есть ли на фрейме шаблон или он пустой
+    private static string[] _samplingFrame; // Отвечает за то, есть ли на фрейме шаблон или он пустой
 
-    private static GameObject _buttonAddPrefabStatic;
+    private static GameObject _buttonEditStatic;
 
     private bool _isSet = false; // Нужна чтобы отслеживать, инициализировался ли массив _isSamplingFrame
 
+    private List<string> _namesOfSamples = new List<string>() { "rack", "pallet" }; // Лист со стринговыми зазваниями шаблонов
+
     private void Start()
     {
-        _isSamplingFrame = new bool[CameraWarehouse.countOfFrames];
+        StartCoroutine(SetValueSamplingFrame());
 
-        // Костыль - при выходе игрока из этой сцены должно запоминаться расположение его шаблонов на фреймах
-        // и при следующем переключении на эту сцену в массиве isSamplingFrame должны быть кастомные значения
-        // Пока заполняем массив значениями False, которые означают, что в фреймах нет шаблонов
-        for (int i = 0; i < _isSamplingFrame.Length; i++)
-            _isSamplingFrame[i] = false;
+        _samplingFrame = new string[CameraWarehouse.countOfFrames];
 
         _canvasMain.SetActive(true);
         _canvasAddPrefab.SetActive(false);
 
-        _buttonAddPrefabStatic = _buttonAddPrefab;
-    }
-
-    private void FixedUpdate()
-    {
-        // Так как значение переменной countOfFrames в классе CameraWarehouse устанавливается не сразу, пришлось сделать
-        // что-то наподобие ожидания, пока эта переменная не получит значение из инспектора Unity
-        if (!_isSet && CameraWarehouse.countOfFrames != 0)
-        {
-            _isSamplingFrame = new bool[CameraWarehouse.countOfFrames];
-
-            // Костыль - при выходе игрока из этой сцены должно запоминаться расположение его шаблонов на фреймах
-            // и при следующем переключении на эту сцену в массиве isSamplingFrame должны быть кастомные значения
-            // Пока заполняем массив значениями False, которые означают, что в фреймах нет шаблонов
-            for (int i = 0; i < _isSamplingFrame.Length; i++)
-                _isSamplingFrame[i] = false;
-
-            _isSet = true;
-        }
+        _buttonEditStatic = _buttonEdit;
     }
 
     // Отвечает за нажатие кнопки плюс
@@ -69,25 +49,36 @@ public class WarehouseButtons : MonoBehaviour
     // Спавним шаблон
     public void CreateSample(int idSample)
     {
-        if (!_isSamplingFrame[CameraWarehouse.GetCameraPosition()])
+        if (_samplingFrame[CameraWarehouse.GetCameraPosition()] == "none")
         {
             Instantiate(_prefabs[idSample], _spawnPosition[CameraWarehouse.GetCameraPosition()], Quaternion.Euler(0f, -90f, 0f));
 
             // Указываем, что в данном фрейме уже находится какой-то шаблон
-            _isSamplingFrame[CameraWarehouse.GetCameraPosition()] = true;
+            if (idSample == 0)
+                _samplingFrame[CameraWarehouse.GetCameraPosition()] = _namesOfSamples[0];
+            else if (idSample == 1)
+                _samplingFrame[CameraWarehouse.GetCameraPosition()] = _namesOfSamples[1];
 
-            ChangeActiveButtonPlus();
+            Debug.Log("Set sample - " + _samplingFrame[CameraWarehouse.GetCameraPosition()]);
         }
         else
             Debug.Log("This frame already has a template installed.");
     }
 
-    // Убираем кнопку плюсика посередине, если игрок поставил на фрейм шаблон и показываем ее, если он его удалил
-    public static void ChangeActiveButtonPlus()
+    // Инициализируем массив с шаблонами с помощью куратины
+    private IEnumerator SetValueSamplingFrame()
     {
-        if (_isSamplingFrame[CameraWarehouse.GetCameraPosition()])
-            _buttonAddPrefabStatic.SetActive(false);
-        else
-            _buttonAddPrefabStatic.SetActive(true);
+        while (CameraWarehouse.countOfFrames == 0)
+            yield return null;
+
+        _samplingFrame = new string[CameraWarehouse.countOfFrames];
+
+        // Костыль - при выходе игрока из этой сцены должно запоминаться расположение его шаблонов на фреймах
+        // и при следующем переключении на эту сцену в массиве isSamplingFrame должны быть кастомные значения
+        // Пока заполняем массив значениями False, которые означают, что в фреймах нет шаблонов
+        for (int i = 0; i < _samplingFrame.Length; i++)
+            _samplingFrame[i] = "none";
+
+        Debug.Log("SF: " + _samplingFrame[0] + " " + _samplingFrame[1]);
     }
 }

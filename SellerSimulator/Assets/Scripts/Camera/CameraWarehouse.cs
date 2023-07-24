@@ -67,7 +67,6 @@ public class CameraWarehouse : MonoBehaviour
         }
 
         ChangeActiveButtons();
-        WarehouseButtons.ChangeActiveButtonPlus();
 
         _isMoving = false;
     }
