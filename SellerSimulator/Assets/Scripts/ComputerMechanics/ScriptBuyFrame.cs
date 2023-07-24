@@ -10,11 +10,10 @@ using UnityEngine.UI;
 
 public static class ButtonExtension
 {
-    public static void AddEventListener<T>(this Button button, T param, Action<T> OnClick)
+    public static void AddEventListener<T>(this Button button, T param, Action<T, Button> OnClick)
     {
         button.onClick.AddListener(delegate () {
-            OnClick(param);
-            
+            OnClick(param, button); // Добавили button как аргумент
         });
     }
 }
@@ -22,6 +21,7 @@ public static class ButtonExtension
 public class ScriptBuyFrame : MonoBehaviour
 {
     public BuyFrameRepository _buyFrameRepository;
+    public WareHouseRepository _test;
 
     void Start()
     {
@@ -49,11 +49,19 @@ public class ScriptBuyFrame : MonoBehaviour
     }
 
     // Сейчас метод проверяет, на ту ли мы кнопку нажимаем. Затем по нажатию кнопка будет покупать товар
-    void ItemClicked(int idProduct)
+    void ItemClicked(int idProduct, Button button)
     {
+
         Debug.Log("Item with id " + idProduct + " clicked");
 
         Debug.Log(_buyFrameRepository.BuyItem(idProduct, 10000));
+
+        _test = new WareHouseRepository(WareHouseDbMock.Instance);
+
+        List<ModelWareHouse> items = _test.GetAll();
+
+        Debug.Log("");
+
     }
 
     // Update is called once per frame
