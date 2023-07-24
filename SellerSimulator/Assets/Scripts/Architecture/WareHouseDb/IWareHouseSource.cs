@@ -10,5 +10,6 @@ namespace Assets.Scripts.Architecture.WareHouseDb
     public interface IWareHouseSource
     {
         void AddPurchasedItem(ModelBox item);
+        Result<List<ModelWareHouse>> GetAll();
     }
 }

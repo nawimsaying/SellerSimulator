@@ -18,10 +18,11 @@ namespace Assets.Scripts.Architecture.MainDB
         private MainDbMock mainDbMock;
         private WareHouseDbMock wareHouseDbMock;
 
+
         public BuyFrameDbMock()
         {
             mainDbMock = new MainDbMock();
-            wareHouseDbMock = new WareHouseDbMock();
+            wareHouseDbMock = WareHouseDbMock.Instance;
         }
 
 
