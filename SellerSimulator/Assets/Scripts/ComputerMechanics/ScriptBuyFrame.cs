@@ -1,4 +1,5 @@
 using Assets.Scripts.Architecture.MainDB;
+using Assets.Scripts.Architecture.WareHouseDb;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ public static class ButtonExtension
     {
         button.onClick.AddListener(delegate () {
             OnClick(param);
+            
         });
     }
 }
@@ -25,48 +27,38 @@ public class ScriptBuyFrame : MonoBehaviour
     {
         // Создаем экземпляр класса BuyFrameRepository
         _buyFrameRepository = new BuyFrameRepository(new BuyFrameDbMock());
-
-       
         List<ModelsBuyFrame> allItems = _buyFrameRepository.GetAll();
 
         GameObject itemProduct = transform.GetChild(0).gameObject;
         GameObject element;
-
-
-
-
+;
 
         for (int i = 0; i < allItems.Count; i++)
         {
             element = Instantiate(itemProduct, transform);
 
             // Установка спрайта
-            
             element.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[i].imageName);
             element.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
             element.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
 
-
-            element.transform.GetChild(3).GetComponent<Button>().AddEventListener(i, ItemClicked);
+            element.transform.GetChild(3).GetComponent<Button>().AddEventListener(allItems[i].idProduct, ItemClicked);
         }
 
-
         Destroy(itemProduct);
-
-
-
     }
 
     // Сейчас метод проверяет, на ту ли мы кнопку нажимаем. Затем по нажатию кнопка будет покупать товар
-    void ItemClicked(int itemIndex)
+    void ItemClicked(int idProduct)
     {
-        Debug.Log("item " + itemIndex + "clicked");
-        
+        Debug.Log("Item with id " + idProduct + " clicked");
+
+        Debug.Log(_buyFrameRepository.BuyItem(idProduct, 10000));
+
     }
 
     // Update is called once per frame
     void Update()
     {
-
     }
 }

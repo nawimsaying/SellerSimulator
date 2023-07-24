@@ -10,9 +10,9 @@ namespace Assets.Scripts.Architecture.MainDB
 {
     public class BuyFrameRepository // более менее готовый репозиторий
     {
-        private IBuyFrame _local;
+        private IBuyFrameSource _local;
 
-        public BuyFrameRepository(IBuyFrame local) => _local = local;
+        public BuyFrameRepository(IBuyFrameSource local) => _local = local;
 
         public List<ModelsBuyFrame> GetAll()
         {
@@ -29,9 +29,9 @@ namespace Assets.Scripts.Architecture.MainDB
             }
         }
 
-        public ModelsBuyFrame BuyItem(int money)
+        public string BuyItem(int id,int money)
         {
-            var result = _local.BuyItem(money);
+            var result = _local.BuyItem(id,money);
 
             if(result.IsSuccess())
             {

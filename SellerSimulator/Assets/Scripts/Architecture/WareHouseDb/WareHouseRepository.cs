@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Architecture.MainDb.ModelsDb;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,15 +8,17 @@ using Unity.VisualScripting.Antlr3.Runtime.Tree;
 
 namespace Assets.Scripts.Architecture.WareHouseDb
 {
-    class WareHouseRepository
+    public class WareHouseRepository
     {
-        private IWareHouse _local;
+        private IWareHouseSource _local;
 
-        WareHouseRepository(IWareHouse local) => _local = local;
+        public WareHouseRepository(IWareHouseSource local) => _local = local;
 
-        ModelWareHouse GetCountBox(int id)
+       
+
+        public List<ModelWareHouse> GetAll()
         {
-            var result = _local.GetCountBox(id);
+            var result = _local.GetAll();
 
             if (result.IsSuccess())
             {
@@ -26,5 +29,7 @@ namespace Assets.Scripts.Architecture.WareHouseDb
                 throw new Exception(result.Exception);
             }
         }
+
+       
     }
 }

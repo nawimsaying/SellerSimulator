@@ -9,9 +9,9 @@ namespace Assets.Scripts.Architecture.WareHouse
 {
     class SellFrameRepository
     {
-        private ISellFrame _local;
+        private ISellFrameSource _local;
 
-        SellFrameRepository(ISellFrame local) => _local = local;
+        SellFrameRepository(ISellFrameSource local) => _local = local;
 
     
         ModelsSaleFrame SellItem()

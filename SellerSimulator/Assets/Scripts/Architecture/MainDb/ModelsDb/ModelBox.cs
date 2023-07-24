@@ -14,6 +14,7 @@ namespace Assets.Scripts.Architecture.MainDb.ModelsDb
         public int price;
         public int countBox;
         public int countProduct;
+        public string sizeBox;
         public ModelProduct idProduct;
 
     }
