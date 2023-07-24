@@ -8,6 +8,10 @@ ScriptsOnlyBuild:
     - DragObject
     - SceneSettings
     - SceneSwitcher
+    - ScriptBuyFrame
+    - SettingsButton
+    - StressReceiver
+    - TraumaInducer
     - WarehouseButtons
     - WarehouseMechanics
     Unity.Rider.Editor.dll:
@@ -32,10 +36,14 @@ ScriptsOnlyBuild:
     - UnityEngine.EventSystems.StandaloneInputModule
     - UnityEngine.UI.Button
     - UnityEngine.UI.CanvasScaler
+    - UnityEngine.UI.ContentSizeFitter
     - UnityEngine.UI.GraphicRaycaster
     - UnityEngine.UI.Image
+    - UnityEngine.UI.Mask
+    - UnityEngine.UI.ScrollRect
     - UnityEngine.UI.Text
     - UnityEngine.UI.Toggle
+    - UnityEngine.UI.VerticalLayoutGroup
   serializedClasses:
     Unity.TextMeshPro:
     - TMPro.FaceInfo_Legacy
@@ -56,6 +64,7 @@ ScriptsOnlyBuild:
     - UnityEngine.Events.ArgumentCache
     - UnityEngine.Events.PersistentCallGroup
     - UnityEngine.Events.PersistentListenerMode
+    - UnityEngine.RectOffset
     UnityEngine.TextCoreFontEngineModule:
     - UnityEngine.TextCore.FaceInfo
     - UnityEngine.TextCore.Glyph
@@ -68,6 +77,7 @@ ScriptsOnlyBuild:
     - UnityEngine.UI.FontData
     - UnityEngine.UI.MaskableGraphic/CullStateChangedEvent
     - UnityEngine.UI.Navigation
+    - UnityEngine.UI.ScrollRect/ScrollRectEvent
     - UnityEngine.UI.SpriteState
     - UnityEngine.UI.Toggle/ToggleEvent
   methodsToPreserve:
@@ -75,11 +85,17 @@ ScriptsOnlyBuild:
     fullTypeName: SceneSwitcher
     methodName: SceneSwitch
   - assembly: Assembly-CSharp
+    fullTypeName: SettingsButton
+    methodName: OnSettingsExit
+  - assembly: Assembly-CSharp
     fullTypeName: SceneSwitcher
     methodName: SceneSwitch
   - assembly: Assembly-CSharp
     fullTypeName: Clicker
     methodName: ChangeToggleValue
+  - assembly: Assembly-CSharp
+    fullTypeName: SettingsButton
+    methodName: OnSettingsEnter
   - assembly: Assembly-CSharp
     fullTypeName: WarehouseButtons
     methodName: OpenCanvasAddPrefab
@@ -132,27 +148,37 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16868}
     - Class: 114
-      Script: {instanceID: 17860}
+      Script: {instanceID: 17862}
     - Class: 114
-      Script: {instanceID: 17952}
+      Script: {instanceID: 17954}
     - Class: 114
-      Script: {instanceID: 18030}
+      Script: {instanceID: 18032}
     - Class: 114
-      Script: {instanceID: 18064}
+      Script: {instanceID: 18066}
     - Class: 114
-      Script: {instanceID: 18346}
+      Script: {instanceID: 18348}
     - Class: 114
-      Script: {instanceID: 20254}
+      Script: {instanceID: 18514}
     - Class: 114
-      Script: {instanceID: 20284}
+      Script: {instanceID: 19094}
     - Class: 114
-      Script: {instanceID: 20500}
+      Script: {instanceID: 20262}
     - Class: 114
-      Script: {instanceID: 20798}
+      Script: {instanceID: 20294}
     - Class: 114
-      Script: {instanceID: 20944}
+      Script: {instanceID: 20512}
     - Class: 114
-      Script: {instanceID: 21254}
+      Script: {instanceID: 20810}
+    - Class: 114
+      Script: {instanceID: 20956}
+    - Class: 114
+      Script: {instanceID: 21268}
+    - Class: 114
+      Script: {instanceID: 21670}
+    - Class: 114
+      Script: {instanceID: 22248}
+    - Class: 114
+      Script: {instanceID: 22302}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -203,37 +229,43 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16868}
     - Class: 114
-      Script: {instanceID: 17448}
+      Script: {instanceID: 17450}
     - Class: 114
-      Script: {instanceID: 17860}
+      Script: {instanceID: 17862}
     - Class: 114
-      Script: {instanceID: 17952}
+      Script: {instanceID: 17954}
     - Class: 114
-      Script: {instanceID: 18064}
+      Script: {instanceID: 18066}
     - Class: 114
-      Script: {instanceID: 18346}
+      Script: {instanceID: 18348}
     - Class: 114
-      Script: {instanceID: 19318}
+      Script: {instanceID: 19322}
     - Class: 114
-      Script: {instanceID: 19566}
+      Script: {instanceID: 19572}
     - Class: 114
-      Script: {instanceID: 20136}
+      Script: {instanceID: 20144}
     - Class: 114
-      Script: {instanceID: 20254}
+      Script: {instanceID: 20262}
     - Class: 114
-      Script: {instanceID: 20284}
+      Script: {instanceID: 20280}
     - Class: 114
-      Script: {instanceID: 20500}
+      Script: {instanceID: 20294}
     - Class: 114
-      Script: {instanceID: 20742}
+      Script: {instanceID: 20512}
     - Class: 114
-      Script: {instanceID: 20798}
+      Script: {instanceID: 20754}
     - Class: 114
-      Script: {instanceID: 20944}
+      Script: {instanceID: 20810}
     - Class: 114
-      Script: {instanceID: 21254}
+      Script: {instanceID: 20956}
     - Class: 114
-      Script: {instanceID: 27638}
+      Script: {instanceID: 21268}
+    - Class: 114
+      Script: {instanceID: 21992}
+    - Class: 114
+      Script: {instanceID: 23708}
+    - Class: 114
+      Script: {instanceID: 23712}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -288,33 +320,33 @@ ScriptsOnlyBuild:
     - Class: 114
       Script: {instanceID: 16868}
     - Class: 114
-      Script: {instanceID: 17196}
+      Script: {instanceID: 17198}
     - Class: 114
-      Script: {instanceID: 17860}
+      Script: {instanceID: 17862}
     - Class: 114
-      Script: {instanceID: 17952}
+      Script: {instanceID: 17954}
     - Class: 114
-      Script: {instanceID: 18008}
+      Script: {instanceID: 18010}
     - Class: 114
-      Script: {instanceID: 18064}
+      Script: {instanceID: 18066}
     - Class: 114
-      Script: {instanceID: 18200}
+      Script: {instanceID: 18202}
     - Class: 114
-      Script: {instanceID: 18346}
+      Script: {instanceID: 18348}
     - Class: 114
-      Script: {instanceID: 20254}
+      Script: {instanceID: 20262}
     - Class: 114
-      Script: {instanceID: 20284}
+      Script: {instanceID: 20294}
     - Class: 114
-      Script: {instanceID: 20500}
+      Script: {instanceID: 20512}
     - Class: 114
-      Script: {instanceID: 20798}
+      Script: {instanceID: 20810}
     - Class: 114
-      Script: {instanceID: 20944}
+      Script: {instanceID: 20956}
     - Class: 114
-      Script: {instanceID: 21254}
+      Script: {instanceID: 21268}
     - Class: 114
-      Script: {instanceID: 22102}
+      Script: {instanceID: 22120}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -878,6 +910,12 @@ ScriptsOnlyBuild:
     className: TMP_FontAsset
   - hash:
       serializedVersion: 2
+      Hash: d94a9346b0342e49e71f2c52df10e0ea
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: Clicker
+  - hash:
+      serializedVersion: 2
       Hash: a2b93c2eef6ed7f44fc06e8b176e66ad
     assemblyName: Assembly-CSharp
     namespaceName: 
@@ -1094,6 +1132,12 @@ ScriptsOnlyBuild:
     className: EventTrigger
   - hash:
       serializedVersion: 2
+      Hash: 74a9174f473f10501a55bd8dbbe11d31
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: SettingsButton
+  - hash:
+      serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
@@ -1122,6 +1166,12 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.Core
     namespaceName: Unity.VisualScripting
     className: UnityOnMoveMessageListener
+  - hash:
+      serializedVersion: 2
+      Hash: 751e5bae2a317288c2ab58d66687092b
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: ScriptBuyFrame
   - hash:
       serializedVersion: 2
       Hash: be140ea01a11255b651c097661ac55b1
@@ -1158,12 +1208,6 @@ ScriptsOnlyBuild:
     assemblyName: Unity.VisualScripting.State
     namespaceName: Unity.VisualScripting
     className: StateMachine
-  - hash:
-      serializedVersion: 2
-      Hash: 722191507061099fac2d459e15726cc2
-    assemblyName: Assembly-CSharp
-    namespaceName: 
-    className: ModelsDb
   - hash:
       serializedVersion: 2
       Hash: 751e5bae2a317288c2ab58d66687092b
@@ -1214,10 +1258,16 @@ ScriptsOnlyBuild:
     className: UnityOnSliderValueChangedMessageListener
   - hash:
       serializedVersion: 2
-      Hash: d94a9346b0342e49e71f2c52df10e0ea
+      Hash: b92e64f9629c3445201ff27bf49e4c80
     assemblyName: Assembly-CSharp
     namespaceName: 
-    className: Clicker
+    className: StressReceiver
+  - hash:
+      serializedVersion: 2
+      Hash: 2414119d356d28fb4ff8323c5d1817c5
+    assemblyName: Assembly-CSharp
+    namespaceName: 
+    className: TraumaInducer
   platform: 13
   scenePathNames:
   - Assets/Scenes/Room.unity

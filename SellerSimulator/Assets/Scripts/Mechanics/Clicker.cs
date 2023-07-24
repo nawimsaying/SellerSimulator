@@ -28,7 +28,7 @@ public class Clicker : MonoBehaviour
                 _text.text = _clickCount.ToString();
             }
 #else
-            if (Input.touchCount < 5)
+            if (Input.touchCount < 4)
             {
                 for (int i = 0; i < Input.touchCount; i++)
                 {

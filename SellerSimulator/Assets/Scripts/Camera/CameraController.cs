@@ -1,19 +1,22 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using static UnityEngine.GraphicsBuffer;
 
 public class CameraController : MonoBehaviour
 {
-    public static float smooth = 10f;
     [SerializeField] private float _movementSpeed = 1f;
     [SerializeField] private float _firstBorder = -6f;
     [SerializeField] private float _secondBorder = 6f;
     //[SerializeField] private float rotationSpeed = 0.2f;
 
-    [NonSerialized] static public bool isButtonPressed = false;
+    [NonSerialized] public static float smooth = 10f;
+    [NonSerialized] public static bool isButtonPressed = false;
 
     private Camera _camera;
     private static Transform _cameraRig;
@@ -25,6 +28,7 @@ public class CameraController : MonoBehaviour
     private Vector3 _startPosition;
     public static Vector3 startPositionRig;
     private Vector3 _startRotation;
+    private bool _isClickerModeSwitched = false;
 
     private float _yCamLimit;
     private float _zCamLimit;
@@ -54,45 +58,53 @@ public class CameraController : MonoBehaviour
         float _lerp = smooth * Time.deltaTime;
 
         // Проверяем, нажал ли игрок на UI-элемент
-        if (Input.touchCount > 0)
+        if (!Clicker.isClickerModeEnable)
         {
-            Touch _touch = Input.GetTouch(0);
-
-            if (_touch.phase == TouchPhase.Began)
+            if (Input.touchCount > 0 && !_isClickerModeSwitched)
             {
-                if (IsTouchOverUIElement(_touch.position))
-                    isButtonPressed = true;
+                Touch _touch = Input.GetTouch(0);
+
+                if (_touch.phase == TouchPhase.Began)
+                {
+                    if (IsTouchOverUIElement(_touch.position))
+                        isButtonPressed = true;
+                    else
+                        isButtonPressed = false;
+                }
+            }
+
+            if (!isButtonPressed)
+            {
+                // Двигаем камеру
+                Movement();
+                // Если игрок коснулся двумя пальцами, переносим камеру на начальную позицию
+                if (Input.touchCount > 1)
+                {
+                    StartCoroutine(MoveCameraToStart(startPositionRig, _lerp));
+                    ResetTouchInput();
+                }
                 else
-                    isButtonPressed = false;
+                {
+                    // Сглаживаем движение камеры
+                    _cameraRig.position = Vector3.Lerp(_cameraRig.position, _position, _lerp);
+                }
+                // Задаем границы для камеры
+                _position.x = Mathf.Clamp(_position.x, _firstBorder, _secondBorder);
+                _position.z = Mathf.Clamp(_position.z, _firstBorder, _secondBorder);
+
+
+                _isClickerModeSwitched = false;
+
+                // Вращаем камеру
+                /*Rotation();
+                cameraRig.rotation = Quaternion.Lerp(cameraRig.rotation, rotation, lerp);*/
             }
         }
-
-        if (!isButtonPressed)
+        else
         {
-            // Двигаем камеру
-            Movement();
-            // Если игрок коснулся двумя пальцами, переносим камеру на начальную позицию
-            if (Clicker.isClickerModeEnable)
-            {
+            isButtonPressed = false;
+            if (!_isClickerModeSwitched)
                 StartCoroutine(MoveCameraToStart(startPositionRig, _lerp));
-            }
-            else if (Input.touchCount > 1)
-            {
-                StartCoroutine(MoveCameraToStart(startPositionRig, _lerp));
-                ResetTouchInput();
-            }
-            else
-            {
-                // Сглаживаем движение камеры
-                _cameraRig.position = Vector3.Lerp(_cameraRig.position, _position, _lerp);
-            }
-            // Задаем границы для камеры
-            _position.x = Mathf.Clamp(_position.x, _firstBorder, _secondBorder);
-            _position.z = Mathf.Clamp(_position.z, _firstBorder, _secondBorder);
-
-            // Вращаем камеру
-            /*Rotation();
-            cameraRig.rotation = Quaternion.Lerp(cameraRig.rotation, rotation, lerp);*/
         }
     }
 
@@ -115,11 +127,23 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    private IEnumerator MoveCameraToStart(Vector3 target, float lerp)
+    public IEnumerator MoveCameraToStart(Vector3 target, float lerp)
     {
-        _cameraRig.position = Vector3.Lerp(_cameraRig.position, target, lerp);
+        //_cameraRig.position = Vector3.Lerp(_cameraRig.position, target, lerp);
+        float elapsedTime = 0f;
+        float duration = 0.2f;
+        Vector3 initialPosition = _cameraRig.position;
 
-        yield return null;
+        while (elapsedTime < duration)
+        {
+            _cameraRig.position = Vector3.Lerp(initialPosition, target, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+
+            if (Clicker.isClickerModeEnable)
+                _isClickerModeSwitched = true;
+
+            yield return null;
+        }
     }
 
     private void ResetTouchInput()
