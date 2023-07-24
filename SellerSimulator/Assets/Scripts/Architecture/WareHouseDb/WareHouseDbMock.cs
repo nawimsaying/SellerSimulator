@@ -9,6 +9,7 @@ using static UnityEditor.Progress;
 class WareHouseDbMock : IWareHouseSource
 {
     private static WareHouseDbMock instance;
+    private static ulong currentMaxId = 0;
     public static WareHouseDbMock Instance
     {
         get
@@ -25,6 +26,9 @@ class WareHouseDbMock : IWareHouseSource
     private List<ModelBox> purchasedItems = new List<ModelBox>();
     public void AddPurchasedItem(ModelBox item)
     {
+
+        item.id = ++currentMaxId;
+
         purchasedItems.Add(item);
         Debug.Log("tut");
     }

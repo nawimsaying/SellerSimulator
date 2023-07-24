@@ -54,7 +54,6 @@ public class ScriptBuyFrame : MonoBehaviour
         Debug.Log("Item with id " + idProduct + " clicked");
 
         Debug.Log(_buyFrameRepository.BuyItem(idProduct, 10000));
-
     }
 
     // Update is called once per frame

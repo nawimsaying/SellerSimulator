@@ -9,7 +9,7 @@ namespace Assets.Scripts.Architecture.WareHouseDb
 {
     public class ModelWareHouse
     {
-        public int idBox;
+        public ulong idBox;
         public int idProduct;
         public string sizeBox;
         public int productCount;

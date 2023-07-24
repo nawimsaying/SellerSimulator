@@ -8,7 +8,7 @@ namespace Assets.Scripts.Architecture.MainDb.ModelsDb
 {
     public class ModelBox
     {
-        public int id;
+        public ulong id;
         public string nameBox;
         public string imageBox;
         public int price;
