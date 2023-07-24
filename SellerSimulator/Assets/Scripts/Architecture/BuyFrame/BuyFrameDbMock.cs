@@ -40,8 +40,6 @@ namespace Assets.Scripts.Architecture.MainDB
             wareHouseDbMock.AddPurchasedItem(itemToBuy);
 
             return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
-
-
         }
 
         Result<List<ModelsBuyFrame>> IBuyFrameSource.GetAll()

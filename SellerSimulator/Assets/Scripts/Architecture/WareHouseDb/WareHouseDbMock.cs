@@ -3,13 +3,15 @@ using Assets.Scripts.Architecture.MainDb.ModelsDb;
 using Assets.Scripts.Architecture.WareHouseDb;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using static UnityEditor.Progress;
 
 class WareHouseDbMock : IWareHouseSource
 {
     private static WareHouseDbMock instance;
-    private static ulong currentMaxId = 0;
+    private ulong currentMaxId = 0;
+
     public static WareHouseDbMock Instance
     {
         get
@@ -24,12 +26,27 @@ class WareHouseDbMock : IWareHouseSource
 
     //Лист в котором будет хранится купленные коробки
     private List<ModelBox> purchasedItems = new List<ModelBox>();
+
+
     public void AddPurchasedItem(ModelBox item)
     {
+        currentMaxId++; // Увеличиваем текущий максимальный айдишник на 1
 
-        item.id = ++currentMaxId;
+        // Создаем новый объект ModelBox и копируем данные из переданного объекта item
+        // Затем присваиваем новому товару текущее значение максимального айдишника
+        ModelBox newItem = new ModelBox()
+        {
+            id = currentMaxId,
+            nameBox = item.nameBox,
+            imageBox = item.imageBox,
+            price = item.price,
+            countBox = item.countBox,
+            countProduct = item.countProduct,
+            sizeBox = item.sizeBox,
+            idProduct = item.idProduct,
+        };
 
-        purchasedItems.Add(item);
+        purchasedItems.Add(newItem);
         Debug.Log("tut");
     }
 
