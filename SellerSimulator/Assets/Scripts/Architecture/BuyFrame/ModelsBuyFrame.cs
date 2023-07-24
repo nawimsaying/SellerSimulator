@@ -8,5 +8,4 @@ public class ModelsBuyFrame
     public string productName;
     public int price;
     public string imageName;
-
 }

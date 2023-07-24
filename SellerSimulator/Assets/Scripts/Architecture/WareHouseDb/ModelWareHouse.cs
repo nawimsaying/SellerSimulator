@@ -7,9 +7,13 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.WareHouseDb
 {
-    class ModelWareHouse
+    public class ModelWareHouse
     {
-        public ModelBox idBox; //Попробывать разные реализации
+        public int idBox;
+        public int idProduct;
+        public string sizeBox;
+        public int productCount;
+        public string productName;
 
     }
 }
