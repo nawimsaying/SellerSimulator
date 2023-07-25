@@ -1163,11 +1163,6 @@ MonoBehaviour:
   _canvasAddPrefab: {fileID: 2068052894}
   _canvasMain: {fileID: 1936927433}
   _buttonEdit: {fileID: 211998228}
-  _prefabs:
-  - {fileID: 8818302825640914230, guid: b14bcb9e21a0c62499037580cfdc9818, type: 3}
-  _spawnPosition:
-  - {x: 0.06, y: 0.257, z: 3.9}
-  - {x: 8.02, y: 0.257, z: 3.9}
 --- !u!4 &602097535
 Transform:
   m_ObjectHideFlags: 0
@@ -1446,6 +1441,7 @@ GameObject:
   - component: {fileID: 768252899}
   - component: {fileID: 768252901}
   - component: {fileID: 768252902}
+  - component: {fileID: 768252903}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -1508,6 +1504,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _buttonBox: {fileID: 140581424}
+--- !u!114 &768252903
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 768252898}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e294eafea1e2476ba4cf996ed819182, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _prefabs:
+  - {fileID: 8818302825640914230, guid: b14bcb9e21a0c62499037580cfdc9818, type: 3}
 --- !u!1 &778900257
 GameObject:
   m_ObjectHideFlags: 0
