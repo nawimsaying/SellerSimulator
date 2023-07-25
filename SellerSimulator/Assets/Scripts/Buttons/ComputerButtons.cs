@@ -9,7 +9,7 @@ public class ComputerButtons : MonoBehaviour
 
     [SerializeField] private GameObject _canvasMain;
     [SerializeField] private GameObject _canvasComputer;
-    // Start is called before the first frame update
+
     private void Start()
     {
         _canvasMain.SetActive(true);

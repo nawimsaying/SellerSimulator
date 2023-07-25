@@ -6,13 +6,13 @@ using UnityEngine.EventSystems;
 
 public class DragObject : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 {
-    [SerializeField] private GameObject _prefabToInstantiate; // Префаб для инстанцирования
+    [SerializeField] private GameObject _prefabToInstantiate; // Prefab for instantiation
 
     [NonSerialized] public static bool isDrag = false;
 
     public static GameObject prefabToInstantiate;
 
-    private GameObject _instantiatedPrefab; // Инстанцированный объект префаба
+    private GameObject _instantiatedPrefab; // Instantiated Prefab Object
 
     private void Start()
     {
@@ -20,25 +20,25 @@ public class DragObject : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
             prefabToInstantiate = _prefabToInstantiate;
     }
 
-    // Срабатывает, когда курсор (палец) нажимают на экран
+    // Fires when the cursor (finger) is pressed on the screen
     public void OnPointerDown(PointerEventData eventData)
     {
-        // Установка флага, что кнопка мыши или палец на экране нажата
+        // Setting a flag that the mouse button or finger on the screen is pressed
         isDrag = true;
 
-        // Создание префаба и привязка его к курсору игрока
+        // Creating a prefab and linking it to the player's cursor
         _instantiatedPrefab = Instantiate(_prefabToInstantiate);
 
         UpdatePrefabPosition();
     }
 
-    // Срабатывает, когда курсор (палец) перестают нажимать на экран
+    // Fires when the cursor (finger) stops pressing the screen
     public void OnPointerUp(PointerEventData eventData)
     {
-        // Установка флага, что кнопка мыши или палец на экране отпущены
+        // Setting a flag that the mouse button or finger on the screen is released
         isDrag = false;
 
-        // Уничтожение инстанцированного префаба
+        // Destroying an instantiated prefab
         Destroy(_instantiatedPrefab);
 
         WarehouseMechanics.CheckForObjectInteraction();
@@ -46,29 +46,29 @@ public class DragObject : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     private void Update()
     {
-        // Если кнопка мыши или палец на экране нажата, обновляем позицию префаба
+        // If the mouse button or finger on the screen is pressed, update the position of the prefab
         if (isDrag)
             UpdatePrefabPosition();
     }
 
     private void UpdatePrefabPosition()
     {
-        // Получение позиции курсора или пальца на экране в мировых координатах
+        // Getting the position of the cursor or finger on the screen in world coordinates
         Vector3 _cursorPosition;
 #if UNITY_EDITOR || UNITY_STANDALONE
         _cursorPosition = Input.mousePosition;
 #else
         _cursorPosition = Input.GetTouch(0).position;
 #endif
-        
-        // Преобразование позиции курсора или пальца на экране в позицию в пространстве игры
+
+        // Convert the position of the cursor or finger on the screen to a position in game space
         _cursorPosition = Camera.main.ScreenToWorldPoint(_cursorPosition);
-        // Корректируем координаты префаба так, чтобы игрок держал его посередине
+        // Adjusting the coordinates of the prefab so that the player keeps it in the middle
         _cursorPosition.z = 1;
         _cursorPosition.y = _cursorPosition.y - 1.3f;
         _cursorPosition.x = _cursorPosition.x - 0.55f;
 
-        // Обновление позиции инстанцированного префаба
+        // Update the position of an instantiated prefab
         _instantiatedPrefab.transform.position = _cursorPosition;
     }
 }

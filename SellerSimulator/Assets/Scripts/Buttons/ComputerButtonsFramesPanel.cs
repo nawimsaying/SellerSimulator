@@ -9,7 +9,7 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
     [SerializeField] private GameObject _frameOnSale;
     [SerializeField] private GameObject _frameContracts;
     [SerializeField] private GameObject _frameStats;
-    // Start is called before the first frame update
+
     private void Start()
     {
         _frameBuy.SetActive(true);

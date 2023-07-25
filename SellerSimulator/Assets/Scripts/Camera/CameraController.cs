@@ -21,9 +21,9 @@ public class CameraController : MonoBehaviour
     private Camera _camera;
     private static Transform _cameraRig;
 
-    private Vector3 _position; // Позиция
-    private Quaternion _rotation; // Вращение
-    private Vector3 _localPosition; // Приблежение
+    private Vector3 _position; // Position
+    private Quaternion _rotation; // Rotation
+    private Vector3 _localPosition; // Zoom
 
     private Vector3 _startPosition;
     public static Vector3 startPositionRig;
@@ -54,10 +54,10 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
-        // Сглаживание
+        // Smoothness
         float _lerp = smooth * Time.deltaTime;
 
-        // Проверяем, нажал ли игрок на UI-элемент
+        // Checking if the player clicked on the UI element
         if (!Clicker.isClickerModeEnable)
         {
             if (Input.touchCount > 0 && !_isClickerModeSwitched)
@@ -75,9 +75,9 @@ public class CameraController : MonoBehaviour
 
             if (!isButtonPressed)
             {
-                // Двигаем камеру
+                // Moving the camera
                 Movement();
-                // Если игрок коснулся двумя пальцами, переносим камеру на начальную позицию
+                // If the player touches with two fingers, move the camera to the starting position
                 if (Input.touchCount > 1)
                 {
                     StartCoroutine(MoveCameraToStart(startPositionRig, _lerp));
@@ -85,17 +85,17 @@ public class CameraController : MonoBehaviour
                 }
                 else
                 {
-                    // Сглаживаем движение камеры
+                    // Smoothing out camera movement
                     _cameraRig.position = Vector3.Lerp(_cameraRig.position, _position, _lerp);
                 }
-                // Задаем границы для камеры
+                // Set boundaries for the camera
                 _position.x = Mathf.Clamp(_position.x, _firstBorder, _secondBorder);
                 _position.z = Mathf.Clamp(_position.z, _firstBorder, _secondBorder);
 
 
                 _isClickerModeSwitched = false;
 
-                // Вращаем камеру
+                // Rotate the camera
                 /*Rotation();
                 cameraRig.rotation = Quaternion.Lerp(cameraRig.rotation, rotation, lerp);*/
             }
@@ -179,17 +179,17 @@ public class CameraController : MonoBehaviour
 
     private bool IsTouchOverUIElement(Vector2 touchPosition)
     {
-        // Создаем eventData для проверки пересечения с UI
+        // Create eventData to check for intersection with UI
         PointerEventData _eventData = new PointerEventData(EventSystem.current);
         _eventData.position = touchPosition;
 
-        // Создаем список результатов пересечения
+        // Create a list of intersection results
         var _results = new List<RaycastResult>();
 
-        // Проверяем пересечение луча с UI-элементами
+        // Checking for Ray Intersections with UI Elements
         EventSystem.current.RaycastAll(_eventData, _results);
 
-        // Проверяем, есть ли результаты пересечения с UI-элементами
+        // Checking if there are intersection results with UI elements
         return _results.Count > 0;
     }
 

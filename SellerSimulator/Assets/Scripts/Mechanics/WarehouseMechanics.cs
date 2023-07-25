@@ -7,7 +7,7 @@ public class WarehouseMechanics : MonoBehaviour
 {
     public static void CheckForObjectInteraction()
     {
-        // Получаем позицию касания пальца на сенсорном экране или позицию мыши в пространстве экрана
+        // Get the touch position of the finger on the touch screen or the position of the mouse in screen space
         Vector3 _inputPosition;
 #if UNITY_EDITOR || UNITY_STANDALONE
         _inputPosition = Input.mousePosition;
@@ -15,17 +15,17 @@ public class WarehouseMechanics : MonoBehaviour
         _inputPosition = Input.GetTouch(0).position;
 #endif
 
-        // Преобразуем позицию в мировые координаты
+        // Convert position to world coordinates
         Ray _ray = Camera.main.ScreenPointToRay(_inputPosition);
         RaycastHit _hit;
 
-        // Пускаем луч и проверяем столкновение с коллайдером объекта
+        // Launch the beam and check for collision with the object's collider
         if (Physics.Raycast(_ray, out _hit))
         {
-            // Проверяем, что столкновение произошло с объектом с определенным тэгом
+            // Checking that the collision happened with an object with a specific tag
             if (_hit.collider.CompareTag("SpaceForBox"))
             {
-                // Выполняем нужное действие
+                // Performing the required action
                 SpawnBox(_hit);
             }
         }
@@ -33,7 +33,7 @@ public class WarehouseMechanics : MonoBehaviour
 
     private static void SpawnBox(RaycastHit hit)
     {
-        // Код для выполнения действия
+        // Code to perform an action
         Vector3 _targetPosition = hit.collider.gameObject.transform.position;
 
         GameObject _instantiatedPrefab = Instantiate(DragObject.prefabToInstantiate);

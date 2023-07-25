@@ -11,7 +11,7 @@ public class SceneSettings : MonoBehaviour
 
     private float _fps;
 
-    // Динамическое разрешение
+    // Dynamic Resolution
     private Vector2 _mainResolution;
     private float _currentScale = 1;
     private float _minScale = 0.5f;
@@ -31,10 +31,10 @@ public class SceneSettings : MonoBehaviour
         _minFpsFloat = 1f / (float)_minFps;
         _maxFpsFloat = 1f / (float)_maxFps;
 
-        // По умолчанию отключаем текст с фпс
+        // Turn off text with fps by default
         _fpsText.gameObject.active = false;
 
-        // Устанавливаем пресет графики и ограничение фпс в зависимости от платформы
+        // Set the graphics preset and fps limit depending on the platform
 #if UNITY_EDITOR || UNITY_STANDALONE
         SetTestPreset();
 #else
@@ -44,7 +44,7 @@ public class SceneSettings : MonoBehaviour
 
     private void Update()
     {
-        // Счетчик фпс
+        // FPS counter
         if (_isFpsCounterEnable)
         {
             if (!_fpsText.IsActive())
@@ -59,10 +59,10 @@ public class SceneSettings : MonoBehaviour
                 _fpsText.gameObject.active = false;
         }
 
-        // Динамическое разрешение
+        // Dynamic Resolution
         if (Time.time > _delayTime)
         {
-            // Уменьшение разрешения
+            // Reducing resolution
             if (Time.deltaTime > _minFpsFloat)
             {
                 if (_currentScale > _minScale)
@@ -72,7 +72,7 @@ public class SceneSettings : MonoBehaviour
                     _delayTime = Time.time + _delay;
                 }
             }
-            // Увеличение разрешения
+            // Resolution increase
             /*else if (CurScale < 1 && Time.deltaTime < MaxFPSS)
             {
                 CurScale += ScaleStep;
@@ -92,33 +92,33 @@ public class SceneSettings : MonoBehaviour
             SetNormalPreset();
     }
 
-    // Режим экономии энергии
+    // Energy saving mode
     private static void SetEcoPreset()
     {
-        // Настраиваем максимальный фпс
+        // Setting the maximum fps
         Application.targetFrameRate = 30;
 
-        // Меняем настройки графики
+        // Changing graphics settings
         QualitySettings.SetQualityLevel(0);
     }
 
-    // Обычные игровые настройки без эко режима
+    // Normal gaming settings without eco mode
     private static void SetNormalPreset()
     {
-        // Настраиваем максимальный фпс
+        // Setting the maximum fps
         Application.targetFrameRate = 120;
 
-        // Меняем настройки графики
+        // Changing graphics settings
         QualitySettings.SetQualityLevel(1);
     }
 
-    // Пресет для юнити эдитора (на компе)
+    // Unit editor preset (on a computer)
     private static void SetTestPreset()
     {
-        // Настраиваем максимальный фпс
+        // Setting the maximum fps
         Application.targetFrameRate = 5000;
 
-        // Меняем настройки графики
+        // Changing graphics settings
         QualitySettings.SetQualityLevel(3);
     }
 }

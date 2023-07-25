@@ -12,13 +12,13 @@ public class WarehouseButtons : MonoBehaviour
     [SerializeField] private GameObject[] _prefabs;
     [SerializeField] private Vector3[] _spawnPosition;
 
-    private static string[] _samplingFrame; // Отвечает за то, есть ли на фрейме шаблон или он пустой
+    private static string[] _samplingFrame; // Responsible for whether the frame has a template or is it empty
 
     private static GameObject _buttonEditStatic;
 
-    private bool _isSet = false; // Нужна чтобы отслеживать, инициализировался ли массив _isSamplingFrame
+    private bool _isSet = false; // Needed to keep track of whether the _isSamplingFrame array has been initialized
 
-    private List<string> _namesOfSamples = new List<string>() { "rack", "pallet" }; // Лист со стринговыми зазваниями шаблонов
+    private List<string> _namesOfSamples = new List<string>() { "rack", "pallet" }; // Template string name sheet
 
     private void Start()
     {
@@ -32,28 +32,28 @@ public class WarehouseButtons : MonoBehaviour
         _buttonEditStatic = _buttonEdit;
     }
 
-    // Отвечает за нажатие кнопки плюс
+    // Responsible for pressing the plus button
     public void OpenCanvasAddPrefab()
     {
         _canvasMain.SetActive(false);
         _canvasAddPrefab.SetActive(true);
     }
 
-    // Закрывает канвас с шаблонами
+    // Closes the canvas with templates
     public void CloseCanvasAddPrefab()
     {
         _canvasMain.SetActive(true);
         _canvasAddPrefab.SetActive(false);
     }
 
-    // Спавним шаблон
+    // Spawn Template
     public void CreateSample(int idSample)
     {
         if (_samplingFrame[CameraWarehouse.GetCameraPosition()] == "none")
         {
             Instantiate(_prefabs[idSample], _spawnPosition[CameraWarehouse.GetCameraPosition()], Quaternion.Euler(0f, -90f, 0f));
 
-            // Указываем, что в данном фрейме уже находится какой-то шаблон
+            // Indicate that there is already some template in this frame
             if (idSample == 0)
                 _samplingFrame[CameraWarehouse.GetCameraPosition()] = _namesOfSamples[0];
             else if (idSample == 1)
@@ -65,7 +65,7 @@ public class WarehouseButtons : MonoBehaviour
             Debug.Log("This frame already has a template installed.");
     }
 
-    // Инициализируем массив с шаблонами с помощью куратины
+    // We initialize an array with templates using Curatin
     private IEnumerator SetValueSamplingFrame()
     {
         while (CameraWarehouse.countOfFrames == 0)
@@ -73,9 +73,9 @@ public class WarehouseButtons : MonoBehaviour
 
         _samplingFrame = new string[CameraWarehouse.countOfFrames];
 
-        // Костыль - при выходе игрока из этой сцены должно запоминаться расположение его шаблонов на фреймах
-        // и при следующем переключении на эту сцену в массиве isSamplingFrame должны быть кастомные значения
-        // Пока заполняем массив значениями False, которые означают, что в фреймах нет шаблонов
+        // Crutch - when the player exits this scene, the location of his templates on the frames should be remembered
+        // and the next time you switch to this scene, the isSamplingFrame array should have custom values
+        // While filling the array with False values, which means that there are no templates in the frames
         for (int i = 0; i < _samplingFrame.Length; i++)
             _samplingFrame[i] = "none";
 

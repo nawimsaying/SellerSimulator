@@ -51,7 +51,7 @@ public class Clicker : MonoBehaviour
             ToggleOff();
     }
 
-    // Логика, когда игрок включил режим кликера
+    // Logic when the player has enabled clicker mode
     private void ToggleOn()
     {
         isClickerModeEnable = true;
@@ -59,7 +59,7 @@ public class Clicker : MonoBehaviour
         _canvas.SetActive(false);
     }
 
-    // Логика, когда игрок выключил режим кликера
+    // Logic when player turned off clicker mode
     private void ToggleOff()
     {
         _canvas.SetActive(true);
