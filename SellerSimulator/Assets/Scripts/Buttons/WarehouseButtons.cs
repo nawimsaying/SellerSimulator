@@ -21,7 +21,7 @@ public class WarehouseButtons : MonoBehaviour
 
         _buttonEditStatic = _buttonEdit;
 
-        _samplesController = new SamplesController();
+        _samplesController = SamplesController.Instance;
     }
 
     // Responsible for pressing the plus button

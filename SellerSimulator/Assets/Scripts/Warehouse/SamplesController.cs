@@ -5,6 +5,20 @@ using UnityEngine;
 
 public class SamplesController : MonoBehaviour
 {
+    private static SamplesController _instance;
+
+    public static SamplesController Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                _instance = FindObjectOfType<SamplesController>();
+            }
+            return _instance;
+        }
+    }
+
     public class RackSample : MonoBehaviour
     {
         public int idFrame;
@@ -36,7 +50,7 @@ public class SamplesController : MonoBehaviour
     private List<RackSample> _rackSamplesList = new List<RackSample>();
 
     private void Start()
-    { 
+    {
         _prefabsStatic = _prefabs;
 
         StartCoroutine(SetValueSamplingFrame());

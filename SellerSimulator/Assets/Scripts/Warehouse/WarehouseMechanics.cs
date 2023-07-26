@@ -39,7 +39,7 @@ public class WarehouseMechanics : MonoBehaviour
         GameObject instantiatedPrefab = Instantiate(DragObject.prefabToInstantiate);
         GameObject spaceForBox = hit.collider.gameObject;
 
-        SamplesController samplesController = new SamplesController();
+        SamplesController samplesController = SamplesController.Instance;
 
         string spaceForBoxName = spaceForBox.name;
 
