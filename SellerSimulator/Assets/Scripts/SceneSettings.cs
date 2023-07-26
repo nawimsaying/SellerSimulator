@@ -7,7 +7,7 @@ public class SceneSettings : MonoBehaviour
 {
     [SerializeField] private Text _fpsText;
     [SerializeField] private bool _isFpsCounterEnable;
-    [SerializeField] private Text screenText;
+    [SerializeField] private Text _screenText;
 
     private float _fps;
 
@@ -58,7 +58,7 @@ public class SceneSettings : MonoBehaviour
             if (_fpsText.IsActive())
                 _fpsText.gameObject.active = false;
         }
-
+        
         // Dynamic Resolution
         if (Time.time > _delayTime)
         {
@@ -81,7 +81,7 @@ public class SceneSettings : MonoBehaviour
             }*/
             _delayTime = Time.time + 0.5f;
         }
-        screenText.text = "MainRes: " + _mainResolution + "X: " + Screen.width + " / Y: " + Screen.height + " / CurScale " + _currentScale + " / ";
+        _screenText.text = "MainRes: " + _mainResolution + "X: " + Screen.width + " / Y: " + Screen.height + " / CurScale " + _currentScale + " / ";
     }
 
     public static void ChangeGraphicSettings(bool isEcoModeEnable)

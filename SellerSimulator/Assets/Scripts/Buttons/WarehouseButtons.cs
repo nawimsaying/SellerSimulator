@@ -2,15 +2,19 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Security.Cryptography;
+using Assets.Scripts.Architecture.WareHouseDb;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class WarehouseButtons : MonoBehaviour
 {
     [SerializeField] private GameObject _canvasAddPrefab;
     [SerializeField] private GameObject _canvasMain;
     [SerializeField] private GameObject _buttonEdit;
+    [SerializeField] private GameObject _spriteSmallBox;
 
     private static GameObject _buttonEditStatic;
+    private static GameObject _spriteSmallBoxStatic;
 
     private SamplesController _samplesController;
 
@@ -22,6 +26,8 @@ public class WarehouseButtons : MonoBehaviour
         _buttonEditStatic = _buttonEdit;
 
         _samplesController = SamplesController.Instance;
+
+        _spriteSmallBoxStatic = _spriteSmallBox;
     }
 
     // Responsible for pressing the plus button
@@ -42,5 +48,26 @@ public class WarehouseButtons : MonoBehaviour
     public void CreateSample(int idSample)
     {
         _samplesController.CreateSample(idSample);
+    }
+
+    public static void SpawnBoxesInToolBar()
+    {
+        if (WarehouseData.smallBoxes > 0 && !_spriteSmallBoxStatic.activeSelf)
+        {
+            _spriteSmallBoxStatic.SetActive(true);
+        }
+        else if (WarehouseData.smallBoxes == 0 && _spriteSmallBoxStatic.activeSelf)
+        {
+            _spriteSmallBoxStatic.SetActive(false);
+        }
+
+        if (WarehouseData.bigBoxes > 0)
+        {
+            // _spriteBigBoxStatic.SetActive(true);
+        }
+        else if (WarehouseData.bigBoxes == 0)
+        {
+            // _spriteBigBoxStatic.SetActive(false);
+        }
     }
 }

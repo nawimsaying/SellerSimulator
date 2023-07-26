@@ -29,6 +29,10 @@ public class WarehouseMechanics : MonoBehaviour
             {
                 // Performing the required action
                 SpawnBox(_hit);
+
+                // Hiding a sprite with a box (if there are zero)
+                WarehouseData.smallBoxes--;
+                WarehouseButtons.SpawnBoxesInToolBar();
             }
         }
     }

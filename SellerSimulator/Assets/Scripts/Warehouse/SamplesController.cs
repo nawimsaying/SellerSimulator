@@ -43,23 +43,16 @@ public class SamplesController : MonoBehaviour
 
     private Vector3[] _spawnPosition = new Vector3[2] { new Vector3(0.09f, 0.27f, 3.94f), new Vector3(8f, 0.27f, 3.94f) };
 
-    private static string[] _samplingFrame; // Responsible for whether the frame has a template or is it empty
-
-    private List<string> _namesOfSamples = new List<string>() { "rack", "pallet" }; // Template string name sheet
-
     private List<RackSample> _rackSamplesList = new List<RackSample>();
 
     private void Start()
     {
         _prefabsStatic = _prefabs;
-
-        StartCoroutine(SetValueSamplingFrame());
-        _samplingFrame = new string[CameraWarehouse.countOfFrames];
     }
 
     public void CreateSample(int idSample)
     {
-        if (_samplingFrame[CameraWarehouse.GetCameraPosition()] == "none")
+        if (!CheckFrameOnSamples())
         {
             Instantiate(_prefabsStatic[idSample], _spawnPosition[CameraWarehouse.GetCameraPosition()], Quaternion.Euler(0f, -90f, 0f));
 
@@ -68,9 +61,6 @@ public class SamplesController : MonoBehaviour
             {
                 int currentPosition = CameraWarehouse.GetCameraPosition();
 
-                // Spawn sample
-                _samplingFrame[currentPosition] = _namesOfSamples[0];
-
                 // Create an array for the rack
                 RackSample newRackSample = new RackSample(currentPosition);
                 _rackSamplesList.Add(newRackSample);
@@ -78,15 +68,10 @@ public class SamplesController : MonoBehaviour
             else if (idSample == 1) // Pallet
             {
                 int currentPosition = CameraWarehouse.GetCameraPosition();
-
-                // Spawn sample
-                _samplingFrame[currentPosition] = _namesOfSamples[1];
             }
-
-            Debug.Log("Set sample - " + _samplingFrame[CameraWarehouse.GetCameraPosition()]);
         }
         else
-            Debug.Log("This frame already has a template installed.");
+            Debug.LogError("This frame already has a template installed.");
     }
 
     public void SetBox(int indexOfPlace)
@@ -94,25 +79,28 @@ public class SamplesController : MonoBehaviour
         int currentPosition = CameraWarehouse.GetCameraPosition();
 
         // Write down on the sheet where the box was placed
-        _rackSamplesList[0].rackSample[indexOfPlace] = 1;
+        _rackSamplesList[currentPosition].rackSample[indexOfPlace] = 1;
+
+        Debug.Log("SetBox - Success!");
 
         // You still need to make these changes in memory and remember
     }
 
-    // We initialize an array with templates using Curatin
-    private IEnumerator SetValueSamplingFrame()
+    private bool CheckFrameOnSamples()
     {
-        while (CameraWarehouse.countOfFrames == 0)
-            yield return null;
+        int currentPosition = CameraWarehouse.GetCameraPosition();
 
-        _samplingFrame = new string[CameraWarehouse.countOfFrames];
+        if (_rackSamplesList.Count > 0)
+        {
+            for (int i = 0; i < _rackSamplesList.Count; i++)
+            {
+                if (_rackSamplesList[i].idFrame == currentPosition)
+                    return true;
+            }
+        }
 
-        // Crutch - when the player exits this scene, the location of his templates on the frames should be remembered
-        // and the next time you switch to this scene, the isSamplingFrame array should have custom values
-        // While filling the array with False values, which means that there are no templates in the frames
-        for (int i = 0; i < _samplingFrame.Length; i++)
-            _samplingFrame[i] = "none";
+        // Check big boxes list...
 
-        Debug.Log("SF: " + _samplingFrame[0] + " " + _samplingFrame[1]);
+        return false;
     }
 }
