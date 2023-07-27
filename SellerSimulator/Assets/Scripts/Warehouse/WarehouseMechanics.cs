@@ -3,10 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
+using UnityEngine.UI;
 
 public class WarehouseMechanics : MonoBehaviour
 {
-    public static void CheckForObjectInteraction()
+    [SerializeField] private Text _textSmallBox;
+
+    private void FixedUpdate()
+    {
+        int data = SaveLoadManager.LoadData<int>("smallBoxes");
+        if (data != 0)
+            _textSmallBox.text = Convert.ToString(data);
+    }
+
+    public void CheckForObjectInteraction()
     {
         // Get the touch position of the finger on the touch screen or the position of the mouse in screen space
         Vector3 _inputPosition;
@@ -30,9 +40,13 @@ public class WarehouseMechanics : MonoBehaviour
                 // Performing the required action
                 SpawnBox(_hit);
 
-                // Hiding a sprite with a box (if there are zero)
-                WarehouseData.smallBoxes--;
-                WarehouseButtons.SpawnBoxesInToolBar();
+                // Update count of boxes in tool bar
+                int smallBoxes = PlayerPrefs.GetInt("smallBoxes");
+                smallBoxes--;
+                PlayerPrefs.SetInt("smallBoxes", smallBoxes);
+
+                WarehouseButtons warehouseButtons = new WarehouseButtons();
+                warehouseButtons.SpawnBoxesInToolBar();
             }
         }
     }
