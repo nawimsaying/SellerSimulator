@@ -1,5 +1,6 @@
 using Assets.Scripts.Architecture.MainDB;
 using Assets.Scripts.Architecture.WareHouseDb;
+using Assets.Scripts.Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,8 +21,10 @@ public static class ButtonExtension
 
 public class ScriptBuyFrame : MonoBehaviour
 {
-    public BuyFrameRepository _buyFrameRepository;
+    private BuyFrameRepository _buyFrameRepository;
     public WareHouseRepository _test;
+
+    public PlayerData playerData;
 
     void Start()
     {
@@ -52,9 +55,11 @@ public class ScriptBuyFrame : MonoBehaviour
     void ItemClicked(int idProduct, Button button)
     {
 
+        playerData = PlayerDataHolder.playerData;
+
         Debug.Log("Item with id " + idProduct + " clicked");
 
-        Debug.Log(_buyFrameRepository.BuyItem(idProduct, 10000));
+        Debug.Log(_buyFrameRepository.BuyItem(idProduct, playerData.Coins));
 
         _test = new WareHouseRepository(WareHouseDbMock.Instance);
 
