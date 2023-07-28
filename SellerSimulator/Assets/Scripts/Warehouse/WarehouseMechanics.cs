@@ -11,7 +11,7 @@ public class WarehouseMechanics : MonoBehaviour
 
     private void FixedUpdate()
     {
-        int data = SaveLoadManager.LoadData<int>("smallBoxes");
+        int data = PlayerPrefs.GetInt("smallBoxes");
         if (data != 0)
             _textSmallBox.text = Convert.ToString(data);
     }
@@ -44,6 +44,12 @@ public class WarehouseMechanics : MonoBehaviour
                 int smallBoxes = PlayerPrefs.GetInt("smallBoxes");
                 smallBoxes--;
                 PlayerPrefs.SetInt("smallBoxes", smallBoxes);
+
+                ToolBarList _toolBarList = SaveLoadManager.Load("toolBarList");
+                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[0]);
+                WarehouseData warehouseData = new WarehouseData();
+                var item = warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList);
+                SaveLoadManager.Save("toolBarList", warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList));
 
                 WarehouseButtons warehouseButtons = new WarehouseButtons();
                 warehouseButtons.SpawnBoxesInToolBar();
