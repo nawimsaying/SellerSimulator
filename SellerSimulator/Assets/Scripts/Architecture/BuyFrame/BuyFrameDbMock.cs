@@ -45,6 +45,7 @@ namespace Assets.Scripts.Architecture.MainDB
                 int newMoney = money - itemToBuy.price;
 
                 PlayerPrefs.SetInt("Coins", newMoney);
+               
                 // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
                 wareHouseDbMock.AddPurchasedItem(itemToBuy);
                 playerData.SetCoins(newMoney);
