@@ -50,22 +50,25 @@ public class WarehouseButtons : MonoBehaviour
         _samplesController.CreateSample(idSample);
     }
 
-    public static void SpawnBoxesInToolBar()
+    public void SpawnBoxesInToolBar()
     {
-        if (WarehouseData.smallBoxes > 0 && !_spriteSmallBoxStatic.activeSelf)
+        int smallBoxes = PlayerPrefs.GetInt("smallBoxes");
+        int bigBoxes = PlayerPrefs.GetInt("bigBoxes");
+
+        if (smallBoxes > 0 && !_spriteSmallBoxStatic.activeSelf)
         {
             _spriteSmallBoxStatic.SetActive(true);
         }
-        else if (WarehouseData.smallBoxes == 0 && _spriteSmallBoxStatic.activeSelf)
+        else if (smallBoxes == 0 && _spriteSmallBoxStatic.activeSelf)
         {
             _spriteSmallBoxStatic.SetActive(false);
         }
 
-        if (WarehouseData.bigBoxes > 0)
+        if (bigBoxes > 0)
         {
             // _spriteBigBoxStatic.SetActive(true);
         }
-        else if (WarehouseData.bigBoxes == 0)
+        else if (bigBoxes == 0)
         {
             // _spriteBigBoxStatic.SetActive(false);
         }

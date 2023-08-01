@@ -40,7 +40,8 @@ public class DragObject : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
         // Destroying an instantiated prefab
         Destroy(_instantiatedPrefab);
 
-        WarehouseMechanics.CheckForObjectInteraction();
+        WarehouseMechanics warehouseMechanics = new WarehouseMechanics();
+        warehouseMechanics.CheckForObjectInteraction();
     }
 
     private void Update()
