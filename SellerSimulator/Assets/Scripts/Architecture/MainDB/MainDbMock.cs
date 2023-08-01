@@ -15,9 +15,10 @@ namespace Assets.Scripts.Architecture.MainDb
         {
             new ModelBox()
             {
+                id =1,
                 nameBox = "Коробка с Кнопочным телефоном",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 20,
                 sizeBox = "Small",
@@ -32,6 +33,7 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 2,
                 nameBox = "Коробка со Флешками",
                 imageBox = "png file",
                 price = 1200,
@@ -49,9 +51,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 3,
                 nameBox = "Коробка с Клавиатурой",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 10,
                 sizeBox = "Small",
@@ -67,9 +70,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 4,
                 nameBox = "Коробка с Кубиком Рубика",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 30,
                 sizeBox = "Small",
@@ -84,9 +88,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 5,
                 nameBox = "Коробка с Обычными Часами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 30,
                 sizeBox = "Small",
@@ -101,9 +106,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 6,
                 nameBox = "Коробка с Маленькими Колонками",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 20,
                 sizeBox = "Small",
@@ -119,9 +125,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 7,
                 nameBox = "Коробка со Флешками",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 100,
                 sizeBox = "Small",
@@ -136,9 +143,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 8,
                 nameBox = "Коробка с Андроидами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 20,
                 sizeBox = "Small",
@@ -154,9 +162,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 9,
                 nameBox = "Коробка с Обычными ноутами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 10,
                 sizeBox = "Small",
@@ -172,9 +181,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 10,
                 nameBox = "Коробка с Квадратными телевизорами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -190,9 +200,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 11,
                 nameBox = "Коробка со Флешками",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 100,
                 sizeBox = "Small",
@@ -208,9 +219,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 12,
                 nameBox = "Коробка с Обычными компьютерами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -225,9 +237,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
              new ModelBox()
             {
+                id= 13,
                 nameBox = "Коробка с Дешевыми микроволновками",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -243,10 +256,11 @@ namespace Assets.Scripts.Architecture.MainDb
 
 
             new ModelBox()
-            {
+            { 
+                id= 14,
                 nameBox = "Коробка с Сенсорнами часами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 30,
                 sizeBox = "Small",
@@ -263,9 +277,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 15,
                 nameBox = "Коробка с Наушниками беспроводными",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 20,
                 sizeBox = "Small",
@@ -281,9 +296,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 16,
                 nameBox = "Коробка с Обычными телевизорами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -299,9 +315,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 17,
                 nameBox = "Коробка с Полу-Игровыми компьютерами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -318,9 +335,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 18,
                 nameBox = "Коробка с Холодильниками",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -335,9 +353,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 19,
                 nameBox = "Коробка с Айфонами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 20,
                 sizeBox = "Small",
@@ -354,9 +373,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 20,
                 nameBox = "Коробка со Стиральными Машинами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -372,9 +392,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 21,
                 nameBox = "Коробка с Игровыми Наушниками",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 20,
                 sizeBox = "Small",
@@ -390,9 +411,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 22,
                 nameBox = "Коробка с Большими Колонками",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -407,9 +429,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 23,
                 nameBox = "Коробка с Дорогими клавиатурами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 10,
                 sizeBox = "Small",
@@ -424,9 +447,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 24,
                 nameBox = "Коробка с Дорогими микроволновками",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -442,9 +466,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 25,
                 nameBox = "Коробка с Игровыми ноутбуками",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 10,
                 sizeBox = "Small",
@@ -460,9 +485,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 26,
                 nameBox = "Коробка с Игровыми Компьютерами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -478,9 +504,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 27,
                 nameBox = "Коробка с Большой плазмой",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 5,
                 sizeBox = "Big",
@@ -496,9 +523,10 @@ namespace Assets.Scripts.Architecture.MainDb
 
             new ModelBox()
             {
+                id = 28,       
                 nameBox = "Коробка с Золотыми Часами",
                 imageBox = "png file",
-                price = 120000,
+                price = 1200,
                 countBox = RIGINALLY_COUNT_BOX,
                 countProduct = 30,
                 sizeBox = "Small",

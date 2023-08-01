@@ -1,6 +1,7 @@
 using Assets.Scripts.Architecture;
 using Assets.Scripts.Architecture.MainDb.ModelsDb;
 using Assets.Scripts.Architecture.WareHouseDb;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,16 +25,28 @@ class WareHouseDbMock : IWareHouseSource
         }
     }
 
-    //Лист в котором будет хранится купленные коробки
+    //пїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
     private List<ModelBox> purchasedItems = new List<ModelBox>();
 
 
     public void AddPurchasedItem(ModelBox item)
     {
-        currentMaxId++; // Увеличиваем текущий максимальный айдишник на 1
+        if (PlayerPrefs.HasKey("CurrentMaxId"))
+        {
+            string savedValue = PlayerPrefs.GetString("CurrentMaxId");
+            if (ulong.TryParse(savedValue, out ulong loadedValue))
+            {
+                currentMaxId = loadedValue;
+            }
+        }
 
-        // Создаем новый объект ModelBox и копируем данные из переданного объекта item
-        // Затем присваиваем новому товару текущее значение максимального айдишника
+        currentMaxId++; // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ 1
+
+        PlayerPrefs.SetString("CurrentMaxId", currentMaxId.ToString());
+        PlayerPrefs.Save();
+
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ ModelBox пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ item
+        // пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         ModelBox newItem = new ModelBox()
         {
             id = currentMaxId,
