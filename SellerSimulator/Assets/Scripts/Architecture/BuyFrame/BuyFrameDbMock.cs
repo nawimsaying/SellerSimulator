@@ -50,6 +50,8 @@ namespace Assets.Scripts.Architecture.MainDB
                 wareHouseDbMock.AddPurchasedItem(itemToBuy);
                 playerData.SetCoins(newMoney);
 
+                playerData.AddExperience(500);
+
                 return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
             }
             else
@@ -75,7 +77,8 @@ namespace Assets.Scripts.Architecture.MainDB
                     idProduct = modelBox.idProduct.id,
                     productName = modelBox.idProduct.name,
                     price = modelBox.price,
-                    imageName = modelBox.idProduct.imageName
+                    imageName = modelBox.idProduct.imageName,
+                    levelUnlock = modelBox.idProduct.lvlUnlock
                 };
 
 
