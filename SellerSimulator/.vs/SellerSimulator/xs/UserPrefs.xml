@@ -1,17 +1,16 @@
 ﻿<Properties StartupConfiguration="{F7834D67-FF7A-60B2-2C0B-4EE742D3026B}|">
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="ebd04a54-0cfe-4101-859a-9aaed93de1aa" />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/SaveLoadManager.cs">
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="dd63d144-64a5-4f1b-bcb1-545c72d69816" />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Architecture/BuyFrame/BuyFrameDbMock.cs">
     <Files>
-      <File FileName="Assets/Scripts/Warehouse/WarehouseData.cs" Line="45" Column="1" />
-      <File FileName="Assets/Scripts/SaveLoadManager.cs" Line="85" Column="1" />
-      <File FileName="Assets/Scripts/Warehouse/WarehouseMechanics.cs" Line="47" Column="1" />
-      <File FileName="Assets/Scripts/SaveLoadData/SetedList.cs" Line="5" Column="1" />
-      <File FileName="Assets/Scripts/SaveLoadData/ToolBarList.cs" Line="10" Column="1" />
-      <File FileName="Assets/Scripts/Warehouse/SamplesController.cs" Line="49" Column="1" />
-      <File FileName="Assets/Scripts/Warehouse/DragObject.cs" Line="44" Column="35" />
-      <File FileName="Assets/Scripts/Buttons/WarehouseButtons.cs" Line="53" Column="17" />
-      <File FileName="Assets/Scripts/Camera/CameraWarehouse.cs" Line="43" Column="1" />
+      <File FileName="Assets/Scripts/Warehouse/SamplesController.cs" />
+      <File FileName="Assets/Scripts/Warehouse/WarehouseData.cs" />
+      <File FileName="Assets/Scripts/Warehouse/WarehouseMechanics.cs" />
+      <File FileName="Assets/Scripts/Buttons/WarehouseButtons.cs" />
+      <File FileName="Assets/Scripts/Warehouse/DragObject.cs" />
+      <File FileName="Assets/Scripts/SceneSettings.cs" Line="10" Column="47" />
+      <File FileName="Assets/Scripts/Camera/CameraController.cs" />
+      <File FileName="Assets/Scripts/ComputerMechanics/ScriptBuyFrame.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Architecture/BuyFrame/BuyFrameDbMock.cs" Line="48" Column="16" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -19,12 +18,13 @@
           <Node name="SellerSimulator" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="Architecture" expanded="True" />
+                <Node name="Architecture" expanded="True">
+                  <Node name="BuyFrame" expanded="True" />
+                </Node>
                 <Node name="Buttons" expanded="True" />
                 <Node name="Camera" expanded="True" />
-                <Node name="SaveLoadData" expanded="True" />
+                <Node name="ComputerMechanics" expanded="True" />
                 <Node name="Warehouse" expanded="True" />
-                <Node name="SaveLoadManager.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -32,12 +32,10 @@
       </Pad>
     </Pads>
   </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.Breakpoints>
-    <BreakpointStore>
-      <Breakpoint file="/Users/yranidrop/Documents/GitHub/SellerSimulator/SellerSimulator/Assets/Scripts/Warehouse/WarehouseData.cs" relfile="Assets/Scripts/Warehouse/WarehouseData.cs" line="101" column="1" />
-      <Breakpoint file="/Users/yranidrop/Documents/GitHub/SellerSimulator/SellerSimulator/Assets/Scripts/Warehouse/WarehouseData.cs" relfile="Assets/Scripts/Warehouse/WarehouseData.cs" line="45" column="1" />
-    </BreakpointStore>
-  </MonoDevelop.Ide.DebuggingService.Breakpoints>
-  <MultiItemStartupConfigurations />
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
 </Properties>

@@ -81,7 +81,7 @@ public class SceneSettings : MonoBehaviour
             }*/
             _delayTime = Time.time + 0.5f;
         }
-        _screenText.text = "MainRes: " + _mainResolution + "X: " + Screen.width + " / Y: " + Screen.height + " / CurScale " + _currentScale + " / ";
+        //_screenText.text = "MainRes: " + _mainResolution + "X: " + Screen.width + " / Y: " + Screen.height + " / CurScale " + _currentScale + " / ";
     }
 
     public static void ChangeGraphicSettings(bool isEcoModeEnable)

@@ -8,6 +8,8 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using Assets.Scripts.Architecture.WareHouseDb;
 using Assets.Scripts.Architecture.MainDb.ModelsDb;
+using Assets.Scripts.Player;
+using UnityEngine;
 
 namespace Assets.Scripts.Architecture.MainDB
 {
@@ -17,12 +19,14 @@ namespace Assets.Scripts.Architecture.MainDB
 
         private MainDbMock mainDbMock;
         private WareHouseDbMock wareHouseDbMock;
+        private PlayerData playerData;
 
 
         public BuyFrameDbMock()
         {
             mainDbMock = new MainDbMock();
             wareHouseDbMock = WareHouseDbMock.Instance;
+            playerData = PlayerDataHolder.playerData;
         }
 
 
@@ -36,10 +40,26 @@ namespace Assets.Scripts.Architecture.MainDB
                 return Result<string>.Error("Item with the specified ID was not found.");
             }
 
-            // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
-            wareHouseDbMock.AddPurchasedItem(itemToBuy);
+            if(money >= itemToBuy.price)
+            {
+                int newMoney = money - itemToBuy.price;
 
-            return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
+                PlayerPrefs.SetInt("Coins", newMoney);
+               
+                // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
+                wareHouseDbMock.AddPurchasedItem(itemToBuy);
+                playerData.SetCoins(newMoney);
+
+                playerData.AddExperience(500);
+
+                return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
+            }
+            else
+            {
+                return Result<string>.Success($"Не достаточно средств");
+            }
+
+         
         }
 
         Result<List<ModelsBuyFrame>> IBuyFrameSource.GetAll()
@@ -57,7 +77,8 @@ namespace Assets.Scripts.Architecture.MainDB
                     idProduct = modelBox.idProduct.id,
                     productName = modelBox.idProduct.name,
                     price = modelBox.price,
-                    imageName = modelBox.idProduct.imageName
+                    imageName = modelBox.idProduct.imageName,
+                    levelUnlock = modelBox.idProduct.lvlUnlock
                 };
 
 
