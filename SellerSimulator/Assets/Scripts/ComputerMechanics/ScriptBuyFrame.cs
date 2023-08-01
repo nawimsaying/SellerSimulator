@@ -22,21 +22,25 @@ public static class ButtonExtension
 public class ScriptBuyFrame : MonoBehaviour
 {
     private BuyFrameRepository _buyFrameRepository;
-    private WareHouseRepository _test;
+    private WareHouseRepository _test; // используетс€ дл€ временных тестов  
     private PlayerData _playerData;
-    private List<int> displayedProductIds = new List<int>();
+    private List<int> displayedProductIds = new List<int>(); // Ћист дл€ запоминани€ айди который уже отображены на дисплеи
     private int _tempLevelUser;
-    private bool _deletedDemoItem;
+    private bool _deletedDemoItem; //ѕеременна€ служающа€ дл€ понимани€, удален ли изначальный макет item или нет
+    [SerializeField] private GameObject _unavailableItem; //Ќедоступный product дл€ user
 
 
     void Start()
     {
+        _unavailableItem.SetActive(false);
         _buyFrameRepository = new BuyFrameRepository(new BuyFrameDbMock());
         _playerData = PlayerDataHolder.playerData;
 
         _tempLevelUser = _playerData.Level;
 
         DisplayProduct();
+
+        _unavailableItem.transform.SetAsLastSibling();
     }
 
     void Update()
@@ -44,13 +48,13 @@ public class ScriptBuyFrame : MonoBehaviour
         if(_playerData.Level > _tempLevelUser)
         {
             DisplayProduct();
+            _unavailableItem.transform.SetAsLastSibling();
             _tempLevelUser = _playerData.Level;
         }
     }
 
-    void DisplayProduct()
+    void DisplayProduct() 
     {
-
         List<ModelsBuyFrame> allItems = _buyFrameRepository.GetAll();
 
         GameObject itemProduct = transform.GetChild(0).gameObject;
@@ -60,6 +64,7 @@ public class ScriptBuyFrame : MonoBehaviour
         {
             if (_playerData.Level >= allItems[i].levelUnlock && !displayedProductIds.Contains(allItems[i].idProduct))
             {
+
                 element = Instantiate(itemProduct, transform);
 
                 // ”становка спрайта
@@ -70,6 +75,9 @@ public class ScriptBuyFrame : MonoBehaviour
                 element.transform.GetChild(3).GetComponent<Button>().AddEventListener(allItems[i].idProduct, ItemClicked);
 
                 displayedProductIds.Add(allItems[i].idProduct);
+            }else if (i == allItems.Count - 1)
+            {
+                _unavailableItem.SetActive(true);
             }
         }
 
@@ -97,9 +105,4 @@ public class ScriptBuyFrame : MonoBehaviour
 
     }
 
-
-
-
-    // Update is called once per frame
-    
 }
