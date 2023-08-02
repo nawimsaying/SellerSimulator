@@ -31,7 +31,7 @@ public class WarehouseData : MonoBehaviour
         // Search new boxes
         List<ModelWareHouse> newBoxesList = SearchNewBoxes(_wareHouseRepositories);
         // Load old boxes in tool bar
-        ToolBarList oldToolBarData = SaveLoadManager.Load("toolBarList");
+        ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList("toolBarList");
         // Concat old boxes with new boxes
         List<ModelWareHouse> newToolBarData;
         if (oldToolBarData.toolBarList != null)
@@ -40,7 +40,7 @@ public class WarehouseData : MonoBehaviour
             newToolBarData = newBoxesList;
         // Save new boxes in tool bar
 
-        SaveLoadManager.Save("toolBarList", GetSaveSnapshotToolBarList(newToolBarData));
+        SaveLoadManager.SaveToolBarList("toolBarList", GetSaveSnapshotToolBarList(newToolBarData));
 
         SortBoxesBySize(newToolBarData);
         Debug.Log("Ended!");
@@ -79,7 +79,7 @@ public class WarehouseData : MonoBehaviour
     private List<ModelWareHouse> SearchNewBoxes(List<ModelWareHouse> allData)
     {
         var oldSetedData = SaveLoadManager.LoadData<List<ModelWareHouse>>("setedList");
-        ToolBarList oldToolBarData = SaveLoadManager.Load("toolBarList");
+        ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList("toolBarList");
 
         if (oldSetedData.Count > 0)
         {

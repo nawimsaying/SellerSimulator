@@ -37,19 +37,20 @@ public class WarehouseMechanics : MonoBehaviour
             // Checking that the collision happened with an object with a specific tag
             if (_hit.collider.CompareTag("SpaceForBox"))
             {
-                // Performing the required action
-                SpawnBox(_hit);
-
                 // Update count of boxes in tool bar
                 int smallBoxes = PlayerPrefs.GetInt("smallBoxes");
                 smallBoxes--;
                 PlayerPrefs.SetInt("smallBoxes", smallBoxes);
 
-                ToolBarList _toolBarList = SaveLoadManager.Load("toolBarList");
+                ToolBarList _toolBarList = SaveLoadManager.LoadToolBarList("toolBarList");
+                ulong idBox = _toolBarList.toolBarList[0].idBox;
                 _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[0]);
                 WarehouseData warehouseData = new WarehouseData();
                 var item = warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList);
-                SaveLoadManager.Save("toolBarList", warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList));
+                SaveLoadManager.SaveToolBarList("toolBarList", warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList));
+
+                // Performing the required action
+                SpawnBox(_hit, idBox);
 
                 WarehouseButtons warehouseButtons = new WarehouseButtons();
                 warehouseButtons.SpawnBoxesInToolBar();
@@ -57,13 +58,13 @@ public class WarehouseMechanics : MonoBehaviour
         }
     }
 
-    private static void SpawnBox(RaycastHit hit)
+    private static void SpawnBox(RaycastHit hit, ulong idBox)
     {
         // Code to perform an action
         GameObject instantiatedPrefab = Instantiate(DragObject.prefabToInstantiate);
         GameObject spaceForBox = hit.collider.gameObject;
 
-        SamplesController samplesController = SamplesController.Instance;
+        SamplesController samplesController = new SamplesController();
 
         string spaceForBoxName = spaceForBox.name;
 
@@ -71,7 +72,7 @@ public class WarehouseMechanics : MonoBehaviour
 
         int index = int.Parse(EditIndex(indexOfSpaceForBox));
 
-        samplesController.SetBox(index);
+        samplesController.SetBox(index, idBox);
 
         instantiatedPrefab.transform.position = spaceForBox.transform.position;
 

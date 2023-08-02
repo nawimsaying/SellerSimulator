@@ -25,7 +25,7 @@ public class WarehouseButtons : MonoBehaviour
 
         _buttonEditStatic = _buttonEdit;
 
-        _samplesController = SamplesController.Instance;
+        _samplesController = new SamplesController();
 
         _spriteSmallBoxStatic = _spriteSmallBox;
     }

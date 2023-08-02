@@ -29,7 +29,7 @@ public static class SaveLoadManager
             return new T();
     }
 
-    public static void Save(string key, ToolBarList saveData)
+    public static void SaveToolBarList(string key, ToolBarList saveData)
     {
         string jsonDataString = null;
 
@@ -41,18 +41,33 @@ public static class SaveLoadManager
             }
             else
             {
-                //jsonDataString += "[";
                 jsonDataString += JsonUtility.ToJson(saveData.toolBarList[i], true);
                 jsonDataString += "$";
             }
-
-            //if (i == saveData.toolBarList.Count - 1)
-            //    jsonDataString += "]";
         }
         PlayerPrefs.SetString(key, jsonDataString);
     }
 
-    public static ToolBarList Load(string key)
+    public static void SaveSampleList(string key, List<Sample> saveData)
+    {
+        string jsonDataString = null;
+
+        for (int i = 0; i < saveData.Count; i++)
+        {
+            if (i == saveData.Count - 1)
+            {
+                jsonDataString += JsonUtility.ToJson(saveData[i], true);
+            }
+            else
+            {
+                jsonDataString += JsonUtility.ToJson(saveData[i], true);
+                jsonDataString += "$";
+            }
+        }
+        PlayerPrefs.SetString(key, jsonDataString);
+    }
+
+    public static ToolBarList LoadToolBarList(string key)
     {
         if (PlayerPrefs.HasKey(key))
         {
@@ -62,18 +77,15 @@ public static class SaveLoadManager
             {
                 string[] jsonArray = loadedString.Split("$");
 
-                List<ModelWareHouse> res = new List<ModelWareHouse>() { };
-
-                ModelWareHouse objectMy = new ModelWareHouse();
+                List<ModelWareHouse> result = new List<ModelWareHouse>() { };
 
                 for (int i = 0; i < jsonArray.Length; i++)
                 {
-                    objectMy = JsonConvert.DeserializeObject<ModelWareHouse>(jsonArray[i]);
-                    //objectMy = JsonUtility.FromJson<ModelWareHouse>(jsonArray[i]);
-                    res.Add(objectMy);
+                    ModelWareHouse objectMy = JsonConvert.DeserializeObject<ModelWareHouse>(jsonArray[i]);
+                    result.Add(objectMy);
                 }
                 ToolBarList toolBarList = new ToolBarList();
-                toolBarList.toolBarList = res;
+                toolBarList.toolBarList = result;
 
                 return toolBarList;
             }
@@ -82,5 +94,31 @@ public static class SaveLoadManager
         }
         else
             return new ToolBarList();
+    }
+
+    public static List<Sample> LoadSampleList(string key)
+    {
+        if (PlayerPrefs.HasKey(key))
+        {
+            string loadedString = PlayerPrefs.GetString(key);
+
+            if (loadedString != "")
+            {
+                string[] jsonArray = loadedString.Split("$");
+
+                List<Sample> result = new List<Sample>();
+
+                for (int i = 0; i < jsonArray.Length; i++)
+                {
+                    Sample objectMy = JsonConvert.DeserializeObject<Sample>(jsonArray[i]);
+                    result.Add(objectMy);
+                }
+                return result;
+            }
+            else
+                return new List<Sample>();
+        }
+        else
+            return new List<Sample>();
     }
 }
