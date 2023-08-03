@@ -28,18 +28,20 @@ public class WarehouseData : MonoBehaviour
         // DELETE
         //PlayerPrefs.DeleteAll();
 
-        // Search new boxes
+        // Search sold and new boxes
         List<ModelWareHouse> newBoxesList = SearchNewBoxes(_wareHouseRepositories);
+
         // Load old boxes in tool bar
         ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList("toolBarList");
+
         // Concat old boxes with new boxes
         List<ModelWareHouse> newToolBarData;
         if (oldToolBarData.toolBarList != null)
             newToolBarData = oldToolBarData.toolBarList.Concat(newBoxesList).ToList();
         else
             newToolBarData = newBoxesList;
-        // Save new boxes in tool bar
 
+        // Save new boxes in tool bar
         SaveLoadManager.SaveToolBarList("toolBarList", GetSaveSnapshotToolBarList(newToolBarData));
 
         SortBoxesBySize(newToolBarData);
@@ -76,21 +78,24 @@ public class WarehouseData : MonoBehaviour
         warehouseButtons.SpawnBoxesInToolBar();
     }
 
-    private List<ModelWareHouse> SearchNewBoxes(List<ModelWareHouse> allData)
+    private List<ModelWareHouse> SearchNewBoxes(List<ModelWareHouse> newData)
     {
-        var oldSetedData = SaveLoadManager.LoadData<List<ModelWareHouse>>("setedList");
+        List<Sample> oldSampleList = SaveLoadManager.LoadSampleList("sampleList");
         ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList("toolBarList");
-
-        if (oldSetedData.Count > 0)
+        
+        if (oldSampleList.Count > 0)
         {
-            for (int i = 0; i < allData.Count; i++)
+            for (int i = 0; i < oldSampleList.Count; i++)
             {
-                for (int j = 0; j < oldSetedData.Count; i++)
+                for (int j = 0; j < oldSampleList[i].rackSample.Length; j++)
                 {
-                    if (allData[i].idBox == oldSetedData[j].idBox)
+                    for (int k = 0; k < newData.Count; k++)
                     {
-                        allData.Remove(allData[i]);
-                        break;
+                        if (newData[k].idBox == oldSampleList[i].rackSample[j])
+                        {
+                            newData.Remove(newData[k]);
+                            break;
+                        }
                     }
                 }
             }
@@ -100,18 +105,18 @@ public class WarehouseData : MonoBehaviour
         {
             for (int i = 0; i < oldToolBarData.toolBarList.Count; i++)
             {
-                for (int j = 0; j < allData.Count; j++)
+                for (int j = 0; j < newData.Count; j++)
                 {
-                    if (allData[j].idBox == oldToolBarData.toolBarList[i].idBox)
+                    if (newData[j].idBox == oldToolBarData.toolBarList[i].idBox)
                     {
-                        allData.Remove(allData[j]);
+                        newData.Remove(newData[j]);
                         break;
                     }
                 }
             }
         }
 
-        return allData;
+        return newData;
     }
 
     public ToolBarList GetSaveSnapshotToolBarList(List<ModelWareHouse> _toolBarList)
@@ -122,5 +127,51 @@ public class WarehouseData : MonoBehaviour
         };
 
         return data;
+    }
+
+    public void CalculateSoldItems(List<ModelWareHouse> newData)
+    {
+        List<Sample> sampleList = SaveLoadManager.LoadSampleList("sampleList");
+        List<ulong> indexes = new List<ulong>();
+
+        for (int i = 0; i < sampleList.Count; i++)
+        {
+            for (int j = 0; j < sampleList[i].rackSample.Length; j++)
+            {
+                if (sampleList[i].rackSample[j] != 0)
+                    indexes.Add(sampleList[i].rackSample[j]);
+            }
+        }
+
+        for (int i = 0; i < indexes.Count; i++)
+        {
+            bool isSold = true;
+
+            for (int j = 0; j < newData.Count; j++)
+            {
+                if (indexes[i] == newData[j].idBox)
+                {
+                    isSold = false;
+                    break;
+                }
+            }
+
+            if (isSold)
+            {
+                // Delete sold items from PlayerPrefs
+                for (int j = 0; j < sampleList.Count; j++)
+                {
+                    for (int k = 0; k < sampleList[j].rackSample.Length; k++)
+                    {
+                        if (sampleList[j].rackSample[k] == indexes[i])
+                        {
+                            sampleList[j].rackSample[k] = 0;
+
+                            SaveLoadManager.SaveSampleList("sampleList", sampleList);
+                        }
+                    }
+                }
+            }
+        }
     }
 }
