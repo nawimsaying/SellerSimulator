@@ -64,7 +64,8 @@ namespace Assets.Scripts.Architecture.MainDb
                     name = "Клавиатура",
                     imageName = "iconIphone",
                     lvlUnlock = 1,
-                    goldenUnlock = true
+                    lockForGold = true,
+                    goldenPrice = 20
                 },
             },
 
@@ -119,7 +120,8 @@ namespace Assets.Scripts.Architecture.MainDb
                     name = "Маленькая колонка",
                     imageName = "iconIphone",
                     lvlUnlock = 6,
-                    goldenUnlock = true
+                    lockForGold = true,
+                    goldenPrice = 20
                 },
             },
 
@@ -175,7 +177,8 @@ namespace Assets.Scripts.Architecture.MainDb
                     name = "Обычный ноут",
                     imageName = "iconIphone",
                     lvlUnlock = 10,
-                    goldenUnlock = true
+                    lockForGold = true,
+                    goldenPrice = 20
                 },
             },
 
@@ -250,7 +253,8 @@ namespace Assets.Scripts.Architecture.MainDb
                     name = "Дешевая микроволновка",
                     imageName = "iconIphone",
                     lvlUnlock = 18,
-                    goldenUnlock = true,
+                    lockForGold = true,
+                    goldenPrice = 20
                 },
             },
 
@@ -270,7 +274,8 @@ namespace Assets.Scripts.Architecture.MainDb
                     name = "Сенсорные часы",
                     imageName = "iconIphone",
                     lvlUnlock = 20,
-                    goldenUnlock = true
+                    lockForGold = true,
+                    goldenPrice = 20
                 },
             },
 
@@ -328,7 +333,8 @@ namespace Assets.Scripts.Architecture.MainDb
                     name = "Полу-Игровой Компьютер",
                     imageName = "iconIphone",
                     lvlUnlock = 29,
-                    goldenUnlock = true
+                    lockForGold = true,
+                    goldenPrice = 20
                 },
             },
 
@@ -366,7 +372,8 @@ namespace Assets.Scripts.Architecture.MainDb
                     name = "Айфон",
                     imageName = "iconIphone",
                     lvlUnlock = 35,
-                    goldenUnlock = true
+                    lockForGold = true,
+                    goldenPrice = 20
                 },
             },
 
@@ -479,7 +486,8 @@ namespace Assets.Scripts.Architecture.MainDb
                     name = "Игровой ноутбук",
                     imageName = "iconIphone",
                     lvlUnlock = 51,
-                    goldenUnlock = true
+                    lockForGold = true, 
+                    goldenPrice = 20
                 },
             },
 
@@ -536,7 +544,8 @@ namespace Assets.Scripts.Architecture.MainDb
                     name = "Золотые часы",
                     imageName = "iconIphone",
                     lvlUnlock = 60,
-                    goldenUnlock = true
+                    lockForGold = true,
+                    goldenPrice = 20
                 },
             },
 

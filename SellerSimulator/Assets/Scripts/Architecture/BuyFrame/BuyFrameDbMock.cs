@@ -17,6 +17,11 @@ namespace Assets.Scripts.Architecture.MainDB
     {
         const int originallyCountBox = 1; // При покупки 1 товара, всегда вместе с ним идет 1 коробка
 
+
+        ///Сдлеать сохранение листа, а так же его обновление.
+
+        List<ModelsBuyFrame> result = new List<ModelsBuyFrame>();
+
         private MainDbMock mainDbMock;
         private WareHouseDbMock wareHouseDbMock;
         private PlayerData playerData;
@@ -29,7 +34,40 @@ namespace Assets.Scripts.Architecture.MainDB
             playerData = PlayerDataHolder.playerData;
         }
 
+        public Result<string> UnlockItemForGold(int productId, int gold)
+        {
+            ModelBox itemToBuy = mainDbMock.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
 
+            if (itemToBuy == null)
+            {
+                return Result<string>.Error("Item with the specified ID was not found.");
+            }
+
+            if(gold >= itemToBuy.idProduct.goldenPrice)
+            {
+                int newGold = gold - itemToBuy.idProduct.goldenPrice;
+
+                PlayerPrefs.SetInt("Gold", newGold);
+
+                foreach (var modelBuyFrame in result)
+                {
+                    if (modelBuyFrame.idProduct == productId)
+                    {
+                        modelBuyFrame.lockForGold = false;
+                        break; // Можно прервать цикл, т.к. мы уже нашли нужный элемент
+                    }
+                }
+
+                playerData.SetGold(newGold);
+
+                return Result<string>.Success($"Товар разблокирован успешно: {itemToBuy.idProduct.name}");
+
+            }
+            else
+            {
+                return Result<string>.Success($"Не достаточно средств");
+            }
+        }
 
         Result<string> IBuyFrameSource.BuyItem(int productId, int money)
         {
@@ -50,7 +88,8 @@ namespace Assets.Scripts.Architecture.MainDB
                 wareHouseDbMock.AddPurchasedItem(itemToBuy);
                 playerData.SetCoins(newMoney);
 
-                playerData.AddExperience(500);
+                playerData.AddExperience(100);
+
 
                 return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
             }
@@ -58,14 +97,10 @@ namespace Assets.Scripts.Architecture.MainDB
             {
                 return Result<string>.Success($"Не достаточно средств");
             }
-
-         
         }
 
         Result<List<ModelsBuyFrame>> IBuyFrameSource.GetAll()
         {
-            List<ModelsBuyFrame> result = new List<ModelsBuyFrame>();
-
             
 
             foreach (var modelBox in mainDbMock.ListBox)
@@ -78,7 +113,9 @@ namespace Assets.Scripts.Architecture.MainDB
                     productName = modelBox.idProduct.name,
                     price = modelBox.price,
                     imageName = modelBox.idProduct.imageName,
-                    levelUnlock = modelBox.idProduct.lvlUnlock
+                    levelUnlock = modelBox.idProduct.lvlUnlock,
+                    lockForGold = modelBox.idProduct.lockForGold,
+                    goldenPrice = modelBox.idProduct.goldenPrice
                 };
 
 

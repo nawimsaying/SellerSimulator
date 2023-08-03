@@ -58,24 +58,47 @@ public class ScriptBuyFrame : MonoBehaviour
         List<ModelsBuyFrame> allItems = _buyFrameRepository.GetAll();
 
         GameObject itemProduct = transform.GetChild(0).gameObject;
-        GameObject element;
+        GameObject elementItem;
+        GameObject lockedItemForGold = transform.GetChild(1).gameObject;
+        GameObject elementItemForGold;
 
         for (int i = 0; i < allItems.Count; i++)
         {
-            if (_playerData.Level >= allItems[i].levelUnlock && !displayedProductIds.Contains(allItems[i].idProduct))
+            if (_playerData.Level >= allItems[i].levelUnlock && !displayedProductIds.Contains(allItems[i].idProduct) && allItems[i].lockForGold == false)
             {
 
-                element = Instantiate(itemProduct, transform);
+                elementItem = Instantiate(itemProduct, transform);
 
                 // Установка спрайта
-                element.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[i].imageName);
-                element.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
-                element.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
+                elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[i].imageName);
+                elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
+                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
 
-                element.transform.GetChild(3).GetComponent<Button>().AddEventListener(allItems[i].idProduct, ItemClicked);
+                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListener(allItems[i].idProduct, ItemClicked);
 
                 displayedProductIds.Add(allItems[i].idProduct);
-            }else if (i == allItems.Count - 1)
+            }else if (_playerData.Level >= allItems[i].levelUnlock && allItems[i].lockForGold == true)
+            {
+                elementItemForGold = Instantiate(lockedItemForGold, transform);
+
+                Transform childTransform = elementItemForGold.transform.GetChild(0);
+                ////////////////////////////////////////////////////////////////////
+                /// Присвоение значения дочернему элементу кнопки
+                ///////////////////////////////////////////////////////////////////
+                Button buttonComponent = childTransform.GetComponent<Button>();
+
+                // Получаем компонент TextMeshProUGUI из кнопки
+                TextMeshProUGUI textComponent = buttonComponent.GetComponentInChildren<TextMeshProUGUI>();
+                // Изменяем текст на нужное значение
+                textComponent.text = allItems[i].goldenPrice.ToString();
+                /////////////////////////////////////////////////////////////////////
+
+                elementItemForGold.transform.GetChild(0).GetComponent<Button>().AddEventListener(allItems[i].idProduct, UnlockItem);
+
+                    
+               
+            }
+            else if (i == allItems.Count - 1)
             {
                 _unavailableItem.SetActive(true);
             }
@@ -83,6 +106,7 @@ public class ScriptBuyFrame : MonoBehaviour
 
         if (!_deletedDemoItem)
         {
+            Destroy(lockedItemForGold);
             Destroy(itemProduct);
             _deletedDemoItem = true;
         }
@@ -105,4 +129,15 @@ public class ScriptBuyFrame : MonoBehaviour
 
     }
 
+
+    void UnlockItem(int idProduct, Button button)
+    {
+
+        Debug.Log(_buyFrameRepository.UnlockItemForGold(idProduct, _playerData.Gold));
+
+        Debug.Log("LockItem with id " + idProduct + " clicked");
+
+        Debug.Log("");
+
+    }
 }
