@@ -8,27 +8,6 @@ using Newtonsoft.Json;
 
 public static class SaveLoadManager
 {
-    public static void SaveData<T>(string key, T saveData)
-    {
-        string jsonDataString = JsonUtility.ToJson(saveData, true);
-
-        PlayerPrefs.SetString(key, jsonDataString);
-    }
-
-    public static T LoadData<T>(string key) where T : new()
-    {
-        if (PlayerPrefs.HasKey(key))
-        {
-            string loadedString = PlayerPrefs.GetString(key);
-
-            var res = JsonUtility.FromJson<T>(loadedString);
-
-            return res;
-        }
-        else
-            return new T();
-    }
-
     public static void SaveToolBarList(string key, ToolBarList saveData)
     {
         string jsonDataString = null;
@@ -49,6 +28,25 @@ public static class SaveLoadManager
     }
 
     public static void SaveSampleList(string key, List<Sample> saveData)
+    {
+        string jsonDataString = null;
+
+        for (int i = 0; i < saveData.Count; i++)
+        {
+            if (i == saveData.Count - 1)
+            {
+                jsonDataString += JsonUtility.ToJson(saveData[i], true);
+            }
+            else
+            {
+                jsonDataString += JsonUtility.ToJson(saveData[i], true);
+                jsonDataString += "$";
+            }
+        }
+        PlayerPrefs.SetString(key, jsonDataString);
+    }
+
+    public static void SaveSamplesOnFramesList(string key, List<SamplesOnFrames> saveData)
     {
         string jsonDataString = null;
 
@@ -120,5 +118,31 @@ public static class SaveLoadManager
         }
         else
             return new List<Sample>();
+    }
+
+    public static List<SamplesOnFrames> LoadSamplesOnFramesList(string key)
+    {
+        if (PlayerPrefs.HasKey(key))
+        {
+            string loadedString = PlayerPrefs.GetString(key);
+
+            if (loadedString != "")
+            {
+                string[] jsonArray = loadedString.Split("$");
+
+                List<SamplesOnFrames> result = new List<SamplesOnFrames>();
+
+                for (int i = 0; i < jsonArray.Length; i++)
+                {
+                    SamplesOnFrames objectMy = JsonConvert.DeserializeObject<SamplesOnFrames>(jsonArray[i]);
+                    result.Add(objectMy);
+                }
+                return result;
+            }
+            else
+                return new List<SamplesOnFrames>();
+        }
+        else
+            return new List<SamplesOnFrames>();
     }
 }

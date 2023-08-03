@@ -23,6 +23,7 @@ public class SamplesController : MonoBehaviour
     [SerializeField] private GameObject[] _prefabs;
 
     private static GameObject[] _prefabsStatic;
+    private static List<SamplesOnFrames> _samplesOnFrames;
 
     private Vector3[] _spawnPosition = new Vector3[2] { new Vector3(0.09f, 0.27f, 3.94f), new Vector3(8f, 0.27f, 3.94f) };
 
@@ -31,6 +32,7 @@ public class SamplesController : MonoBehaviour
     private void Start()
     {
         _prefabsStatic = _prefabs;
+        _samplesOnFrames = SaveLoadManager.LoadSamplesOnFramesList("samplesOnFrameList");
 
         //PlayerPrefs.DeleteKey("sampleList");
 
@@ -48,7 +50,10 @@ public class SamplesController : MonoBehaviour
             // Indicate that there is already some template in this frame
             int currentPosition = CameraWarehouse.GetCameraPosition();
 
-            Instantiate(_prefabsStatic[idSample], _spawnPosition[currentPosition], Quaternion.Euler(0f, -90f, 0f));
+            GameObject spawnObject = Instantiate(_prefabsStatic[idSample], _spawnPosition[currentPosition], Quaternion.Euler(0f, -90f, 0f));
+            SamplesOnFrames samplesOnFrames = new SamplesOnFrames(currentPosition, spawnObject);
+            _samplesOnFrames.Add(samplesOnFrames);
+            SaveLoadManager.SaveSamplesOnFramesList("samplesOnFrameList", _samplesOnFrames);
 
             // Create an array for the sample
             Sample newRackSample = new Sample(currentPosition, idSample);
@@ -61,6 +66,14 @@ public class SamplesController : MonoBehaviour
         }
         else
             Debug.LogError("This frame already has a template installed.");
+    }
+
+    public void DeleteSample()
+    {
+        if (CheckFrameOnSamples() && !CheckBoxesInFrame())
+        {
+            //Destroy();
+        }
     }
 
     public void SetBox(int indexOfPlace, ulong idBox)
@@ -85,11 +98,30 @@ public class SamplesController : MonoBehaviour
         List<Sample> sampleList = SaveLoadManager.LoadSampleList("sampleList");
         int currentPosition = CameraWarehouse.GetCameraPosition();
 
-        if (sampleList.Count > 0)
+        for (int i = 0; i < sampleList.Count; i++)
         {
-            for (int i = 0; i < sampleList.Count; i++)
+            if (sampleList[i].idFrame == currentPosition)
             {
-                if (sampleList[i].idFrame == currentPosition)
+                for (int j = 0; j < sampleList[i].rackSample.Length; j++)
+                {
+                    if (sampleList[i].rackSample[j] != 0)
+                        return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private bool CheckBoxesInFrame()
+    {
+        List<Sample> sampleList = SaveLoadManager.LoadSampleList("sampleList");
+        int currentPosition = CameraWarehouse.GetCameraPosition();
+
+        for (int i = 0; i < sampleList.Count; i++)
+        {
+            for (int j = 0; j < sampleList[i].rackSample.Length; j++)
+            {
+                if (sampleList[i].rackSample[j] != 0)
                     return true;
             }
         }

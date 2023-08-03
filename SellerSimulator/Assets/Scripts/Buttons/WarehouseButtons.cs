@@ -50,6 +50,11 @@ public class WarehouseButtons : MonoBehaviour
         _samplesController.CreateSample(idSample);
     }
 
+    public void DeleteSample()
+    {
+        _samplesController.DeleteSample();
+    }
+
     public void SpawnBoxesInToolBar()
     {
         int smallBoxes = PlayerPrefs.GetInt("smallBoxes");
