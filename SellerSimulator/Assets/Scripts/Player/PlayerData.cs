@@ -43,6 +43,18 @@ namespace Assets.Scripts.Player
             SavePlayerData();
         }
 
+        public void SetGold(int amount)
+        {
+            Gold = amount;
+            SavePlayerData();
+        }
+
+        private void SetLvl(int amount) //использовать для изменения игры внутри кода
+        {
+            Level = amount;
+            SavePlayerData();
+        }
+
         // Метод для добавления опыта
         public void AddExperience(int amount)
         {
