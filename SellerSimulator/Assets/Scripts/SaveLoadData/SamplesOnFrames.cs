@@ -8,11 +8,11 @@ using Assets.Scripts.Architecture.WareHouseDb;
 public class SamplesOnFrames
 {
     public int idFrame { get; set; }
-    public GameObject sample { get; set; }
+    public string sampleName { get; set; }
 
-    public SamplesOnFrames(int _idFrame, GameObject _sample)
+    public SamplesOnFrames(int _idFrame, string _sample)
     {
         idFrame = _idFrame;
-        sample = _sample;
+        sampleName = _sample;
     }
 }

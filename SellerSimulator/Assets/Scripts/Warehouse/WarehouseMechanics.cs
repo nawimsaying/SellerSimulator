@@ -42,12 +42,12 @@ public class WarehouseMechanics : MonoBehaviour
                 smallBoxes--;
                 PlayerPrefs.SetInt("smallBoxes", smallBoxes);
 
-                ToolBarList _toolBarList = SaveLoadManager.LoadToolBarList("toolBarList");
+                ToolBarList _toolBarList = SaveLoadManager.LoadToolBarList();
                 ulong idBox = _toolBarList.toolBarList[0].idBox;
                 _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[0]);
                 WarehouseData warehouseData = new WarehouseData();
                 var item = warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList);
-                SaveLoadManager.SaveToolBarList("toolBarList", warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList));
+                SaveLoadManager.SaveToolBarList(warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList));
 
                 // Performing the required action
                 SpawnBox(_hit, idBox);

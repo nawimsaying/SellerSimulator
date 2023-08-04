@@ -12,15 +12,11 @@ public class WarehouseData : MonoBehaviour
     [SerializeField] private GameObject _buttonBox;
     [SerializeField] private Text _textSmallBox;
 
-    private static GameObject _buttonBoxStatic;
-
     private WareHouseRepository _houseRepository;
     private List<ModelWareHouse> _wareHouseRepositories;
 
     private void Start()
     {
-        _buttonBoxStatic = _buttonBox;
-        
         // Receive data from the warehouse in the computer 
         _houseRepository = new WareHouseRepository(WareHouseDbMock.Instance);
         _wareHouseRepositories = _houseRepository.GetAll();
@@ -32,25 +28,24 @@ public class WarehouseData : MonoBehaviour
         List<ModelWareHouse> newBoxesList = SearchNewBoxes(_wareHouseRepositories);
 
         // Load old boxes in tool bar
-        ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList("toolBarList");
+        ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList();
 
         // Concat old boxes with new boxes
         List<ModelWareHouse> newToolBarData;
+
         if (oldToolBarData.toolBarList != null)
             newToolBarData = oldToolBarData.toolBarList.Concat(newBoxesList).ToList();
         else
             newToolBarData = newBoxesList;
 
         // Save new boxes in tool bar
-        SaveLoadManager.SaveToolBarList("toolBarList", GetSaveSnapshotToolBarList(newToolBarData));
+        SaveLoadManager.SaveToolBarList(GetSaveSnapshotToolBarList(newToolBarData));
 
         SortBoxesBySize(newToolBarData);
-        Debug.Log("Ended!");
     }
 
     private void FixedUpdate()
     {
-        int count = PlayerPrefs.GetInt("smallBoxes");
         _textSmallBox.text = Convert.ToString(PlayerPrefs.GetInt("smallBoxes"));
     }
 
@@ -80,8 +75,8 @@ public class WarehouseData : MonoBehaviour
 
     private List<ModelWareHouse> SearchNewBoxes(List<ModelWareHouse> newData)
     {
-        List<Sample> oldSampleList = SaveLoadManager.LoadSampleList("sampleList");
-        ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList("toolBarList");
+        List<Sample> oldSampleList = SaveLoadManager.LoadSampleList();
+        ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList();
         
         if (oldSampleList.Count > 0)
         {
@@ -131,7 +126,7 @@ public class WarehouseData : MonoBehaviour
 
     public void CalculateSoldItems(List<ModelWareHouse> newData)
     {
-        List<Sample> sampleList = SaveLoadManager.LoadSampleList("sampleList");
+        List<Sample> sampleList = SaveLoadManager.LoadSampleList();
         List<ulong> indexes = new List<ulong>();
 
         for (int i = 0; i < sampleList.Count; i++)
@@ -167,7 +162,7 @@ public class WarehouseData : MonoBehaviour
                         {
                             sampleList[j].rackSample[k] = 0;
 
-                            SaveLoadManager.SaveSampleList("sampleList", sampleList);
+                            SaveLoadManager.SaveSampleList(sampleList);
                         }
                     }
                 }

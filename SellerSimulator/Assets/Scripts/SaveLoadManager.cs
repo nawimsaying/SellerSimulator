@@ -8,65 +8,72 @@ using Newtonsoft.Json;
 
 public static class SaveLoadManager
 {
-    public static void SaveToolBarList(string key, ToolBarList saveData)
+    public static void SaveToolBarList(ToolBarList saveData)
     {
+        string key = "toolBarList";
+
         string jsonDataString = null;
 
         for (int i = 0; i < saveData.toolBarList.Count; i++)
         {
             if (i == saveData.toolBarList.Count - 1)
             {
-                jsonDataString += JsonUtility.ToJson(saveData.toolBarList[i], true);
+                jsonDataString += JsonConvert.SerializeObject(saveData.toolBarList[i]);
             }
             else
             {
-                jsonDataString += JsonUtility.ToJson(saveData.toolBarList[i], true);
+                jsonDataString += JsonConvert.SerializeObject(saveData.toolBarList[i]);
                 jsonDataString += "$";
             }
         }
         PlayerPrefs.SetString(key, jsonDataString);
     }
 
-    public static void SaveSampleList(string key, List<Sample> saveData)
+    public static void SaveSampleList(List<Sample> saveData)
     {
+        string key = "sampleList";
+
         string jsonDataString = null;
 
         for (int i = 0; i < saveData.Count; i++)
         {
             if (i == saveData.Count - 1)
             {
-                jsonDataString += JsonUtility.ToJson(saveData[i], true);
+                jsonDataString += JsonConvert.SerializeObject(saveData[i]);
             }
             else
             {
-                jsonDataString += JsonUtility.ToJson(saveData[i], true);
+                jsonDataString += JsonConvert.SerializeObject(saveData[i]);
                 jsonDataString += "$";
             }
         }
         PlayerPrefs.SetString(key, jsonDataString);
     }
 
-    public static void SaveSamplesOnFramesList(string key, List<SamplesOnFrames> saveData)
+    public static void SaveSamplesOnFramesList(List<SamplesOnFrames> saveData)
     {
+        string key = "samplesOnFrameList";
         string jsonDataString = null;
 
         for (int i = 0; i < saveData.Count; i++)
         {
             if (i == saveData.Count - 1)
             {
-                jsonDataString += JsonUtility.ToJson(saveData[i], true);
+                jsonDataString += JsonConvert.SerializeObject(saveData[i]);
             }
             else
             {
-                jsonDataString += JsonUtility.ToJson(saveData[i], true);
+                jsonDataString += JsonConvert.SerializeObject(saveData[i]);
                 jsonDataString += "$";
             }
         }
         PlayerPrefs.SetString(key, jsonDataString);
     }
 
-    public static ToolBarList LoadToolBarList(string key)
+    public static ToolBarList LoadToolBarList()
     {
+        string key = "toolBarList";
+
         if (PlayerPrefs.HasKey(key))
         {
             string loadedString = PlayerPrefs.GetString(key);
@@ -94,8 +101,10 @@ public static class SaveLoadManager
             return new ToolBarList();
     }
 
-    public static List<Sample> LoadSampleList(string key)
+    public static List<Sample> LoadSampleList()
     {
+        string key = "sampleList";
+
         if (PlayerPrefs.HasKey(key))
         {
             string loadedString = PlayerPrefs.GetString(key);
@@ -120,8 +129,10 @@ public static class SaveLoadManager
             return new List<Sample>();
     }
 
-    public static List<SamplesOnFrames> LoadSamplesOnFramesList(string key)
+    public static List<SamplesOnFrames> LoadSamplesOnFramesList()
     {
+        string key = "samplesOnFrameList";
+
         if (PlayerPrefs.HasKey(key))
         {
             string loadedString = PlayerPrefs.GetString(key);
