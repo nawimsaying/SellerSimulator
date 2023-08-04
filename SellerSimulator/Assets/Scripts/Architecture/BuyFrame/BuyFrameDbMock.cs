@@ -26,7 +26,6 @@ namespace Assets.Scripts.Architecture.MainDB
         private WareHouseDbMock wareHouseDbMock;
         private PlayerData playerData;
 
-
         public BuyFrameDbMock()
         {
             mainDbMock = new MainDbMock();
@@ -36,7 +35,12 @@ namespace Assets.Scripts.Architecture.MainDB
 
         public Result<string> UnlockItemForGold(int productId, int gold)
         {
-            ModelBox itemToBuy = mainDbMock.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
+            // Переделать
+            MainDbMock loadedMainDbMock = SaveLoadManager.LoadMainDbMockList();
+
+            ModelBox itemToBuy = loadedMainDbMock.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
+
+            // ModelBox itemToBuy = mainDbMock.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
 
             if (itemToBuy == null)
             {
@@ -103,7 +107,32 @@ namespace Assets.Scripts.Architecture.MainDB
         {
             List<ModelsBuyFrame> resultList = new List<ModelsBuyFrame>();
 
-            foreach (var modelBox in mainDbMock.ListBox)
+            // Test load data
+            MainDbMock loadedMainDbMock = SaveLoadManager.LoadMainDbMockList();
+
+            // SaveLoadManager.SaveMainDbMockList(loadedMainDbMock);
+
+            foreach (var item in loadedMainDbMock.ListBox)
+            {
+                // Создаем экземпляр ModelsBuyFrame и заполняем его данными из modelBox
+                ModelsBuyFrame modelsBuyFrame = new ModelsBuyFrame()
+                {
+
+                    idProduct = item.idProduct.id,
+                    productName = item.idProduct.name,
+                    price = item.price,
+                    imageName = item.idProduct.imageName,
+                    levelUnlock = item.idProduct.lvlUnlock,
+                    lockForGold = item.idProduct.lockForGold,
+                    goldenPrice = item.idProduct.goldenPrice
+                };
+
+
+                // Добавляем экземпляр ModelsBuyFrame в результирующий лист
+                resultList.Add(modelsBuyFrame);
+            }
+
+            /*foreach (var modelBox in mainDbMock.ListBox)
             {
                 // Создаем экземпляр ModelsBuyFrame и заполняем его данными из modelBox
                 ModelsBuyFrame modelsBuyFrame = new ModelsBuyFrame()
@@ -121,7 +150,7 @@ namespace Assets.Scripts.Architecture.MainDB
 
                 // Добавляем экземпляр ModelsBuyFrame в результирующий лист
                 resultList.Add(modelsBuyFrame);
-            }
+            }*/
 
             return Result<List<ModelsBuyFrame>>.Success(resultList);
         }

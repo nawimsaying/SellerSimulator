@@ -5,6 +5,9 @@ using System.Text.Json;
 using Palmmedia.ReportGenerator.Core.Common;
 using Assets.Scripts.Architecture.WareHouseDb;
 using Newtonsoft.Json;
+using Assets.Scripts.Architecture.MainDb;
+using Unity.VisualScripting;
+using Assets.Scripts.Architecture.MainDb.ModelsDb;
 
 public static class SaveLoadManager
 {
@@ -64,6 +67,26 @@ public static class SaveLoadManager
             else
             {
                 jsonDataString += JsonConvert.SerializeObject(saveData[i]);
+                jsonDataString += "$";
+            }
+        }
+        PlayerPrefs.SetString(key, jsonDataString);
+    }
+
+    public static void SaveMainDbMockList(MainDbMock saveData)
+    {
+        string key = "mainDbMockList";
+        string jsonDataString = null;
+
+        for (int i = 0; i < saveData.ListBox.Count; i++)
+        {
+            if (i == saveData.ListBox.Count - 1)
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData.ListBox[i]);
+            }
+            else
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData.ListBox[i]);
                 jsonDataString += "$";
             }
         }
@@ -155,5 +178,37 @@ public static class SaveLoadManager
         }
         else
             return new List<SamplesOnFrames>();
+    }
+
+    public static MainDbMock LoadMainDbMockList()
+    {
+        string key = "mainDbMockList";
+
+        if (PlayerPrefs.HasKey(key))
+        {
+            string loadedString = PlayerPrefs.GetString(key);
+
+            if (loadedString != "")
+            {
+                string[] jsonArray = loadedString.Split("$");
+
+                MainDbMock result = new MainDbMock();
+                List<ModelBox> modelBoxList = new List<ModelBox>();
+
+                for (int i = 0; i < jsonArray.Length; i++)
+                {
+                    ModelBox objectMy = JsonConvert.DeserializeObject<ModelBox>(jsonArray[i]);
+
+                    modelBoxList.Add(objectMy);
+
+                    result.ListBox = modelBoxList;
+                }
+                return result;
+            }
+            else
+                return new MainDbMock();
+        }
+        else
+            return new MainDbMock();
     }
 }

@@ -11,7 +11,7 @@ namespace Assets.Scripts.Architecture.MainDb
     {
         const int RIGINALLY_COUNT_BOX = 1; // При покупки 1 товара, всегда вместе с ним идет 1 коробка
 
-        public List<ModelBox> ListBox { get; } = new List<ModelBox>()
+        public List<ModelBox> ListBox { get; set; } = new List<ModelBox>()
         {
             new ModelBox()
             {
