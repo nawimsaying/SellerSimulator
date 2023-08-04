@@ -42,5 +42,21 @@ namespace Assets.Scripts.Architecture.MainDB
                 throw new Exception(result.Exception); 
             }
         }
+
+
+        public string UnlockItemForGold(int id, int gold)
+        {
+            var result = _local.UnlockItemForGold(id, gold);
+
+            if (result.IsSuccess())
+            {
+                return result.Data;
+            }
+            else
+            {
+                throw new Exception(result.Exception);
+            }
+
+        }
     }
 }

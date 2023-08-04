@@ -9,4 +9,7 @@ public class ModelsBuyFrame
     public int price;
     public string imageName;
     public int levelUnlock;
+    public bool lockForGold;
+    public int goldenPrice;
+
 }

@@ -12,6 +12,7 @@ namespace Assets.Scripts.Architecture.MainDb.ModelsDb
         public string name;
         public string imageName;
         public int lvlUnlock;
-        public bool goldenUnlock;
+        public bool lockForGold;
+        public int goldenPrice;
     }
 }
