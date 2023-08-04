@@ -12,15 +12,11 @@ public class WarehouseData : MonoBehaviour
     [SerializeField] private GameObject _buttonBox;
     [SerializeField] private Text _textSmallBox;
 
-    private static GameObject _buttonBoxStatic;
-
     private WareHouseRepository _houseRepository;
     private List<ModelWareHouse> _wareHouseRepositories;
 
     private void Start()
     {
-        _buttonBoxStatic = _buttonBox;
-        
         // Receive data from the warehouse in the computer 
         _houseRepository = new WareHouseRepository(WareHouseDbMock.Instance);
         _wareHouseRepositories = _houseRepository.GetAll();
@@ -28,27 +24,28 @@ public class WarehouseData : MonoBehaviour
         // DELETE
         //PlayerPrefs.DeleteAll();
 
-        // Search new boxes
+        // Search sold and new boxes
         List<ModelWareHouse> newBoxesList = SearchNewBoxes(_wareHouseRepositories);
+
         // Load old boxes in tool bar
-        ToolBarList oldToolBarData = SaveLoadManager.Load("toolBarList");
+        ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList();
+
         // Concat old boxes with new boxes
         List<ModelWareHouse> newToolBarData;
+
         if (oldToolBarData.toolBarList != null)
             newToolBarData = oldToolBarData.toolBarList.Concat(newBoxesList).ToList();
         else
             newToolBarData = newBoxesList;
-        // Save new boxes in tool bar
 
-        SaveLoadManager.Save("toolBarList", GetSaveSnapshotToolBarList(newToolBarData));
+        // Save new boxes in tool bar
+        SaveLoadManager.SaveToolBarList(GetSaveSnapshotToolBarList(newToolBarData));
 
         SortBoxesBySize(newToolBarData);
-        Debug.Log("Ended!");
     }
 
     private void FixedUpdate()
     {
-        int count = PlayerPrefs.GetInt("smallBoxes");
         _textSmallBox.text = Convert.ToString(PlayerPrefs.GetInt("smallBoxes"));
     }
 
@@ -76,21 +73,24 @@ public class WarehouseData : MonoBehaviour
         warehouseButtons.SpawnBoxesInToolBar();
     }
 
-    private List<ModelWareHouse> SearchNewBoxes(List<ModelWareHouse> allData)
+    private List<ModelWareHouse> SearchNewBoxes(List<ModelWareHouse> newData)
     {
-        var oldSetedData = SaveLoadManager.LoadData<List<ModelWareHouse>>("setedList");
-        ToolBarList oldToolBarData = SaveLoadManager.Load("toolBarList");
-
-        if (oldSetedData.Count > 0)
+        List<Sample> oldSampleList = SaveLoadManager.LoadSampleList();
+        ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList();
+        
+        if (oldSampleList.Count > 0)
         {
-            for (int i = 0; i < allData.Count; i++)
+            for (int i = 0; i < oldSampleList.Count; i++)
             {
-                for (int j = 0; j < oldSetedData.Count; i++)
+                for (int j = 0; j < oldSampleList[i].rackSample.Length; j++)
                 {
-                    if (allData[i].idBox == oldSetedData[j].idBox)
+                    for (int k = 0; k < newData.Count; k++)
                     {
-                        allData.Remove(allData[i]);
-                        break;
+                        if (newData[k].idBox == oldSampleList[i].rackSample[j])
+                        {
+                            newData.Remove(newData[k]);
+                            break;
+                        }
                     }
                 }
             }
@@ -100,18 +100,18 @@ public class WarehouseData : MonoBehaviour
         {
             for (int i = 0; i < oldToolBarData.toolBarList.Count; i++)
             {
-                for (int j = 0; j < allData.Count; j++)
+                for (int j = 0; j < newData.Count; j++)
                 {
-                    if (allData[j].idBox == oldToolBarData.toolBarList[i].idBox)
+                    if (newData[j].idBox == oldToolBarData.toolBarList[i].idBox)
                     {
-                        allData.Remove(allData[j]);
+                        newData.Remove(newData[j]);
                         break;
                     }
                 }
             }
         }
 
-        return allData;
+        return newData;
     }
 
     public ToolBarList GetSaveSnapshotToolBarList(List<ModelWareHouse> _toolBarList)
@@ -122,5 +122,51 @@ public class WarehouseData : MonoBehaviour
         };
 
         return data;
+    }
+
+    public void CalculateSoldItems(List<ModelWareHouse> newData)
+    {
+        List<Sample> sampleList = SaveLoadManager.LoadSampleList();
+        List<ulong> indexes = new List<ulong>();
+
+        for (int i = 0; i < sampleList.Count; i++)
+        {
+            for (int j = 0; j < sampleList[i].rackSample.Length; j++)
+            {
+                if (sampleList[i].rackSample[j] != 0)
+                    indexes.Add(sampleList[i].rackSample[j]);
+            }
+        }
+
+        for (int i = 0; i < indexes.Count; i++)
+        {
+            bool isSold = true;
+
+            for (int j = 0; j < newData.Count; j++)
+            {
+                if (indexes[i] == newData[j].idBox)
+                {
+                    isSold = false;
+                    break;
+                }
+            }
+
+            if (isSold)
+            {
+                // Delete sold items from PlayerPrefs
+                for (int j = 0; j < sampleList.Count; j++)
+                {
+                    for (int k = 0; k < sampleList[j].rackSample.Length; k++)
+                    {
+                        if (sampleList[j].rackSample[k] == indexes[i])
+                        {
+                            sampleList[j].rackSample[k] = 0;
+
+                            SaveLoadManager.SaveSampleList(sampleList);
+                        }
+                    }
+                }
+            }
+        }
     }
 }

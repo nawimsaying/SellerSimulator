@@ -25,7 +25,7 @@ public class WarehouseButtons : MonoBehaviour
 
         _buttonEditStatic = _buttonEdit;
 
-        _samplesController = SamplesController.Instance;
+        _samplesController = new SamplesController();
 
         _spriteSmallBoxStatic = _spriteSmallBox;
     }
@@ -48,6 +48,11 @@ public class WarehouseButtons : MonoBehaviour
     public void CreateSample(int idSample)
     {
         _samplesController.CreateSample(idSample);
+    }
+
+    public void DeleteSample()
+    {
+        _samplesController.DeleteSample();
     }
 
     public void SpawnBoxesInToolBar()

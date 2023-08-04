@@ -8,52 +8,72 @@ using Newtonsoft.Json;
 
 public static class SaveLoadManager
 {
-    public static void SaveData<T>(string key, T saveData)
+    public static void SaveToolBarList(ToolBarList saveData)
     {
-        string jsonDataString = JsonUtility.ToJson(saveData, true);
+        string key = "toolBarList";
 
-        PlayerPrefs.SetString(key, jsonDataString);
-    }
-
-    public static T LoadData<T>(string key) where T : new()
-    {
-        if (PlayerPrefs.HasKey(key))
-        {
-            string loadedString = PlayerPrefs.GetString(key);
-
-            var res = JsonUtility.FromJson<T>(loadedString);
-
-            return res;
-        }
-        else
-            return new T();
-    }
-
-    public static void Save(string key, ToolBarList saveData)
-    {
         string jsonDataString = null;
 
         for (int i = 0; i < saveData.toolBarList.Count; i++)
         {
             if (i == saveData.toolBarList.Count - 1)
             {
-                jsonDataString += JsonUtility.ToJson(saveData.toolBarList[i], true);
+                jsonDataString += JsonConvert.SerializeObject(saveData.toolBarList[i]);
             }
             else
             {
-                //jsonDataString += "[";
-                jsonDataString += JsonUtility.ToJson(saveData.toolBarList[i], true);
+                jsonDataString += JsonConvert.SerializeObject(saveData.toolBarList[i]);
                 jsonDataString += "$";
             }
-
-            //if (i == saveData.toolBarList.Count - 1)
-            //    jsonDataString += "]";
         }
         PlayerPrefs.SetString(key, jsonDataString);
     }
 
-    public static ToolBarList Load(string key)
+    public static void SaveSampleList(List<Sample> saveData)
     {
+        string key = "sampleList";
+
+        string jsonDataString = null;
+
+        for (int i = 0; i < saveData.Count; i++)
+        {
+            if (i == saveData.Count - 1)
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData[i]);
+            }
+            else
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData[i]);
+                jsonDataString += "$";
+            }
+        }
+        PlayerPrefs.SetString(key, jsonDataString);
+    }
+
+    public static void SaveSamplesOnFramesList(List<SamplesOnFrames> saveData)
+    {
+        string key = "samplesOnFrameList";
+        string jsonDataString = null;
+
+        for (int i = 0; i < saveData.Count; i++)
+        {
+            if (i == saveData.Count - 1)
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData[i]);
+            }
+            else
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData[i]);
+                jsonDataString += "$";
+            }
+        }
+        PlayerPrefs.SetString(key, jsonDataString);
+    }
+
+    public static ToolBarList LoadToolBarList()
+    {
+        string key = "toolBarList";
+
         if (PlayerPrefs.HasKey(key))
         {
             string loadedString = PlayerPrefs.GetString(key);
@@ -62,18 +82,15 @@ public static class SaveLoadManager
             {
                 string[] jsonArray = loadedString.Split("$");
 
-                List<ModelWareHouse> res = new List<ModelWareHouse>() { };
-
-                ModelWareHouse objectMy = new ModelWareHouse();
+                List<ModelWareHouse> result = new List<ModelWareHouse>() { };
 
                 for (int i = 0; i < jsonArray.Length; i++)
                 {
-                    objectMy = JsonConvert.DeserializeObject<ModelWareHouse>(jsonArray[i]);
-                    //objectMy = JsonUtility.FromJson<ModelWareHouse>(jsonArray[i]);
-                    res.Add(objectMy);
+                    ModelWareHouse objectMy = JsonConvert.DeserializeObject<ModelWareHouse>(jsonArray[i]);
+                    result.Add(objectMy);
                 }
                 ToolBarList toolBarList = new ToolBarList();
-                toolBarList.toolBarList = res;
+                toolBarList.toolBarList = result;
 
                 return toolBarList;
             }
@@ -82,5 +99,61 @@ public static class SaveLoadManager
         }
         else
             return new ToolBarList();
+    }
+
+    public static List<Sample> LoadSampleList()
+    {
+        string key = "sampleList";
+
+        if (PlayerPrefs.HasKey(key))
+        {
+            string loadedString = PlayerPrefs.GetString(key);
+
+            if (loadedString != "")
+            {
+                string[] jsonArray = loadedString.Split("$");
+
+                List<Sample> result = new List<Sample>();
+
+                for (int i = 0; i < jsonArray.Length; i++)
+                {
+                    Sample objectMy = JsonConvert.DeserializeObject<Sample>(jsonArray[i]);
+                    result.Add(objectMy);
+                }
+                return result;
+            }
+            else
+                return new List<Sample>();
+        }
+        else
+            return new List<Sample>();
+    }
+
+    public static List<SamplesOnFrames> LoadSamplesOnFramesList()
+    {
+        string key = "samplesOnFrameList";
+
+        if (PlayerPrefs.HasKey(key))
+        {
+            string loadedString = PlayerPrefs.GetString(key);
+
+            if (loadedString != "")
+            {
+                string[] jsonArray = loadedString.Split("$");
+
+                List<SamplesOnFrames> result = new List<SamplesOnFrames>();
+
+                for (int i = 0; i < jsonArray.Length; i++)
+                {
+                    SamplesOnFrames objectMy = JsonConvert.DeserializeObject<SamplesOnFrames>(jsonArray[i]);
+                    result.Add(objectMy);
+                }
+                return result;
+            }
+            else
+                return new List<SamplesOnFrames>();
+        }
+        else
+            return new List<SamplesOnFrames>();
     }
 }
