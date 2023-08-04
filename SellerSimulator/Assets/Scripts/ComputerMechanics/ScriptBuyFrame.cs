@@ -47,9 +47,9 @@ public class ScriptBuyFrame : MonoBehaviour
     {
         if(_playerData.Level > _tempLevelUser)
         {
+            _tempLevelUser = _playerData.Level;
             DisplayProduct();
             _unavailableItem.transform.SetAsLastSibling();
-            _tempLevelUser = _playerData.Level;
         }
     }
 
@@ -77,7 +77,7 @@ public class ScriptBuyFrame : MonoBehaviour
                 elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListener(allItems[i].idProduct, ItemClicked);
 
                 displayedProductIds.Add(allItems[i].idProduct);
-            }else if (_playerData.Level >= allItems[i].levelUnlock && allItems[i].lockForGold == true)
+            }else if (_playerData.Level >= allItems[i].levelUnlock && allItems[i].lockForGold == true && !displayedProductIds.Contains(allItems[i].idProduct))
             {
                 elementItemForGold = Instantiate(lockedItemForGold, transform);
 
@@ -95,10 +95,13 @@ public class ScriptBuyFrame : MonoBehaviour
 
                 elementItemForGold.transform.GetChild(0).GetComponent<Button>().AddEventListener(allItems[i].idProduct, UnlockItem);
 
-                    
-               
+                displayedProductIds.Add(allItems[i].idProduct);
+
             }
-            else if (i == allItems.Count - 1)
+
+            
+
+            if (i == allItems.Count - 1)
             {
                 _unavailableItem.SetActive(true);
             }
@@ -110,7 +113,7 @@ public class ScriptBuyFrame : MonoBehaviour
             Destroy(itemProduct);
             _deletedDemoItem = true;
         }
-        
+
     }
 
     // Сейчас метод проверяет, на ту ли мы кнопку нажимаем. Затем по нажатию кнопка будет покупать товар

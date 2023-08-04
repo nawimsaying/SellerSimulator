@@ -212,7 +212,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 sizeBox = "Small",
                 idProduct = new ModelProduct()
                 {
-                    id = 3,
+                    id = 11,
                     name = "USB Flash 1024gb",
                     imageName = "iconIphone",
                     lvlUnlock = 14,

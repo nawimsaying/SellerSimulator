@@ -20,7 +20,7 @@ namespace Assets.Scripts.Architecture.MainDB
 
         ///Сдлеать сохранение листа, а так же его обновление.
 
-        List<ModelsBuyFrame> result = new List<ModelsBuyFrame>();
+        
 
         private MainDbMock mainDbMock;
         private WareHouseDbMock wareHouseDbMock;
@@ -49,11 +49,11 @@ namespace Assets.Scripts.Architecture.MainDB
 
                 PlayerPrefs.SetInt("Gold", newGold);
 
-                foreach (var modelBuyFrame in result)
+                foreach (var modelBuyFrame in mainDbMock.ListBox)
                 {
-                    if (modelBuyFrame.idProduct == productId)
+                    if (modelBuyFrame.idProduct.id == productId)
                     {
-                        modelBuyFrame.lockForGold = false;
+                        modelBuyFrame.idProduct.lockForGold = false;
                         break; // Можно прервать цикл, т.к. мы уже нашли нужный элемент
                     }
                 }
@@ -88,7 +88,7 @@ namespace Assets.Scripts.Architecture.MainDB
                 wareHouseDbMock.AddPurchasedItem(itemToBuy);
                 playerData.SetCoins(newMoney);
 
-                playerData.AddExperience(100);
+                playerData.AddExperience(500);
 
 
                 return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
@@ -101,7 +101,7 @@ namespace Assets.Scripts.Architecture.MainDB
 
         Result<List<ModelsBuyFrame>> IBuyFrameSource.GetAll()
         {
-            
+            List<ModelsBuyFrame> resultList = new List<ModelsBuyFrame>();
 
             foreach (var modelBox in mainDbMock.ListBox)
             {
@@ -120,10 +120,10 @@ namespace Assets.Scripts.Architecture.MainDB
 
 
                 // Добавляем экземпляр ModelsBuyFrame в результирующий лист
-                result.Add(modelsBuyFrame);
+                resultList.Add(modelsBuyFrame);
             }
 
-            return Result<List<ModelsBuyFrame>>.Success(result);
+            return Result<List<ModelsBuyFrame>>.Success(resultList);
         }
     }
 }
