@@ -44,7 +44,7 @@ namespace Assets.Scripts.Architecture.MainDB
         }
 
 
-        public string UnlockItemForGold(int id, int gold)
+        public bool UnlockItemForGold(int id, int gold)
         {
             var result = _local.UnlockItemForGold(id, gold);
 

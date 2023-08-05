@@ -27,7 +27,10 @@ public class ScriptBuyFrame : MonoBehaviour
     private List<int> displayedProductIds = new List<int>(); // Лист для запоминания айди который уже отображены на дисплеи
     private int _tempLevelUser;
     private bool _deletedDemoItem; //Переменная служающая для понимания, удален ли изначальный макет item или нет
+    [SerializeField] private GameObject _itemProduct;
+    [SerializeField] private GameObject _itemProductForGold;
     [SerializeField] private GameObject _unavailableItem; //Недоступный product для user
+    private List<GameObject> displayedItems = new List<GameObject>(); // Список для хранения созданных элементов
 
 
     void Start()
@@ -48,6 +51,7 @@ public class ScriptBuyFrame : MonoBehaviour
         if(_playerData.Level > _tempLevelUser)
         {
             _tempLevelUser = _playerData.Level;
+            ClearDisplayedItems();
             DisplayProduct();
             _unavailableItem.transform.SetAsLastSibling();
         }
@@ -55,6 +59,8 @@ public class ScriptBuyFrame : MonoBehaviour
 
     void DisplayProduct() 
     {
+        displayedProductIds.Clear();
+
         List<ModelsBuyFrame> allItems = _buyFrameRepository.GetAll();
 
         GameObject itemProduct = transform.GetChild(0).gameObject;
@@ -68,6 +74,7 @@ public class ScriptBuyFrame : MonoBehaviour
             {
 
                 elementItem = Instantiate(itemProduct, transform);
+                displayedItems.Add(elementItem);
 
                 // Установка спрайта
                 elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[i].imageName);
@@ -80,6 +87,7 @@ public class ScriptBuyFrame : MonoBehaviour
             }else if (_playerData.Level >= allItems[i].levelUnlock && allItems[i].lockForGold == true && !displayedProductIds.Contains(allItems[i].idProduct))
             {
                 elementItemForGold = Instantiate(lockedItemForGold, transform);
+                displayedItems.Add(elementItemForGold);
 
                 Transform childTransform = elementItemForGold.transform.GetChild(0);
                 ////////////////////////////////////////////////////////////////////
@@ -107,13 +115,24 @@ public class ScriptBuyFrame : MonoBehaviour
             }
         }
 
-        if (!_deletedDemoItem)
+            _itemProduct.SetActive(false);
+            _itemProductForGold.SetActive(false);
+
+
+    }
+
+
+    public void ClearDisplayedItems()
+    {
+        foreach (var item in displayedItems)
         {
-            Destroy(lockedItemForGold);
-            Destroy(itemProduct);
-            _deletedDemoItem = true;
+            Destroy(item);
         }
 
+        displayedItems.Clear(); // Очищаем список после удаления элементов
+
+        _itemProduct.SetActive(true);
+        _itemProductForGold.SetActive(true);
     }
 
     // Сейчас метод проверяет, на ту ли мы кнопку нажимаем. Затем по нажатию кнопка будет покупать товар
@@ -135,12 +154,20 @@ public class ScriptBuyFrame : MonoBehaviour
 
     void UnlockItem(int idProduct, Button button)
     {
-
-        Debug.Log(_buyFrameRepository.UnlockItemForGold(idProduct, _playerData.Gold));
-
         Debug.Log("LockItem with id " + idProduct + " clicked");
 
-        Debug.Log("");
+        bool result =  _buyFrameRepository.UnlockItemForGold(idProduct, _playerData.Gold);
+
+        if (result)
+        {
+            ClearDisplayedItems();
+            DisplayProduct();
+            _unavailableItem.transform.SetAsLastSibling();
+        }
+
+
+
+        Debug.Log($"Покупка{result}");
 
     }
 }

@@ -11,6 +11,18 @@ namespace Assets.Scripts.Architecture.MainDb
     {
         const int RIGINALLY_COUNT_BOX = 1; // При покупки 1 товара, всегда вместе с ним идет 1 коробка
 
+        public MainDbMock LoadedList()
+        {
+            MainDbMock loadedMainDbMock = SaveLoadManager.LoadMainDbMockList();
+            if (loadedMainDbMock == null)
+            {
+                SaveLoadManager.SaveMainDbMockList(loadedMainDbMock);
+                return LoadedList();
+            }
+            else
+                return loadedMainDbMock;
+        }
+
         public List<ModelBox> ListBox { get; set; } = new List<ModelBox>()
         {
             new ModelBox()

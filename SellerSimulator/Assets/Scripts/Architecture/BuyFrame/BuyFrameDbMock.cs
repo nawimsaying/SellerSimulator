@@ -22,29 +22,30 @@ namespace Assets.Scripts.Architecture.MainDB
 
         
 
-        private MainDbMock mainDbMock;
-        private WareHouseDbMock wareHouseDbMock;
-        private PlayerData playerData;
+        private MainDbMock _mainDbMock;
+        private MainDbMock _listLocal;
+        private WareHouseDbMock _wareHouseDbMock;
+        private PlayerData _playerData;
 
         public BuyFrameDbMock()
         {
-            mainDbMock = new MainDbMock();
-            wareHouseDbMock = WareHouseDbMock.Instance;
-            playerData = PlayerDataHolder.playerData;
+            _mainDbMock = new MainDbMock();
+            _listLocal = _mainDbMock.LoadedList();
+            _wareHouseDbMock = WareHouseDbMock.Instance;
+            _playerData = PlayerDataHolder.playerData;
         }
 
-        public Result<string> UnlockItemForGold(int productId, int gold)
+        public Result<bool> UnlockItemForGold(int productId, int gold)
         {
-            // Переделать
-            MainDbMock loadedMainDbMock = SaveLoadManager.LoadMainDbMockList();
 
-            ModelBox itemToBuy = loadedMainDbMock.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
+
+            ModelBox itemToBuy = _listLocal.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
 
             // ModelBox itemToBuy = mainDbMock.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
 
             if (itemToBuy == null)
             {
-                return Result<string>.Error("Item with the specified ID was not found.");
+                return Result<bool>.Error("Item with the specified ID was not found.");
             }
 
             if(gold >= itemToBuy.idProduct.goldenPrice)
@@ -53,7 +54,7 @@ namespace Assets.Scripts.Architecture.MainDB
 
                 PlayerPrefs.SetInt("Gold", newGold);
 
-                foreach (var modelBuyFrame in mainDbMock.ListBox)
+                foreach (var modelBuyFrame in _listLocal.ListBox)
                 {
                     if (modelBuyFrame.idProduct.id == productId)
                     {
@@ -62,20 +63,22 @@ namespace Assets.Scripts.Architecture.MainDB
                     }
                 }
 
-                playerData.SetGold(newGold);
+                SaveLoadManager.SaveMainDbMockList(_listLocal);
 
-                return Result<string>.Success($"Товар разблокирован успешно: {itemToBuy.idProduct.name}");
+                _playerData.SetGold(newGold);
+
+                return Result<bool>.Success(true);
 
             }
             else
             {
-                return Result<string>.Success($"Не достаточно средств");
+                return Result<bool>.Success(true);
             }
         }
 
         Result<string> IBuyFrameSource.BuyItem(int productId, int money)
         {
-            ModelBox itemToBuy = mainDbMock.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
+            ModelBox itemToBuy = _listLocal.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
 
             if (itemToBuy == null)
             {
@@ -85,14 +88,13 @@ namespace Assets.Scripts.Architecture.MainDB
             if(money >= itemToBuy.price)
             {
                 int newMoney = money - itemToBuy.price;
-
-                PlayerPrefs.SetInt("Coins", newMoney);
                
                 // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
-                wareHouseDbMock.AddPurchasedItem(itemToBuy);
-                playerData.SetCoins(newMoney);
+                _wareHouseDbMock.AddPurchasedItem(itemToBuy);
+                _playerData.SetCoins(newMoney);
 
-                playerData.AddExperience(500);
+
+                _playerData.AddExperience(250);
 
 
                 return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
@@ -108,11 +110,10 @@ namespace Assets.Scripts.Architecture.MainDB
             List<ModelsBuyFrame> resultList = new List<ModelsBuyFrame>();
 
             // Test load data
-            MainDbMock loadedMainDbMock = SaveLoadManager.LoadMainDbMockList();
 
-            // SaveLoadManager.SaveMainDbMockList(loadedMainDbMock);
+            
 
-            foreach (var item in loadedMainDbMock.ListBox)
+            foreach (var item in _listLocal.ListBox)
             {
                 // Создаем экземпляр ModelsBuyFrame и заполняем его данными из modelBox
                 ModelsBuyFrame modelsBuyFrame = new ModelsBuyFrame()
