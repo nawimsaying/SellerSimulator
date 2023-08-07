@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,6 +9,7 @@ public class SceneSettings : MonoBehaviour
     [SerializeField] private Text _fpsText;
     [SerializeField] private bool _isFpsCounterEnable;
     [SerializeField] private Text _screenText;
+    [SerializeField] private AnimatorController transitionOut;
 
     private float _fps;
 

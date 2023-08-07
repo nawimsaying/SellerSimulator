@@ -12,9 +12,11 @@ public class WarehouseButtons : MonoBehaviour
     [SerializeField] private GameObject _canvasMain;
     [SerializeField] private GameObject _buttonEdit;
     [SerializeField] private GameObject _spriteSmallBox;
+    [SerializeField] private GameObject _spriteBigBox;
 
     private static GameObject _buttonEditStatic;
     private static GameObject _spriteSmallBoxStatic;
+    private static GameObject _spriteBigBoxStatic;
 
     private SamplesController _samplesController;
 
@@ -28,6 +30,7 @@ public class WarehouseButtons : MonoBehaviour
         _samplesController = new SamplesController();
 
         _spriteSmallBoxStatic = _spriteSmallBox;
+        _spriteBigBoxStatic = _spriteBigBox;
     }
 
     // Responsible for pressing the plus button
@@ -69,13 +72,13 @@ public class WarehouseButtons : MonoBehaviour
             _spriteSmallBoxStatic.SetActive(false);
         }
 
-        if (bigBoxes > 0)
+        if (bigBoxes > 0 && !_spriteBigBoxStatic.activeSelf)
         {
-            // _spriteBigBoxStatic.SetActive(true);
+            _spriteBigBoxStatic.SetActive(true);
         }
-        else if (bigBoxes == 0)
+        else if (bigBoxes == 0 && _spriteBigBoxStatic.activeSelf)
         {
-            // _spriteBigBoxStatic.SetActive(false);
+            _spriteBigBoxStatic.SetActive(false);
         }
     }
 }

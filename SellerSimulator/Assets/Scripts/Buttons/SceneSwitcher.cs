@@ -6,8 +6,11 @@ using UnityEngine.SceneManagement;
 
 public class SceneSwitcher : MonoBehaviour
 {
+    [SerializeField] private Animation transitionIn;
+
     public void SceneSwitch(int _idScene)
     {
+        transitionIn.Play();
         SceneManager.LoadScene(_idScene);
     }
 }

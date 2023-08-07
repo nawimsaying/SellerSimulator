@@ -1,3 +1,4 @@
+using Assets.Scripts.Architecture.WareHouseDb;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -36,7 +37,7 @@ public class SamplesController : MonoBehaviour
             // Indicate that there is already some template in this frame
             int currentPosition = CameraWarehouse.GetCameraPosition();
 
-            GameObject spawnObject = Instantiate(_prefabsStatic[idSample], _spawnPosition[currentPosition], Quaternion.Euler(0f, -90f, 0f));
+            GameObject spawnObject = Instantiate(_prefabsStatic[idSample], _spawnPosition[currentPosition], _prefabsStatic[idSample].transform.rotation);
             spawnObject.name = GenerateSampleName();
             SamplesOnFrames samplesOnFrames = new SamplesOnFrames(currentPosition, spawnObject.name);
             samplesOnFramesList.Add(samplesOnFrames);
@@ -171,7 +172,7 @@ public class SamplesController : MonoBehaviour
             else
                 idSample = 1;
 
-            GameObject sample = Instantiate(_prefabsStatic[idSample], _spawnPosition[samplePosition], Quaternion.Euler(0f, -90f, 0f));
+            GameObject sample = Instantiate(_prefabsStatic[idSample], _spawnPosition[samplePosition], _prefabsStatic[idSample].transform.rotation);
 
             // Give name to sample
             for (int j = 0; j < samplesOnFramesList.Count; j++)
@@ -180,27 +181,67 @@ public class SamplesController : MonoBehaviour
                     sample.name = samplesOnFramesList[j].sampleName;
             }
 
+            // Get data
+            WareHouseRepository houseRepository = new WareHouseRepository(WareHouseDbMock.Instance);
+            List<ModelWareHouse> wareHouseRepositories = houseRepository.GetAll();
+
             // Spawn boxes on prefab
             for (int j = 0; j < sampleList[i].rackSample.Length; j++)
             {
+                bool isSelled = true;
+
                 if (sampleList[i].rackSample[j] != 0)
                 {
-                    GameObject instantiatedPrefab = Instantiate(DragObject.prefabToInstantiate);
+                    for (int k = 0; k < wareHouseRepositories.Count; k++)
+                    {
+                        // If the box was not sold, spawn it
+                        if (wareHouseRepositories[k].idBox == sampleList[i].rackSample[j])
+                        {
+                            GameObject instantiatedPrefab;
 
-                    string nameOfSpace;
+                            if (idSample == 0)
+                                instantiatedPrefab = Instantiate(DragObject.prefabToInstantiate[0]);
+                            else
+                                instantiatedPrefab = Instantiate(DragObject.prefabToInstantiate[1]);
 
-                    if (j < 10)
-                        nameOfSpace = "SpaceForBox" + "0" + Convert.ToString(j);
-                    else
-                        nameOfSpace = "SpaceForBox" + Convert.ToString(j);
+                            string nameOfSpace;
 
-                    GameObject spaceForBox = sample.transform.Find(nameOfSpace).gameObject;
+                            if (idSample == 0)
+                            {
+                                if (j < 10)
+                                    nameOfSpace = "SpaceForBox" + "0" + Convert.ToString(j);
+                                else
+                                    nameOfSpace = "SpaceForBox" + Convert.ToString(j);
+                            }
+                            else
+                            {
+                                if (j < 10)
+                                    nameOfSpace = "SpaceForBigBox" + "0" + Convert.ToString(j);
+                                else
+                                    nameOfSpace = "SpaceForBigBox" + Convert.ToString(j);
+                            }
 
-                    instantiatedPrefab.transform.position = spaceForBox.transform.position;
+                            GameObject spaceForBox = sample.transform.Find(nameOfSpace).gameObject;
 
-                    Destroy(spaceForBox);
+                            instantiatedPrefab.transform.position = spaceForBox.transform.position;
+
+                            if (idSample == 1)
+                                instantiatedPrefab.transform.rotation = spaceForBox.transform.rotation;
+
+                            Destroy(spaceForBox);
+
+                            isSelled = false;
+
+                            break;
+                        }
+                    }
+                    if (isSelled)
+                    {
+                        sampleList[i].rackSample[j] = 0;
+                    }
                 }
             }
+            SaveLoadManager.SaveSampleList(sampleList);
         }
     }
 }
