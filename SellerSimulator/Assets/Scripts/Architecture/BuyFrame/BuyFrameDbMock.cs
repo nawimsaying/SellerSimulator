@@ -22,58 +22,69 @@ namespace Assets.Scripts.Architecture.MainDB
 
         
 
-        private MainDbMock _mainDbMock;
         private MainDbMock _listLocal;
         private WareHouseDbMock _wareHouseDbMock;
         private PlayerData _playerData;
 
         public BuyFrameDbMock()
         {
-            _mainDbMock = new MainDbMock();
-            _listLocal = _mainDbMock.LoadedList();
-            _wareHouseDbMock = WareHouseDbMock.Instance;
+            _listLocal = SaveLoadManager.LoadMainDbMockList();
+            _wareHouseDbMock = new WareHouseDbMock();
             _playerData = PlayerDataHolder.playerData;
         }
 
         public Result<bool> UnlockItemForGold(int productId, int gold)
         {
-
-
             ModelBox itemToBuy = _listLocal.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
 
-            // ModelBox itemToBuy = mainDbMock.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
 
             if (itemToBuy == null)
             {
                 return Result<bool>.Error("Item with the specified ID was not found.");
-            }
+            }  
 
-            if(gold >= itemToBuy.idProduct.goldenPrice)
+            if (gold >= itemToBuy.idProduct.goldenPrice)
             {
-                int newGold = gold - itemToBuy.idProduct.goldenPrice;
+                    int newGold = gold - itemToBuy.idProduct.goldenPrice;
 
-                PlayerPrefs.SetInt("Gold", newGold);
+                    PlayerPrefs.SetInt("Gold", newGold);
 
-                foreach (var modelBuyFrame in _listLocal.ListBox)
-                {
-                    if (modelBuyFrame.idProduct.id == productId)
+                    foreach (var modelBuyFrame in _listLocal.ListBox)
                     {
-                        modelBuyFrame.idProduct.lockForGold = false;
-                        break; // Можно прервать цикл, т.к. мы уже нашли нужный элемент
+                        if (modelBuyFrame.idProduct.id == productId)
+                        {
+                            modelBuyFrame.idProduct.lockForGold = false;
+                            break; // Можно прервать цикл, т.к. мы уже нашли нужный элемент
+                        }
                     }
-                }
 
-                SaveLoadManager.SaveMainDbMockList(_listLocal);
+                    SaveLoadManager.SaveMainDbMockList(_listLocal);
 
-                _playerData.SetGold(newGold);
+                    _playerData.SetGold(newGold);
 
-                return Result<bool>.Success(true);
+                    return Result<bool>.Success(true);
+            }else
+                return Result<bool>.Success(false);
+        }
 
-            }
-            else
+        string GetEmptyCellCountMessage(List<Sample> sampleList)
+        {
+            if (sampleList.Count == 0 || sampleList[0].rackSample == null)
             {
-                return Result<bool>.Success(true);
+                return "Установите стеллаж";
             }
+
+            int countEmptyCells = 0;
+
+            for (int i = 0; i < sampleList[0].rackSample.Length; i++)
+            {
+                if (sampleList[0].rackSample[i] == 0)
+                {
+                    countEmptyCells++;
+                }
+            }
+
+            return countEmptyCells.ToString();
         }
 
         Result<string> IBuyFrameSource.BuyItem(int productId, int money)
@@ -85,31 +96,44 @@ namespace Assets.Scripts.Architecture.MainDB
                 return Result<string>.Error("Item with the specified ID was not found.");
             }
 
-            if(money >= itemToBuy.price)
+            List<Sample> sampleList = SaveLoadManager.LoadSampleList(); // List stylage
+            
+            WareHouseDbMock data = SaveLoadManager.LoadWareHouseDbMockList(); //database in wareHouse
+            List<ModelBox> ListBoxInWareHouse = data.purchasedItems;
+
+
+            string resultMessage = GetEmptyCellCountMessage(sampleList);
+
+            if (resultMessage == "Установите стеллаж")
+                return Result<string>.Error($"Установите стеллаж");
+
+            int countEmptyCells = Convert.ToInt32(resultMessage);
+
+            if (ListBoxInWareHouse.Count < countEmptyCells)
             {
-                int newMoney = money - itemToBuy.price;
-               
-                // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
-                _wareHouseDbMock.AddPurchasedItem(itemToBuy);
-                _playerData.SetCoins(newMoney);
+                if (money >= itemToBuy.price)
+                {
+                    int newMoney = money - itemToBuy.price;
 
+                    // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
+                    _wareHouseDbMock.AddPurchasedItem(itemToBuy);
+                    _playerData.SetCoins(newMoney);
+                    _playerData.AddExperience(250);
 
-                _playerData.AddExperience(250);
-
-
-                return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
+                    return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
+                }
+                else
+                    return Result<string>.Error($"Не достаточно средств");
             }
             else
-            {
-                return Result<string>.Success($"Не достаточно средств");
-            }
+                return Result<string>.Error("Не достаточно места на складе");
         }
 
         Result<List<ModelsBuyFrame>> IBuyFrameSource.GetAll()
         {
             List<ModelsBuyFrame> resultList = new List<ModelsBuyFrame>();
 
-            // Test load data
+
 
             
 
@@ -132,26 +156,6 @@ namespace Assets.Scripts.Architecture.MainDB
                 // Добавляем экземпляр ModelsBuyFrame в результирующий лист
                 resultList.Add(modelsBuyFrame);
             }
-
-            /*foreach (var modelBox in mainDbMock.ListBox)
-            {
-                // Создаем экземпляр ModelsBuyFrame и заполняем его данными из modelBox
-                ModelsBuyFrame modelsBuyFrame = new ModelsBuyFrame()
-                {
-                    
-                    idProduct = modelBox.idProduct.id,
-                    productName = modelBox.idProduct.name,
-                    price = modelBox.price,
-                    imageName = modelBox.idProduct.imageName,
-                    levelUnlock = modelBox.idProduct.lvlUnlock,
-                    lockForGold = modelBox.idProduct.lockForGold,
-                    goldenPrice = modelBox.idProduct.goldenPrice
-                };
-
-
-                // Добавляем экземпляр ModelsBuyFrame в результирующий лист
-                resultList.Add(modelsBuyFrame);
-            }*/
 
             return Result<List<ModelsBuyFrame>>.Success(resultList);
         }

@@ -93,6 +93,26 @@ public static class SaveLoadManager
         PlayerPrefs.SetString(key, jsonDataString);
     }
 
+    public static void SaveWareHouseDbMockList(WareHouseDbMock saveData)
+    {
+        string key = "wareHouseDbMockList";
+        string jsonDataString = null;
+
+        for (int i = 0; i < saveData.purchasedItems.Count; i++)
+        {
+            if (i == saveData.purchasedItems.Count - 1)
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData.purchasedItems[i]);
+            }
+            else
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData.purchasedItems[i]);
+                jsonDataString += "$";
+            }
+        }
+        PlayerPrefs.SetString(key, jsonDataString);
+    }
+
     public static ToolBarList LoadToolBarList()
     {
         string key = "toolBarList";
@@ -210,5 +230,37 @@ public static class SaveLoadManager
         }
         else
             return new MainDbMock();
+    }
+
+    public static WareHouseDbMock LoadWareHouseDbMockList()
+    {
+        string key = "wareHouseDbMockList";
+
+        if (PlayerPrefs.HasKey(key))
+        {
+            string loadedString = PlayerPrefs.GetString(key);
+
+            if (loadedString != "")
+            {
+                string[] jsonArray = loadedString.Split("$");
+
+                WareHouseDbMock result = new WareHouseDbMock();
+                List<ModelBox> modelBoxList = new List<ModelBox>();
+
+                for (int i = 0; i < jsonArray.Length; i++)
+                {
+                    ModelBox objectMy = JsonConvert.DeserializeObject<ModelBox>(jsonArray[i]);
+
+                    modelBoxList.Add(objectMy);
+
+                    result.purchasedItems = modelBoxList;
+                }
+                return result;
+            }
+            else
+                return new WareHouseDbMock();
+        }
+        else
+            return new WareHouseDbMock();
     }
 }

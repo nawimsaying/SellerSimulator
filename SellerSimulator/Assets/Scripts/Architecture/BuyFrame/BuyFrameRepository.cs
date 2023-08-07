@@ -56,7 +56,6 @@ namespace Assets.Scripts.Architecture.MainDB
             {
                 throw new Exception(result.Exception);
             }
-
         }
     }
 }

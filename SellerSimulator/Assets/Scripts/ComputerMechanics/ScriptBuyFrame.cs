@@ -143,7 +143,7 @@ public class ScriptBuyFrame : MonoBehaviour
 
         Debug.Log(_buyFrameRepository.BuyItem(idProduct, _playerData.Coins));
 
-        _test = new WareHouseRepository(WareHouseDbMock.Instance);
+        _test = new WareHouseRepository(new WareHouseDbMock());
 
         List<ModelWareHouse> items = _test.GetAll();
 

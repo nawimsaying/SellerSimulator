@@ -22,6 +22,7 @@ public class SamplesController : MonoBehaviour
 
         //PlayerPrefs.DeleteKey("sampleList");
 
+        //PlayerPrefs.DeleteKey("wareHouseDbMockList"); для удаления товаров со склада
         // Arranging objects in the scene
         PreparingTheScene();
     }

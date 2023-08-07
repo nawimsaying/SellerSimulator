@@ -8,25 +8,18 @@ using System.Linq;
 using UnityEngine;
 using static UnityEditor.Progress;
 
-class WareHouseDbMock : IWareHouseSource
+public class WareHouseDbMock : IWareHouseSource
 {
-    private static WareHouseDbMock instance;
+    private WareHouseDbMock _dataList;
     private ulong currentMaxId = 0;
 
-    public static WareHouseDbMock Instance
-    {
-        get
-        {
-            if (instance == null)
-            {
-                instance = new WareHouseDbMock();
-            }
-            return instance;
-        }
-    }
+ 
+
+
+    
 
     //���� � ������� ����� �������� ��������� �������
-    private List<ModelBox> purchasedItems = new List<ModelBox>();
+     public List<ModelBox> purchasedItems = new List<ModelBox>();
 
 
     public void AddPurchasedItem(ModelBox item)
@@ -45,6 +38,9 @@ class WareHouseDbMock : IWareHouseSource
         PlayerPrefs.SetString("CurrentMaxId", currentMaxId.ToString());
         PlayerPrefs.Save();
 
+        WareHouseDbMock data = SaveLoadManager.LoadWareHouseDbMockList(); // record
+        purchasedItems = data.purchasedItems; //duplicate list
+
         // ������� ����� ������ ModelBox � �������� ������ �� ����������� ������� item
         // ����� ����������� ������ ������ ������� �������� ������������� ���������
         ModelBox newItem = new ModelBox()
@@ -60,14 +56,19 @@ class WareHouseDbMock : IWareHouseSource
         };
 
         purchasedItems.Add(newItem);
-        Debug.Log("tut");
+        data.purchasedItems = purchasedItems; //copy list in data
+        SaveLoadManager.SaveWareHouseDbMockList(data); //save data(list)
     }
 
     Result<List<ModelWareHouse>> IWareHouseSource.GetAll()
     {
+
+
         List<ModelWareHouse> result = new List<ModelWareHouse>();
 
-        foreach (var wareHouseBox in purchasedItems)
+        _dataList = SaveLoadManager.LoadWareHouseDbMockList();
+
+        foreach (var wareHouseBox in _dataList.purchasedItems)
         {
             ModelWareHouse modelWareHouse = new ModelWareHouse()
             {
