@@ -132,10 +132,7 @@ namespace Assets.Scripts.Architecture.MainDB
         Result<List<ModelsBuyFrame>> IBuyFrameSource.GetAll()
         {
             List<ModelsBuyFrame> resultList = new List<ModelsBuyFrame>();
-
-
-
-            
+   
 
             foreach (var item in _listLocal.ListBox)
             {

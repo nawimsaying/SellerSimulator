@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.WareHouse
 {
-    class SellFrameRepository
+    public class SellFrameRepository
     {
         private ISellFrameSource _local;
 
-        SellFrameRepository(ISellFrameSource local) => _local = local;
+        public SellFrameRepository(ISellFrameSource local) => _local = local;
 
     
-        ModelsSaleFrame SellItem()
+        public List<ModelsSaleFrame> GetAll()
         {
-            var result = _local.SellItem();
+            var result = _local.GetAll();
 
             if (result.IsSuccess())
             {
