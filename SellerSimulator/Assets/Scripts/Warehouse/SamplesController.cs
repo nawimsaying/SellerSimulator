@@ -20,9 +20,9 @@ public class SamplesController : MonoBehaviour
     {
         _prefabsStatic = _prefabs;
 
-        //PlayerPrefs.DeleteKey("sampleList");
+       //PlayerPrefs.DeleteKey("sampleList");
 
-        //PlayerPrefs.DeleteKey("wareHouseDbMockList"); для удаления товаров со склада
+        //PlayerPrefs.DeleteKey("wareHouseDbMockList"); //для удаления товаров со склада
         // Arranging objects in the scene
         PreparingTheScene();
     }

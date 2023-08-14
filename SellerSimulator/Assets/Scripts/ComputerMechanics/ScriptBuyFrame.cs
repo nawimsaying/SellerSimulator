@@ -11,11 +11,21 @@ using UnityEngine.UI;
 
 public static class ButtonExtension
 {
-    public static void AddEventListener<T>(this Button button, T param, Action<T, Button> OnClick)
+    public static void AddEventListener(this Button button, Action onClick)
     {
-        button.onClick.AddListener(delegate () {
-            OnClick(param, button); // Добавили button как аргумент
+        button.onClick.AddListener(() => {
+            onClick();
         });
+    }
+}
+
+public class ItemClickParametersBuyFrame
+{
+    public int IdProduct { get; }
+
+    public ItemClickParametersBuyFrame(int idProduct)
+    {
+        IdProduct = idProduct;
     }
 }
 
@@ -70,6 +80,8 @@ public class ScriptBuyFrame : MonoBehaviour
 
         for (int i = 0; i < allItems.Count; i++)
         {
+            int tempIndex = i;
+
             if (_playerData.Level >= allItems[i].levelUnlock && !displayedProductIds.Contains(allItems[i].idProduct) && allItems[i].lockForGold == false)
             {
 
@@ -81,7 +93,7 @@ public class ScriptBuyFrame : MonoBehaviour
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
                 elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
 
-                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListener(allItems[i].idProduct, ItemClicked);
+                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListener(() => ItemClicked(new ItemClickParametersBuyFrame(allItems[tempIndex].idProduct)));
 
                 displayedProductIds.Add(allItems[i].idProduct);
             }else if (_playerData.Level >= allItems[i].levelUnlock && allItems[i].lockForGold == true && !displayedProductIds.Contains(allItems[i].idProduct))
@@ -101,7 +113,7 @@ public class ScriptBuyFrame : MonoBehaviour
                 textComponent.text = allItems[i].goldenPrice.ToString();
                 /////////////////////////////////////////////////////////////////////
 
-                elementItemForGold.transform.GetChild(0).GetComponent<Button>().AddEventListener(allItems[i].idProduct, UnlockItem);
+                elementItemForGold.transform.GetChild(0).GetComponent<Button>().AddEventListener(() => UnlockItem(new ItemClickParametersBuyFrame(allItems[tempIndex].idProduct)));
 
                 displayedProductIds.Add(allItems[i].idProduct);
 
@@ -136,12 +148,12 @@ public class ScriptBuyFrame : MonoBehaviour
     }
 
     // Сейчас метод проверяет, на ту ли мы кнопку нажимаем. Затем по нажатию кнопка будет покупать товар
-    void ItemClicked(int idProduct, Button button)
+    void ItemClicked(ItemClickParametersBuyFrame parameters)
     { 
 
-        Debug.Log("Item with id " + idProduct + " clicked");
+        Debug.Log("Item with id " + parameters.IdProduct + " clicked");
 
-        Debug.Log(_buyFrameRepository.BuyItem(idProduct, _playerData.Coins));
+        Debug.Log(_buyFrameRepository.BuyItem(parameters.IdProduct, _playerData.Coins));
 
         _test = new WareHouseRepository(new WareHouseDbMock());
 
@@ -152,11 +164,11 @@ public class ScriptBuyFrame : MonoBehaviour
     }
 
 
-    void UnlockItem(int idProduct, Button button)
+    void UnlockItem(ItemClickParametersBuyFrame parameters)
     {
-        Debug.Log("LockItem with id " + idProduct + " clicked");
+        Debug.Log("LockItem with id " + parameters.IdProduct + " clicked");
 
-        bool result =  _buyFrameRepository.UnlockItemForGold(idProduct, _playerData.Gold);
+        bool result =  _buyFrameRepository.UnlockItemForGold(parameters.IdProduct, _playerData.Gold);
 
         if (result)
         {
