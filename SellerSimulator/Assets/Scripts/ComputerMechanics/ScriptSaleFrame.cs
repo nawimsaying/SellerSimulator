@@ -10,17 +10,22 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+public static class ButtonExtensionSaleFrame
+{
+    public static void AddEventListenerForSaleFrame(this Button button, Action onClick)
+    {
+        button.onClick.AddListener(() => {
+            onClick();
+        });
+    }
+}
 public class ItemClickParametersSaleFrame
 {
     public int IdProduct { get; }
-    public int PriceSale { get; }
-    public int CountProduct { get; }
-
-    public ItemClickParametersSaleFrame(int idProduct, int priceSale, int countItem)
+    public ItemClickParametersSaleFrame(int idProduct)
     {
         IdProduct = idProduct;
-        PriceSale = priceSale;
-        CountProduct = countItem;
+        
     }
 }
 
@@ -29,19 +34,21 @@ public class ScriptSaleFrame : MonoBehaviour
 
     [SerializeField] private GameObject _itemProduct;
     private SellFrameRepository _saleFrameRepository;
-   /* [SerializeField] public GameObject inputPriceSale;
-    [SerializeField] public GameObject inputCountSale;*/ //переделать
+    [SerializeField] public InputField inputPriceSale;
+    [SerializeField] public InputField inputCountSale;
 
     // Start is called before the first frame update
     void Start()
     {
         _saleFrameRepository = new SellFrameRepository(new SellFrameDbMock());
+        DisplayProduct();
+        
     }
 
     // Update is called once per frame
     void Update()
     {
-        DisplayProduct();
+
     }
 
 
@@ -50,48 +57,60 @@ public class ScriptSaleFrame : MonoBehaviour
 
         List<ModelsSaleFrame> allItems = _saleFrameRepository.GetAll();
 
-        GameObject itemProduct = transform.GetChild(0).gameObject;
-        GameObject elementItem;
-
-        /*int tempPrice = Convert.ToInt32(inputPriceSale);
-        int tempCount = Convert.ToInt32(inputCountSale);*/  
-           
-
-
-        for (int i = 0; i < allItems.Count; i++)
+        if (allItems.Count > 0)
         {
-            int tempIndex = i;
+
+
+            GameObject itemProduct = transform.GetChild(0).gameObject;
+            GameObject elementItem;
+
+
+
+            for (int i = 0; i < allItems.Count; i++)
+            {
+                int tempIndex = i;
+
                 elementItem = Instantiate(itemProduct, transform);
+
+
 
                 // ”становка спрайта
                 elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[i].imageName);
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
                 elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].countProduct.ToString();
 
-                //elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListener(() => ItemClicked(new ItemClickParametersSaleFrame(allItems[tempIndex].idProduct, tempPrice, tempCount))); //доделать 
-        }
+                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForSaleFrame(() => ItemClicked(new ItemClickParametersSaleFrame(allItems[tempIndex].idProduct))); //доделать 
+            }
 
-        _itemProduct.SetActive(false);
+            _itemProduct.SetActive(false);
+        }else
+            _itemProduct.SetActive(false);
 
     }
 
 
     void ItemClicked(ItemClickParametersSaleFrame parameters)
     {
-
         Debug.Log("Item with id " + parameters.IdProduct + " clicked");
 
-        int temp= parameters.PriceSale;
-        int temp1 = parameters.CountProduct;
+        // ѕолучаем текст из полей ввода
+        string priceText = inputPriceSale.text;
+        string countText = inputCountSale.text;
 
-        /*Debug.Log(_buyFrameRepository.BuyItem(idProduct, _playerData.Coins));
+        // ѕреобразуем текст в числа (предполагаетс€, что это целочисленные значени€)
+        int price;
+        int count;
 
-        _test = new WareHouseRepository(new WareHouseDbMock());
-
-        List<ModelWareHouse> items = _test.GetAll();*/
-
-        Debug.Log("");
-
+        if (int.TryParse(priceText, out price) && int.TryParse(countText, out count))
+        {
+            //_saleFrameRepository.SellItem(parameters.IdProduct, price, count);
+            Debug.Log("Id: " + parameters.IdProduct + "price: " +  price + "count: " + count);
+            // “еперь у вас есть id товара, цена и количество дл€ передачи в метод SellItem
+        }
+        else
+        {
+            Debug.LogError("Invalid input for price or count");
+        }
     }
 
 }

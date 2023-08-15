@@ -9,9 +9,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public static class ButtonExtension
+public static class ButtonExtensionBuyFrame
 {
-    public static void AddEventListener(this Button button, Action onClick)
+    public static void AddEventListenerForBuyFrame(this Button button, Action onClick)
     {
         button.onClick.AddListener(() => {
             onClick();
@@ -93,7 +93,7 @@ public class ScriptBuyFrame : MonoBehaviour
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
                 elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
 
-                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListener(() => ItemClicked(new ItemClickParametersBuyFrame(allItems[tempIndex].idProduct)));
+                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForBuyFrame(() => ItemClicked(new ItemClickParametersBuyFrame(allItems[tempIndex].idProduct)));
 
                 displayedProductIds.Add(allItems[i].idProduct);
             }else if (_playerData.Level >= allItems[i].levelUnlock && allItems[i].lockForGold == true && !displayedProductIds.Contains(allItems[i].idProduct))
@@ -113,7 +113,7 @@ public class ScriptBuyFrame : MonoBehaviour
                 textComponent.text = allItems[i].goldenPrice.ToString();
                 /////////////////////////////////////////////////////////////////////
 
-                elementItemForGold.transform.GetChild(0).GetComponent<Button>().AddEventListener(() => UnlockItem(new ItemClickParametersBuyFrame(allItems[tempIndex].idProduct)));
+                elementItemForGold.transform.GetChild(0).GetComponent<Button>().AddEventListenerForBuyFrame(() => UnlockItem(new ItemClickParametersBuyFrame(allItems[tempIndex].idProduct)));
 
                 displayedProductIds.Add(allItems[i].idProduct);
 
