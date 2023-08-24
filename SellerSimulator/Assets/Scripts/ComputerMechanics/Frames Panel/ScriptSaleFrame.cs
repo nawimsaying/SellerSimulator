@@ -59,6 +59,8 @@ public class ScriptSaleFrame : MonoBehaviour
                 int tempIndex = i;
                 elementItem = Instantiate(itemProduct, transform);
 
+                
+
                 // Установка спрайта
                 elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[i].imageName);
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
@@ -67,7 +69,7 @@ public class ScriptSaleFrame : MonoBehaviour
                 Slider slider = elementItem.transform.GetChild(4).GetComponent<Slider>();
                 slider.maxValue = allItems[i].countProduct;
 
-                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForSaleFrame(() => ItemClicked(allItems[tempIndex].idProduct, Convert.ToInt32(slider.value)));
+                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForSaleFrame(() => ItemClicked(allItems[tempIndex].idBox, Convert.ToInt32(slider.value)));
             }
 
             _itemProduct.SetActive(false);
@@ -77,9 +79,11 @@ public class ScriptSaleFrame : MonoBehaviour
     }
 
 
-    void ItemClicked(int id, int currentSliderValue)
+    void ItemClicked(ulong idBox, int currentSliderValue)
     {
-        Debug.Log("Item with id " + id + "value slider" + currentSliderValue);
+        int tempPrice = 5000;
+        Debug.Log("Item with id " + idBox + "value slider" + currentSliderValue);
+        _saleFrameRepository.PutOnSale(idBox, currentSliderValue, tempPrice);
     }
 
 }

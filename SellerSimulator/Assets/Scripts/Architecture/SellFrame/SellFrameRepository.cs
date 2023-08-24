@@ -27,5 +27,22 @@ namespace Assets.Scripts.Architecture.WareHouse
                 throw new Exception(result.Exception);
             }
         }
+        
+
+        public bool PutOnSale(ulong id, int countProduct, int priceSale)
+        {
+            var result = _local.PutOnSale(id, countProduct, priceSale);
+
+            if (result.IsSuccess())
+            {
+                return result.Data;
+            }
+            else 
+            { 
+                throw new Exception(result.Exception); 
+            }
+        }
     }
+
+ 
 }

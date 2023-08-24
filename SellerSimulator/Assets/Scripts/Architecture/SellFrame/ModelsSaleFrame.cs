@@ -9,6 +9,7 @@ namespace Assets.Scripts.Architecture.WareHouse
 {
     public class ModelsSaleFrame 
     {
+        public ulong idBox;
         public int idProduct;
         public int countProduct;
         public string productName;

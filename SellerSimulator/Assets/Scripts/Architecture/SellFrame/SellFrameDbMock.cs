@@ -62,10 +62,10 @@ namespace Assets.Scripts.Architecture.WareHouse
 
             foreach (var item in listBoxFromStylageWareHouse)
             {
-                        // Создаем экземпляр ModelsBuyFrame и заполняем его данными из modelBox
+                // Создаем экземпляр ModelsBuyFrame и заполняем его данными из modelBox
                 ModelsSaleFrame modelsSaleFrame = new ModelsSaleFrame()
                 {
-
+                    idBox = item.id,
                     idProduct = item.idProduct.id,
                     countProduct = item.countProduct,
                     productName = item.idProduct.name,
@@ -79,6 +79,11 @@ namespace Assets.Scripts.Architecture.WareHouse
            
 
             return Result<List<ModelsSaleFrame>>.Success(resultList);
+        }
+
+        public Result<bool> PutOnSale(ulong idBox, int countProduct, int priceSale)
+        {
+            throw new NotImplementedException();
         }
     }
 }
