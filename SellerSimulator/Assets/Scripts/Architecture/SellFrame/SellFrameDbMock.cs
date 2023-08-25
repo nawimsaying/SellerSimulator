@@ -1,5 +1,8 @@
-﻿using Assets.Scripts.Architecture.MainDb.ModelsDb;
+﻿using Assets.Scripts.Architecture.MainDb;
+using Assets.Scripts.Architecture.MainDb.ModelsDb;
+using Assets.Scripts.Architecture.OnSaleFrame;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +14,15 @@ namespace Assets.Scripts.Architecture.WareHouse
     class SellFrameDbMock : ISellFrameSource
     {
         List<ModelBox> listBoxFromWareHouse = new List<ModelBox>(); // хранит в себе id коробки, которая хранит уже все остальные данные самой коробки
+
+        private WareHouseDbMock _listWareHouse;
+
+
+        public SellFrameDbMock()
+        {
+            _listWareHouse = SaveLoadManager.LoadWareHouseDbMockList();
+
+        }
 
         public List<ulong> ChekIdBoxOnStylage(List<Sample> sampleList)
         {
@@ -29,6 +41,8 @@ namespace Assets.Scripts.Architecture.WareHouse
                 }
             }
 
+            //Переделать GetAll Создать доп лист, затем сложить каждый idProduct по кол-ву товара, добавить проверку на активные продажи. Затем вывести список 
+
             return idList;
         }
 
@@ -39,8 +53,7 @@ namespace Assets.Scripts.Architecture.WareHouse
             List<Sample> sampleList = SaveLoadManager.LoadSampleList(); // List stylage
             List<ulong> idListBox = ChekIdBoxOnStylage(sampleList);
 
-            WareHouseDbMock data = SaveLoadManager.LoadWareHouseDbMockList(); // record
-            listBoxFromWareHouse = data.purchasedItems; //duplicate list
+            listBoxFromWareHouse = _listWareHouse.purchasedItems; //duplicate list
 
             List<ModelBox> listBoxFromStylageWareHouse = new List<ModelBox>();
 
@@ -81,9 +94,91 @@ namespace Assets.Scripts.Architecture.WareHouse
             return Result<List<ModelsSaleFrame>>.Success(resultList);
         }
 
-        public Result<bool> PutOnSale(ulong idBox, int countProduct, int priceSale)
+        public Result<bool> PutOnSale(ulong idBox, int countProduct, int priceSale)//переделать 
         {
-            throw new NotImplementedException();
+            OnSaleFrameDbMock data = SaveLoadManager.LoadOnSaleFrameDbMockList();
+            List<ModelBox> listProductsOnSale = data.onSaleProduct; // duplicate
+
+            ModelBox itemToWareHouse = _listWareHouse.purchasedItems.FirstOrDefault(item => item.id == idBox);
+
+            if (itemToWareHouse == null)
+            {
+                return Result<bool>.Error("Item not found in warehouse.");
+            }
+
+            // Создаем копии объектов
+            ModelBox dataForSale = new ModelBox
+            {
+                id = itemToWareHouse.id,
+                nameBox = itemToWareHouse.nameBox,
+                imageBox = itemToWareHouse.imageBox,
+                price = priceSale,
+                countBox = itemToWareHouse.countBox,
+                countProduct = countProduct,
+                sizeBox = itemToWareHouse.sizeBox,
+                idProduct = itemToWareHouse.idProduct
+                // Копируйте остальные поля по аналогии
+            };
+
+            ModelBox dataForWareHouse = new ModelBox
+            {
+                id = itemToWareHouse.id,
+                nameBox = itemToWareHouse.nameBox,
+                imageBox = itemToWareHouse.imageBox,
+                price = itemToWareHouse.price,
+                countBox = itemToWareHouse.countBox,
+                countProduct = itemToWareHouse.countProduct - countProduct, // Обновляем количество в складе
+                sizeBox = itemToWareHouse.sizeBox,
+                idProduct = itemToWareHouse.idProduct
+                // Копируйте остальные поля по аналогии
+            };
+
+            // Добавляем объект dataForSale в список продаж
+            listProductsOnSale.Add(dataForSale);
+            data.onSaleProduct = listProductsOnSale;
+
+            // Удаляем объект dataForWareHouse из склада только если продается все содержимое коробки
+            List<ModelBox> tempList = new List<ModelBox>(_listWareHouse.purchasedItems);
+            if (dataForWareHouse.countProduct == 0) // Сравниваем с нулем, чтобы определить, что продается все содержимое коробки
+            {
+                // Заменяем айди вместо его удаления
+                List<Sample> sampleList = SaveLoadManager.LoadSampleList();
+                List<ulong> rackSampleList = new List<ulong>(sampleList[0].rackSample);
+
+                // Заменяем айди на 0
+                int index = rackSampleList.IndexOf(idBox);
+                if (index >= 0)
+                {
+                    rackSampleList[index] = 0;
+                }
+
+                sampleList[0].rackSample = rackSampleList.ToArray();
+                SaveLoadManager.SaveSampleList(sampleList);
+            }
+            else
+            {
+                int indexOfItem = tempList.FindIndex(item => item.id == idBox);
+                if (indexOfItem >= 0)
+                {
+                    tempList[indexOfItem] = dataForWareHouse; // Обновляем элемент в списке с учетом продажи
+                }
+                else
+                {
+                    return Result<bool>.Error("Error index");
+                }
+            }
+
+            _listWareHouse.purchasedItems = tempList;
+
+            // Сохраняем изменения
+            SaveLoadManager.SaveOnSaleFrameDbMockList(data);
+            SaveLoadManager.SaveWareHouseDbMockList(_listWareHouse);
+
+            return Result<bool>.Success(true);
         }
+
+
+
+
     }
 }

@@ -99,7 +99,7 @@ namespace Assets.Scripts.Architecture.MainDB
             List<Sample> sampleList = SaveLoadManager.LoadSampleList(); // List stylage
             
             WareHouseDbMock data = SaveLoadManager.LoadWareHouseDbMockList(); //database in wareHouse
-            List<ModelBox> ListBoxInWareHouse = data.purchasedItems;
+            List<ModelBox> listBoxInWareHouse = data.purchasedItems;
 
 
             string resultMessage = GetEmptyCellCountMessage(sampleList);
@@ -109,7 +109,7 @@ namespace Assets.Scripts.Architecture.MainDB
 
             int countEmptyCells = Convert.ToInt32(resultMessage);
 
-            if (ListBoxInWareHouse.Count < countEmptyCells)
+            if (listBoxInWareHouse.Count < countEmptyCells)
             {
                 if (money >= itemToBuy.price)
                 {
