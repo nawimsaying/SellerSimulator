@@ -22,6 +22,7 @@ public class SamplesController : MonoBehaviour
         _prefabsStatic = _prefabs;
 
         //PlayerPrefs.DeleteKey("sampleList");
+        //PlayerPrefs.DeleteKey("Level");
 
         // Arranging objects in the scene
         PreparingTheScene();
@@ -54,6 +55,9 @@ public class SamplesController : MonoBehaviour
         }
         else
             Debug.LogWarning("This frame already has a template installed.");
+
+        WarehouseButtons warehouseButtons = new WarehouseButtons();
+        warehouseButtons.ChangePrefabActive();
     }
 
     public void DeleteSample()
@@ -89,6 +93,9 @@ public class SamplesController : MonoBehaviour
         }
         else
             Debug.LogWarning("There are boxes on the template, so it cannot be removed!");
+
+        WarehouseButtons warehouseButtons = new WarehouseButtons();
+        warehouseButtons.ChangePrefabActive();
     }
 
     public void SetBox(int indexOfPlace, ulong idBox)

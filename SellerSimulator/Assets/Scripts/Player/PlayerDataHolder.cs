@@ -30,7 +30,7 @@ namespace Assets.Scripts.Player
             else
             {
                 // Если данных нет, создаем новый экземпляр PlayerData с значениями по умолчанию
-                playerData = new PlayerData(70, 1000000, 5, 0, 100); // Lvl, Money, Gold, Exp, nextExp
+                playerData = new PlayerData(20, 1000000, 1000, 0, 100); // Lvl, Money, Gold, Exp, nextExp
 
                 // Сохраняем новые данные по умолчанию в PlayerPrefs
                 SavePlayerData();
