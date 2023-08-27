@@ -191,7 +191,7 @@ public class SamplesController : MonoBehaviour
             }
 
             // Get data
-            WareHouseRepository houseRepository = new WareHouseRepository(WareHouseDbMock.Instance);
+            WareHouseRepository houseRepository = new WareHouseRepository(new WareHouseDbMock());    
             List<ModelWareHouse> wareHouseRepositories = houseRepository.GetAll();
 
             // Spawn boxes on prefab
