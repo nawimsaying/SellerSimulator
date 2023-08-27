@@ -7,8 +7,13 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.WareHouse
 {
-    class ModelsSaleFrame //доделать
+    public class ModelsSaleFrame 
     {
-        public ModelBox idBox;
+        public ulong idBox;
+        public int idProduct;
+        public int countProduct;
+        public string productName;
+        public int price;
+        public string imageName;
     }
 }

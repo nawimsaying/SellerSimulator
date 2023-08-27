@@ -22,9 +22,11 @@ public class SamplesController : MonoBehaviour
         _prefabsStatic = _prefabs;
 
         //PlayerPrefs.DeleteKey("sampleList");
-        //PlayerPrefs.DeleteKey("Level");
+        //PlayerPrefs.DeleteKey("wareHouseDbMockList"); //��� �������� ������� �� ������
+        //PlayerPrefs.DeleteKey("toolBarList");
 
-        // Arranging objects in the scene
+
+        //PlayerPrefs.DeleteAll();
         PreparingTheScene();
     }
 
@@ -116,7 +118,7 @@ public class SamplesController : MonoBehaviour
     }
 
     private bool CheckFrameOnSamples()
-    { 
+    {
         List<Sample> sampleList = SaveLoadManager.LoadSampleList();
         int currentPosition = CameraWarehouse.GetCameraPosition();
 

@@ -18,7 +18,7 @@ public class WarehouseData : MonoBehaviour
     private void Start()
     {
         // Receive data from the warehouse in the computer 
-        _houseRepository = new WareHouseRepository(WareHouseDbMock.Instance);
+        _houseRepository = new WareHouseRepository(new WareHouseDbMock());
         _wareHouseRepositories = _houseRepository.GetAll();
 
         // DELETE

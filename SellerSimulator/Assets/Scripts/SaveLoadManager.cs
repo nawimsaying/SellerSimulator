@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Assets.Scripts.Architecture.MainDb;
 using Unity.VisualScripting;
 using Assets.Scripts.Architecture.MainDb.ModelsDb;
+using Assets.Scripts.Architecture.OnSaleFrame;
 
 public static class SaveLoadManager
 {
@@ -92,6 +93,47 @@ public static class SaveLoadManager
         }
         PlayerPrefs.SetString(key, jsonDataString);
     }
+
+    public static void SaveWareHouseDbMockList(WareHouseDbMock saveData)
+    {
+        string key = "wareHouseDbMockList";
+        string jsonDataString = null;
+
+        for (int i = 0; i < saveData.purchasedItems.Count; i++)
+        {
+            if (i == saveData.purchasedItems.Count - 1)
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData.purchasedItems[i]);
+            }
+            else
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData.purchasedItems[i]);
+                jsonDataString += "$";
+            }
+        }
+        PlayerPrefs.SetString(key, jsonDataString);
+    }
+
+    public static void SaveOnSaleFrameDbMockList(OnSaleFrameDbMock saveData)
+    {
+        string key = "wareHouseDbMockList";
+        string jsonDataString = null;
+
+        for (int i = 0; i < saveData.onSaleProduct.Count; i++)
+        {
+            if (i == saveData.onSaleProduct.Count - 1)
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData.onSaleProduct[i]);
+            }
+            else
+            {
+                jsonDataString += JsonConvert.SerializeObject(saveData.onSaleProduct[i]);
+                jsonDataString += "$";
+            }
+        }
+        PlayerPrefs.SetString(key, jsonDataString);
+    }
+
 
     public static ToolBarList LoadToolBarList()
     {
@@ -211,4 +253,70 @@ public static class SaveLoadManager
         else
             return new MainDbMock();
     }
+
+    public static WareHouseDbMock LoadWareHouseDbMockList()
+    {
+        string key = "wareHouseDbMockList";
+
+        if (PlayerPrefs.HasKey(key))
+        {
+            string loadedString = PlayerPrefs.GetString(key);
+
+            if (loadedString != "")
+            {
+                string[] jsonArray = loadedString.Split("$");
+
+                WareHouseDbMock result = new WareHouseDbMock();
+                List<ModelBox> modelBoxList = new List<ModelBox>();
+
+                for (int i = 0; i < jsonArray.Length; i++)
+                {
+                    ModelBox objectMy = JsonConvert.DeserializeObject<ModelBox>(jsonArray[i]);
+
+                    modelBoxList.Add(objectMy);
+
+                    result.purchasedItems = modelBoxList;
+                }
+                return result;
+            }
+            else
+                return new WareHouseDbMock();
+        }
+        else
+            return new WareHouseDbMock();
+    }
+
+    public static OnSaleFrameDbMock LoadOnSaleFrameDbMockList()
+    {
+        string key = "onSaleFrameDbMockList";
+
+        if (PlayerPrefs.HasKey(key))
+        {
+            string loadedString = PlayerPrefs.GetString(key);
+
+            if (loadedString != "")
+            {
+                string[] jsonArray = loadedString.Split("$");
+
+                OnSaleFrameDbMock result = new OnSaleFrameDbMock();
+                List<ModelBox> modelBoxList = new List<ModelBox>();
+
+                for (int i = 0; i < jsonArray.Length; i++)
+                {
+                    ModelBox objectMy = JsonConvert.DeserializeObject<ModelBox>(jsonArray[i]);
+
+                    modelBoxList.Add(objectMy);
+
+                    result.onSaleProduct = modelBoxList;
+                }
+                return result;
+            }
+            else
+                return new OnSaleFrameDbMock();
+        }
+        else
+            return new OnSaleFrameDbMock();
+    }
+
+
 }

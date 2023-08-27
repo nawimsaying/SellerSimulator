@@ -7,16 +7,16 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.WareHouse
 {
-    class SellFrameRepository
+    public class SellFrameRepository
     {
         private ISellFrameSource _local;
 
-        SellFrameRepository(ISellFrameSource local) => _local = local;
+        public SellFrameRepository(ISellFrameSource local) => _local = local;
 
     
-        ModelsSaleFrame SellItem()
+        public List<ModelsSaleFrame> GetAll()
         {
-            var result = _local.SellItem();
+            var result = _local.GetAll();
 
             if (result.IsSuccess())
             {
@@ -27,5 +27,22 @@ namespace Assets.Scripts.Architecture.WareHouse
                 throw new Exception(result.Exception);
             }
         }
+        
+
+        public bool PutOnSale(ulong id, int countProduct, int priceSale)
+        {
+            var result = _local.PutOnSale(id, countProduct, priceSale);
+
+            if (result.IsSuccess())
+            {
+                return result.Data;
+            }
+            else 
+            { 
+                throw new Exception(result.Exception); 
+            }
+        }
     }
+
+ 
 }

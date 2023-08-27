@@ -10,7 +10,7 @@ namespace Assets.Scripts.Architecture.MainDB
     {
         Result<List<ModelsBuyFrame>> GetAll();
         Result<string> BuyItem(int productId, int money);
-        Result<string> UnlockItemForGold(int productId, int gold);
+        Result<bool> UnlockItemForGold(int productId, int gold);
     }
 }
     

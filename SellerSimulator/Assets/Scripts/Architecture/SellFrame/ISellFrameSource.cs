@@ -6,11 +6,10 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.WareHouse
 {
-    interface ISellFrameSource // не доработано, додумать все методы
+    public interface ISellFrameSource // не доработано, додумать все методы
     {
 
-        Result <ModelsSaleFrame>SellItem(); 
-        
-
+        Result <List<ModelsSaleFrame>>GetAll();
+        Result<bool> PutOnSale(ulong idBox, int countProduct, int priceSale);
     }
 }
