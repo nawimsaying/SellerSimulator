@@ -4,18 +4,10 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using System;
 using UnityEngine.UI;
+using Unity.VisualScripting;
 
 public class WarehouseMechanics : MonoBehaviour
 {
-    [SerializeField] private Text _textSmallBox;
-
-    private void FixedUpdate()
-    {
-        int data = PlayerPrefs.GetInt("smallBoxes");
-        if (data != 0)
-            _textSmallBox.text = Convert.ToString(data);
-    }
-
     public void CheckForObjectInteraction()
     {
         // Get the touch position of the finger on the touch screen or the position of the mouse in screen space
@@ -55,28 +47,73 @@ public class WarehouseMechanics : MonoBehaviour
                 WarehouseButtons warehouseButtons = new WarehouseButtons();
                 warehouseButtons.SpawnBoxesInToolBar();
             }
+            else if (_hit.collider.CompareTag("SpaceForBigBox"))
+            {
+                // Update count of boxes in tool bar
+                int bigBoxes = PlayerPrefs.GetInt("bigBoxes");
+                bigBoxes--;
+                PlayerPrefs.SetInt("bigBoxes", bigBoxes);
+
+                ToolBarList _toolBarList = SaveLoadManager.LoadToolBarList();
+                ulong idBox = _toolBarList.toolBarList[0].idBox;
+                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[0]);
+                WarehouseData warehouseData = new WarehouseData();
+                var item = warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList);
+                SaveLoadManager.SaveToolBarList(warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList));
+
+                // Performing the required action
+                SpawnBox(_hit, idBox);
+
+                WarehouseButtons warehouseButtons = new WarehouseButtons();
+                warehouseButtons.SpawnBoxesInToolBar();
+            }
         }
     }
 
     private static void SpawnBox(RaycastHit hit, ulong idBox)
     {
-        // Code to perform an action
-        GameObject instantiatedPrefab = Instantiate(DragObject.prefabToInstantiate);
-        GameObject spaceForBox = hit.collider.gameObject;
+        if (hit.collider.CompareTag("SpaceForBox"))
+        {
+            // Code to perform an action
+            GameObject instantiatedPrefab = Instantiate(DragObject.prefabToInstantiate[0]);
+            GameObject spaceForBox = hit.collider.gameObject;
 
-        SamplesController samplesController = new SamplesController();
+            SamplesController samplesController = new SamplesController();
 
-        string spaceForBoxName = spaceForBox.name;
+            string spaceForBoxName = spaceForBox.name;
 
-        string indexOfSpaceForBox = spaceForBoxName.Substring(spaceForBoxName.Length - 2);
+            string indexOfSpaceForBox = spaceForBoxName.Substring(spaceForBoxName.Length - 2);
 
-        int index = int.Parse(EditIndex(indexOfSpaceForBox));
+            int index = int.Parse(EditIndex(indexOfSpaceForBox));
 
-        samplesController.SetBox(index, idBox);
+            samplesController.SetBox(index, idBox);
 
-        instantiatedPrefab.transform.position = spaceForBox.transform.position;
+            instantiatedPrefab.transform.position = spaceForBox.transform.position;
 
-        Destroy(spaceForBox);
+            Destroy(spaceForBox);
+        }
+        else if (hit.collider.CompareTag("SpaceForBigBox"))
+        {
+            // Code to perform an action
+            GameObject instantiatedPrefab = Instantiate(DragObject.prefabToInstantiate[1]).gameObject;
+            GameObject spaceForBox = hit.collider.gameObject;
+
+            SamplesController samplesController = new SamplesController();
+
+            string spaceForBoxName = spaceForBox.name;
+
+            string indexOfSpaceForBox = spaceForBoxName.Substring(spaceForBoxName.Length - 2);
+
+            int index = int.Parse(EditIndex(indexOfSpaceForBox));
+
+            samplesController.SetBox(index, idBox);
+
+            instantiatedPrefab.transform.position = spaceForBox.transform.position;
+
+            instantiatedPrefab.transform.rotation = spaceForBox.transform.rotation;
+
+            Destroy(spaceForBox);
+        }
     }
 
     private static string EditIndex(string index)

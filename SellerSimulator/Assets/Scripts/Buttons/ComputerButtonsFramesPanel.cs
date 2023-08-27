@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ComputerButtonsFramesPanel : MonoBehaviour
 {
@@ -10,8 +12,12 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
     [SerializeField] private GameObject _frameContracts;
     [SerializeField] private GameObject _frameStats;
 
+    [SerializeField] private TextMeshProUGUI _textBanner;
+
     private void Start()
     {
+        _textBanner.text = "Оптовый рынок";
+
         _frameBuy.SetActive(true);
         _frameSale.SetActive(false);
         _frameOnSale.SetActive(false);
@@ -21,6 +27,8 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
 
     public void OpenFrameBuy()
     {
+        _textBanner.text = "Оптовый рынок";
+
         _frameBuy.SetActive(true);
         _frameSale.SetActive(false);
         _frameOnSale.SetActive(false);
@@ -30,6 +38,8 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
 
     public void OpenFrameSale()
     {
+        _textBanner.text = "Склад";
+
         _frameBuy.SetActive(false);
         _frameSale.SetActive(true);
         _frameOnSale.SetActive(false);
@@ -39,6 +49,8 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
 
     public void OpenFrameOnSale()
     {
+        _textBanner.text = "Активные продажи";
+
         _frameBuy.SetActive(false);
         _frameSale.SetActive(false);
         _frameOnSale.SetActive(true);
@@ -48,6 +60,8 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
 
     public void OpenFrameContracts()
     {
+        _textBanner.text = "Контракты";
+
         _frameBuy.SetActive(false);
         _frameSale.SetActive(false);
         _frameOnSale.SetActive(false);

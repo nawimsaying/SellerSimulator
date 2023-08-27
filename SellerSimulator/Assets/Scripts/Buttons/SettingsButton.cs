@@ -24,11 +24,13 @@ public class SettingsButton : MonoBehaviour
 
     public void OnSettingsExit()
     {
+        Clicker clicker = new Clicker();
+
         _settingsCanvas.SetActive(false);
 
-        foreach (var canvas in _anotherCanvas)
-        {
-            canvas.SetActive(true);
-        }
+        if (Clicker.isClickerModeEnable)
+            _anotherCanvas[1].SetActive(true);
+        else
+            _anotherCanvas[0].SetActive(true);
     }
 }

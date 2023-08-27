@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,9 +9,9 @@ using static UnityEngine.GraphicsBuffer;
 
 public class Clicker : MonoBehaviour
 {
-    [SerializeField] private Toggle _toggle;
-    [SerializeField] private GameObject _canvas;
-    [SerializeField] private Text _text;
+    [SerializeField] private GameObject _canvasMain;
+    [SerializeField] private GameObject _canvasClickerMode;
+    [SerializeField] private TextMeshProUGUI _clickerCounterText;
 
     [NonSerialized] public static bool isClickerModeEnable = false;
 
@@ -25,7 +26,7 @@ public class Clicker : MonoBehaviour
             {
                 _clickCount++;
 
-                _text.text = _clickCount.ToString();
+                _clickerCounterText.text = _clickCount.ToString();
             }
 #else
             if (Input.touchCount < 4)
@@ -45,7 +46,7 @@ public class Clicker : MonoBehaviour
 
     public void ChangeToggleValue()
     {
-        if (_toggle.isOn)
+        if (!isClickerModeEnable)
             ToggleOn();
         else
             ToggleOff();
@@ -56,13 +57,15 @@ public class Clicker : MonoBehaviour
     {
         isClickerModeEnable = true;
 
-        _canvas.SetActive(false);
+        _canvasMain.SetActive(false);
+        _canvasClickerMode.SetActive(true);
     }
 
     // Logic when player turned off clicker mode
     private void ToggleOff()
     {
-        _canvas.SetActive(true);
+        _canvasClickerMode.SetActive(false);
+        _canvasMain.SetActive(true);
 
         isClickerModeEnable = false;
     }

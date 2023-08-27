@@ -1,13 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
+using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class SceneSettings : MonoBehaviour
 {
-    [SerializeField] private Text _fpsText;
+    [SerializeField] private TextMeshProUGUI _fpsText;
     [SerializeField] private bool _isFpsCounterEnable;
-    [SerializeField] private Text _screenText;
+    [SerializeField] private TextMeshProUGUI _screenText;
 
     private float _fps;
 
@@ -81,7 +83,7 @@ public class SceneSettings : MonoBehaviour
             }*/
             _delayTime = Time.time + 0.5f;
         }
-        //_screenText.text = "MainRes: " + _mainResolution + "X: " + Screen.width + " / Y: " + Screen.height + " / CurScale " + _currentScale + " / ";
+        _screenText.text = "MainRes: " + _mainResolution + " X: " + Screen.width + " / Y: " + Screen.height + " / CurScale " + _currentScale + " / ";
     }
 
     public static void ChangeGraphicSettings(bool isEcoModeEnable)
