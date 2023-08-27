@@ -9,8 +9,8 @@ using Palmmedia.ReportGenerator.Core.Common;
 
 public class WarehouseData : MonoBehaviour
 {
-    [SerializeField] private GameObject _buttonBox;
     [SerializeField] private Text _textSmallBox;
+    [SerializeField] private Text _textBigBox;
 
     private WareHouseRepository _houseRepository;
     private List<ModelWareHouse> _wareHouseRepositories;
@@ -47,6 +47,7 @@ public class WarehouseData : MonoBehaviour
     private void FixedUpdate()
     {
         _textSmallBox.text = Convert.ToString(PlayerPrefs.GetInt("smallBoxes"));
+        _textBigBox.text = Convert.ToString(PlayerPrefs.GetInt("bigBoxes"));
     }
 
     private void SortBoxesBySize(List<ModelWareHouse> toolBarList)
@@ -77,7 +78,7 @@ public class WarehouseData : MonoBehaviour
     {
         List<Sample> oldSampleList = SaveLoadManager.LoadSampleList();
         ToolBarList oldToolBarData = SaveLoadManager.LoadToolBarList();
-        
+
         if (oldSampleList.Count > 0)
         {
             for (int i = 0; i < oldSampleList.Count; i++)
