@@ -10,5 +10,10 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
     public class OnSaleFrameDbMock : IOnSaleFrameSource
     {
         public List<ModelBox> onSaleProduct = new List<ModelBox>(); // stores the products on display for sale
+
+        public Result<string> CancelSell(int idSell)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

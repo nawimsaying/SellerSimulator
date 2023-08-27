@@ -15,15 +15,17 @@ public class SamplesController : MonoBehaviour
         new Vector3(0.09f, 0.27f, 3.94f),
         new Vector3(8f, 0.27f, 3.94f)
     };
-
+    
     private void Start()
     {
         _prefabsStatic = _prefabs;
 
-        //PlayerPrefs.DeleteKey("sampleList");
-
+        //PlayerPrefs.DeleteKey("sampleList"); 
         //PlayerPrefs.DeleteKey("wareHouseDbMockList"); //для удаления товаров со склада
-        // Arranging objects in the scene
+        //PlayerPrefs.DeleteKey("toolBarList");
+
+
+        //PlayerPrefs.DeleteAll();
         PreparingTheScene();
     }
 

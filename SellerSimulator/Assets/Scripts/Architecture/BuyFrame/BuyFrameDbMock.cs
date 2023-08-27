@@ -76,15 +76,43 @@ namespace Assets.Scripts.Architecture.MainDB
 
             int countEmptyCells = 0;
 
-            for (int i = 0; i < sampleList[0].rackSample.Length; i++)
+            for (int i = 0; i < sampleList.Count; i++)
             {
-                if (sampleList[0].rackSample[i] == 0)
+                for (int j = 0; j < sampleList[i].rackSample.Length; j++)
                 {
-                    countEmptyCells++;
+                    if (sampleList[i].rackSample[j] == 0)
+                    {
+                        countEmptyCells++;
+                    }
                 }
+                
             }
 
             return countEmptyCells.ToString();
+        }
+
+        string GetPlaceStylageMessage(List<Sample> sampleList)
+        {
+            if (sampleList.Count == 0 || sampleList[0].rackSample == null)
+            {
+                return "Установите стеллаж";
+            }
+
+            int countPlaceCells = 0;
+
+            for (int i = 0; i < sampleList.Count; i++)
+            {
+                for (int j = 0; j < sampleList[i].rackSample.Length; j++)
+                {
+                    if (sampleList[i].rackSample[j] != 0)
+                    {
+                        countPlaceCells++; 
+                    }                    
+                }
+
+            }
+
+            return countPlaceCells.ToString();
         }
 
         Result<string> IBuyFrameSource.BuyItem(int productId, int money)
@@ -101,15 +129,27 @@ namespace Assets.Scripts.Architecture.MainDB
             WareHouseDbMock data = SaveLoadManager.LoadWareHouseDbMockList(); //database in wareHouse
             List<ModelBox> listBoxInWareHouse = data.purchasedItems;
 
+            string resultMessageEmpty = GetEmptyCellCountMessage(sampleList);
+            string resultMessageTest = GetPlaceStylageMessage(sampleList);
 
-            string resultMessage = GetEmptyCellCountMessage(sampleList);
-
-            if (resultMessage == "Установите стеллаж")
+            
+            if (resultMessageEmpty == "Установите стеллаж" || resultMessageTest == "Установите стеллаж")
                 return Result<string>.Error($"Установите стеллаж");
 
-            int countEmptyCells = Convert.ToInt32(resultMessage);
 
-            if (listBoxInWareHouse.Count < countEmptyCells)
+            int countEmptyCells = Convert.ToInt32(resultMessageEmpty);
+            int test = Convert.ToInt32(resultMessageTest);
+
+
+            int countWareHousePlace = 0;
+            int temp = listBoxInWareHouse.Count - test;
+
+            countWareHousePlace = countEmptyCells - temp; 
+
+
+
+
+            if (countWareHousePlace > 0)
             {
                 if (money >= itemToBuy.price)
                 {

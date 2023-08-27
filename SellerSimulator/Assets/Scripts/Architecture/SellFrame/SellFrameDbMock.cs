@@ -71,9 +71,40 @@ namespace Assets.Scripts.Architecture.WareHouse
                 listBoxFromStylageWareHouse.Add(item);
             }
 
-
+            Dictionary<int, ModelBox> productCountDict = new Dictionary<int, ModelBox>();
 
             foreach (var item in listBoxFromStylageWareHouse)
+            {
+                if (productCountDict.ContainsKey(item.idProduct.id))
+                {
+                    // Если idProduct уже есть в словаре, добавляем к существующему значению countProduct
+                    productCountDict[item.idProduct.id].countProduct += item.countProduct;
+                }
+                else
+                {
+                    // Если idProduct отсутствует в словаре, добавляем его с текущим элементом
+                    productCountDict[item.idProduct.id] = item;
+                }
+            }
+
+            List<ModelBox> result = productCountDict.Values.ToList();
+
+            // Теперь uniqueProducts содержит только уникальные idProduct, а productCountDict содержит суммарные countProduct
+
+            // Добавляем оставшиеся элементы из исходного списка
+            foreach (var item in listBoxFromStylageWareHouse)
+            {
+                if (!productCountDict.ContainsKey(item.idProduct.id))
+                {
+                    result.Add(item);
+                }
+            }
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            //
+            /// !!!Добавить проверку на продажу товаров на данный момент. (Вычесть Весь список от списка продаж на данный момент) и вывести
+            //
+            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+            foreach (var item in result)
             {
                 // Создаем экземпляр ModelsBuyFrame и заполняем его данными из modelBox
                 ModelsSaleFrame modelsSaleFrame = new ModelsSaleFrame()
@@ -88,8 +119,8 @@ namespace Assets.Scripts.Architecture.WareHouse
 
                 resultList.Add(modelsSaleFrame);
             }
-               
-           
+
+
 
             return Result<List<ModelsSaleFrame>>.Success(resultList);
         }
