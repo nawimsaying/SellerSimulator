@@ -64,12 +64,12 @@ public class ScriptSaleFrame : MonoBehaviour
                 // Установка спрайта
                 elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[i].imageName);
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
-                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].countProduct.ToString();
+                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"{allItems[i].countProduct.ToString()} шт. ";
 
-                Slider slider = elementItem.transform.GetChild(4).GetComponent<Slider>();
-                slider.maxValue = allItems[i].countProduct;
+               /* Slider slider = elementItem.transform.GetChild(4).GetComponent<Slider>();
+                slider.maxValue = allItems[i].countProduct;*/
 
-                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForSaleFrame(() => ItemClicked(allItems[tempIndex].idBox, Convert.ToInt32(slider.value)));
+                /*elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForSaleFrame(() => ItemClicked(allItems[tempIndex].idBox, Convert.ToInt32(slider.value)));*/
             }
 
             _itemProduct.SetActive(false);

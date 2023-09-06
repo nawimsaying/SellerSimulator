@@ -26,7 +26,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 1,
                     name = "Кнопочный телефон",
-                    imageName = "iconIphone",
+                    imageName = "oldPhone",
                     lvlUnlock = 1
                 },
             },
@@ -82,7 +82,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 4,
                     name = "Кубик Рубика",
-                    imageName = "iconIphone",
+                    imageName = "rubiksCube",
                     lvlUnlock = 2,
                 },
             },
@@ -156,7 +156,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 8,
                     name = "Андроид",
-                    imageName = "iconIphone",
+                    imageName = "middlePhone",
                     lvlUnlock = 7,
                 },
             },
@@ -370,7 +370,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 19,
                     name = "Айфон",
-                    imageName = "iconIphone",
+                    imageName = "newPhone",
                     lvlUnlock = 35,
                     lockForGold = true,
                     goldenPrice = 20

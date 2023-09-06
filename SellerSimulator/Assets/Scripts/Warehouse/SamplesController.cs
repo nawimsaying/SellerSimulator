@@ -24,8 +24,8 @@ public class SamplesController : MonoBehaviour
         //PlayerPrefs.DeleteKey("sampleList");
         //PlayerPrefs.DeleteKey("wareHouseDbMockList"); //��� �������� ������� �� ������
         //PlayerPrefs.DeleteKey("toolBarList");
-
-
+        
+        
         //PlayerPrefs.DeleteAll();
         PreparingTheScene();
     }

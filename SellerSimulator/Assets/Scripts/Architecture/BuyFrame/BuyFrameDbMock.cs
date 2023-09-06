@@ -138,11 +138,11 @@ namespace Assets.Scripts.Architecture.MainDB
 
 
             int countEmptyCells = Convert.ToInt32(resultMessageEmpty);
-            int test = Convert.ToInt32(resultMessageTest);
+            int result = Convert.ToInt32(resultMessageTest);
 
 
             int countWareHousePlace = 0;
-            int temp = listBoxInWareHouse.Count - test;
+            int temp = listBoxInWareHouse.Count - result;
 
             countWareHousePlace = countEmptyCells - temp; 
 
