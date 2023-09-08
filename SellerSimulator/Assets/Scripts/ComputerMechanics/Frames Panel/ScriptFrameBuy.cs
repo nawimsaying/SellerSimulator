@@ -86,9 +86,9 @@ public class ScriptFrameBuy : MonoBehaviour
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
                 elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
 
-                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForBuyFrame(() => ItemClicked(allItems[tempIndex].idProduct));
+                //elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForBuyFrame(() => ItemClicked(allItems[tempIndex].idProduct));
 
-                displayedProductIds.Add(allItems[i].idProduct);
+                //displayedProductIds.Add(allItems[i].idProduct);
             }
             else if (_playerData.Level >= allItems[i].levelUnlock && allItems[i].lockForGold == true && !displayedProductIds.Contains(allItems[i].idProduct))
             {
