@@ -1,4 +1,6 @@
+using TMPro;
 using UnityEngine;
+using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCounters;
 
 public class ComputerPopWindowController : MonoBehaviour
 {
@@ -11,11 +13,11 @@ public class ComputerPopWindowController : MonoBehaviour
         background.SetActive(false);
     }
 
-    public void OpenPopWindow()
+    /*public void OpenPopWindow()
     {
         popWindow.SetActive(true);
         background.SetActive(true);
-    }
+    }*/
 
     public void ClosePopWindow()
     {

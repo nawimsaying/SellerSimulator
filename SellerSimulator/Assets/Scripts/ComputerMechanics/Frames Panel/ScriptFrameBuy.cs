@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.IO;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public static class ButtonExtensionBuyFrame
@@ -31,11 +32,16 @@ public class ScriptFrameBuy : MonoBehaviour
     [SerializeField] private GameObject _itemProduct;
     [SerializeField] private GameObject _itemProductForGold;
     [SerializeField] private GameObject _unavailableItem; //Недоступный product для user
+    [SerializeField] private GameObject _popWindow;
+    [SerializeField] private TextMeshProUGUI _counterForWindowPop;
+    private ClickButtonPopWindow clickButtonPopWindow;
     private List<GameObject> displayedItems = new List<GameObject>(); // Список для хранения созданных элементов
-
+    string tempTextFromCounter;
 
     void Start()
     {
+        clickButtonPopWindow = FindObjectOfType<ClickButtonPopWindow>();
+        tempTextFromCounter  = _counterForWindowPop.text;
         _unavailableItem.SetActive(false);
         _buyFrameRepository = new BuyFrameRepository(new BuyFrameDbMock());
         _playerData = PlayerDataHolder.playerData;
@@ -56,16 +62,23 @@ public class ScriptFrameBuy : MonoBehaviour
             DisplayProduct();
             _unavailableItem.transform.SetAsLastSibling();
         }
+
+        
+        
+        if(tempTextFromCounter != _counterForWindowPop.text)
+        {
+            tempTextFromCounter = _counterForWindowPop.text;
+            int id = PlayerPrefs.GetInt("idForCounter");
+            LoadInfoPopWindow(id);
+        }
     }
 
     void DisplayProduct()
     {
-
-
         displayedProductIds.Clear();
 
-        List<ModelsBuyFrame> allItems = _buyFrameRepository.GetAll();
 
+        List<ModelsBuyFrame> allItems = _buyFrameRepository.GetAll();
         GameObject itemProduct = transform.GetChild(0).gameObject;
         GameObject elementItem;
         GameObject lockedItemForGold = transform.GetChild(1).gameObject;
@@ -86,9 +99,15 @@ public class ScriptFrameBuy : MonoBehaviour
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
                 elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
 
+                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForBuyFrame(() => {
+                    clickButtonPopWindow.ResetCounter();
+                    LoadInfoPopWindow(tempIndex);
+                    PlayerPrefs.SetInt("idForCounter", tempIndex);
+                    PlayerPrefs.Save();
+                });
                 //elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForBuyFrame(() => ItemClicked(allItems[tempIndex].idProduct));
 
-                //displayedProductIds.Add(allItems[i].idProduct);
+                displayedProductIds.Add(allItems[i].idProduct);
             }
             else if (_playerData.Level >= allItems[i].levelUnlock && allItems[i].lockForGold == true && !displayedProductIds.Contains(allItems[i].idProduct))
             {
@@ -124,6 +143,22 @@ public class ScriptFrameBuy : MonoBehaviour
         _itemProduct.SetActive(false);
         _itemProductForGold.SetActive(false);
 
+    }
+
+    public void LoadInfoPopWindow(int id)
+    {
+        List<ModelsBuyFrame> allItems = _buyFrameRepository.GetAll();
+
+        // Обновите содержимое существующего окна
+        _popWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[id].productName;
+        _popWindow.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[id].imageName);
+        string textFromCounter = _counterForWindowPop.text;
+        int result = allItems[id].price * int.Parse(textFromCounter);
+        Button button = _popWindow.transform.GetChild(5).GetComponent<Button>();
+        button.GetComponentInChildren<TextMeshProUGUI>().text = result.ToString();
+
+        _popWindow.transform.GetChild(5).GetComponent<Button>().AddEventListenerForBuyFrame(() => ItemClicked(allItems[id].idProduct, int.Parse(_counterForWindowPop.text), result));
+        _popWindow.SetActive(true);
 
     }
 
@@ -142,18 +177,18 @@ public class ScriptFrameBuy : MonoBehaviour
     }
 
     // Сейчас метод проверяет, на ту ли мы кнопку нажимаем. Затем по нажатию кнопка будет покупать товар
-    void ItemClicked(int idProduct)
+    void ItemClicked(int idProduct, int countProducts, int priceProducts)
     {
 
-        Debug.Log("Item with id " + idProduct + " clicked");
+        Debug.Log("Item with id " + idProduct + " " + countProducts + " " + priceProducts+ " clicked");
 
-        Debug.Log(_buyFrameRepository.BuyItem(idProduct, _playerData.Coins));
+      /*  Debug.Log(_buyFrameRepository.BuyItem(idProduct, _playerData.Coins));
 
         _test = new WareHouseRepository(new WareHouseDbMock());
 
         List<ModelWareHouse> items = _test.GetAll();
 
-        Debug.Log("");
+        Debug.Log("");*/
 
     }
 
@@ -171,9 +206,6 @@ public class ScriptFrameBuy : MonoBehaviour
             _unavailableItem.transform.SetAsLastSibling();
         }
 
-
-
         Debug.Log($"Покупка{result}");
-
     }
 }
