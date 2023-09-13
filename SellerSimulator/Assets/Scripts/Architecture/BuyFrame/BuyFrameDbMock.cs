@@ -115,7 +115,7 @@ namespace Assets.Scripts.Architecture.MainDB
             return countPlaceCells.ToString();
         }
 
-        Result<string> IBuyFrameSource.BuyItem(int productId, int money)
+        Result<string> IBuyFrameSource.BuyItem(int productId, int countProducts, int priceProducts, int money)
         {
             ModelBox itemToBuy = _listLocal.ListBox.FirstOrDefault(item => item.idProduct.id == productId);
 
@@ -129,17 +129,15 @@ namespace Assets.Scripts.Architecture.MainDB
             WareHouseDbMock data = SaveLoadManager.LoadWareHouseDbMockList(); //database in wareHouse
             List<ModelBox> listBoxInWareHouse = data.purchasedItems;
 
-            string resultMessageEmpty = GetEmptyCellCountMessage(sampleList);
-            string resultMessageTest = GetPlaceStylageMessage(sampleList);
+            string resultMessageEmpty = GetEmptyCellCountMessage(sampleList); //Получаем кол-во о пустых ячеек 
+            string resultMessageTest = GetPlaceStylageMessage(sampleList); // Кол-во мест
 
             
             if (resultMessageEmpty == "Установите стеллаж" || resultMessageTest == "Установите стеллаж")
                 return Result<string>.Error($"Установите стеллаж");
 
-
             int countEmptyCells = Convert.ToInt32(resultMessageEmpty);
             int result = Convert.ToInt32(resultMessageTest);
-
 
             int countWareHousePlace = 0;
             int temp = listBoxInWareHouse.Count - result;
@@ -149,16 +147,19 @@ namespace Assets.Scripts.Architecture.MainDB
 
 
 
-            if (countWareHousePlace > 0)
+            if (countWareHousePlace >= countProducts)
             {
-                if (money >= itemToBuy.price)
+                if (money >= priceProducts)
                 {
-                    int newMoney = money - itemToBuy.price;
+                    int newMoney = money - priceProducts;
 
-                    // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
-                    _wareHouseDbMock.AddPurchasedItem(itemToBuy);
+                    for (int i = 0; i < countProducts; i++) // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
+                    {
+                        _wareHouseDbMock.AddPurchasedItem(itemToBuy); 
+                        
+                        _playerData.AddExperience(250); // опыт временно / temp exp
+                    }
                     _playerData.SetCoins(newMoney);
-                    _playerData.AddExperience(250);
 
                     return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
                 }

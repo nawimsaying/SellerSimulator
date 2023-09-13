@@ -157,7 +157,10 @@ public class ScriptFrameBuy : MonoBehaviour
         Button button = _popWindow.transform.GetChild(5).GetComponent<Button>();
         button.GetComponentInChildren<TextMeshProUGUI>().text = result.ToString();
 
-        _popWindow.transform.GetChild(5).GetComponent<Button>().AddEventListenerForBuyFrame(() => ItemClicked(allItems[id].idProduct, int.Parse(_counterForWindowPop.text), result));
+        Button buttonBuy = _popWindow.transform.GetChild(5).GetComponent<Button>();
+        buttonBuy.onClick.RemoveAllListeners(); // Удалить все предыдущие обработчики
+        buttonBuy.onClick.AddListener(() => ItemClicked(allItems[id].idProduct, int.Parse(_counterForWindowPop.text), result));
+
         _popWindow.SetActive(true);
 
     }
@@ -179,17 +182,18 @@ public class ScriptFrameBuy : MonoBehaviour
     // Сейчас метод проверяет, на ту ли мы кнопку нажимаем. Затем по нажатию кнопка будет покупать товар
     void ItemClicked(int idProduct, int countProducts, int priceProducts)
     {
-
         Debug.Log("Item with id " + idProduct + " " + countProducts + " " + priceProducts+ " clicked");
 
-      /*  Debug.Log(_buyFrameRepository.BuyItem(idProduct, _playerData.Coins));
+        _buyFrameRepository.BuyItem(idProduct, countProducts, priceProducts, _playerData.Coins);
+        _popWindow.SetActive(false);
 
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        /// For test. How much count box on WareHouse
+        ////////////////////////////////////////////////////////////////////////////////////////////////
         _test = new WareHouseRepository(new WareHouseDbMock());
-
         List<ModelWareHouse> items = _test.GetAll();
-
-        Debug.Log("");*/
-
+        ////////////////////////////////////////////////////////////////////////////////////////////////
+        Debug.Log("");
     }
 
 
