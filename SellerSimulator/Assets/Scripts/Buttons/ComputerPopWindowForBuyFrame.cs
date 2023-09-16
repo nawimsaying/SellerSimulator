@@ -4,24 +4,37 @@ using static UnityEditor.Experimental.AssetDatabaseExperimental.AssetDatabaseCou
 
 public class ComputerPopWindowController : MonoBehaviour
 {
-    [SerializeField] private GameObject popWindow;
+    [SerializeField] private GameObject popWindowForBuy;
+    [SerializeField] private GameObject popWindowForSale;
     [SerializeField] private GameObject background;
 
     private void Start()
     {
-        popWindow.SetActive(false);
+        popWindowForBuy.SetActive(false);
+        popWindowForSale.SetActive(false);
         background.SetActive(false);
     }
 
-    /*public void OpenPopWindow()
+    public void OpenPopWindowForBuy()
     {
-        popWindow.SetActive(true);
+        popWindowForBuy.SetActive(true);
         background.SetActive(true);
-    }*/
-
-    public void ClosePopWindow()
+    }
+    public void OpenPopWindowForSale()
     {
-        popWindow.SetActive(false);
+        popWindowForSale.SetActive(true);
+        background.SetActive(true);
+    }
+
+    public void ClosePopWindowForBuy()
+    {
+        popWindowForBuy.SetActive(false);
+        background.SetActive(false);
+    }
+
+    public void ClosePopWindowForSale()
+    {
+        popWindowForSale.SetActive(false);
         background.SetActive(false);
     }
 }

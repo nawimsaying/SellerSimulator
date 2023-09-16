@@ -38,6 +38,7 @@ public class ScriptFrameBuy : MonoBehaviour
     private List<GameObject> displayedItems = new List<GameObject>(); // Список для хранения созданных элементов
     string tempTextFromCounter;
 
+
     void Start()
     {
         clickButtonPopWindow = FindObjectOfType<ClickButtonPopWindow>();

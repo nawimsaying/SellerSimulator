@@ -125,12 +125,12 @@ namespace Assets.Scripts.Architecture.WareHouse
             return Result<List<ModelsSaleFrame>>.Success(resultList);
         }
 
-        public Result<bool> PutOnSale(ulong idBox, int countProduct, int priceSale)//переделать 
+        public Result<bool> PutOnSale(int idProduct, int countProduct, int priceSale)//переделать 
         {
             OnSaleFrameDbMock data = SaveLoadManager.LoadOnSaleFrameDbMockList();
             List<ModelBox> listProductsOnSale = data.onSaleProduct; // duplicate
 
-            ModelBox itemToWareHouse = _listWareHouse.purchasedItems.FirstOrDefault(item => item.id == idBox);
+            ModelBox itemToWareHouse = _listWareHouse.purchasedItems.FirstOrDefault(item => item.idProduct.id == idProduct);
 
             if (itemToWareHouse == null)
             {
@@ -172,23 +172,23 @@ namespace Assets.Scripts.Architecture.WareHouse
             List<ModelBox> tempList = new List<ModelBox>(_listWareHouse.purchasedItems);
             if (dataForWareHouse.countProduct == 0) // Сравниваем с нулем, чтобы определить, что продается все содержимое коробки
             {
-                // Заменяем айди вместо его удаления
+                /*// Заменяем айди вместо его удаления
                 List<Sample> sampleList = SaveLoadManager.LoadSampleList();
-                List<ulong> rackSampleList = new List<ulong>(sampleList[0].rackSample);
+                List<int> rackSampleList = new List<int>(sampleList[0].rackSample);
 
                 // Заменяем айди на 0
-                int index = rackSampleList.IndexOf(idBox);
+                int index = rackSampleList.IndexOf(idProduct);
                 if (index >= 0)
                 {
                     rackSampleList[index] = 0;
                 }
 
                 sampleList[0].rackSample = rackSampleList.ToArray();
-                SaveLoadManager.SaveSampleList(sampleList);
+                SaveLoadManager.SaveSampleList(sampleList);*/
             }
             else
             {
-                int indexOfItem = tempList.FindIndex(item => item.id == idBox);
+                int indexOfItem = tempList.FindIndex(item => item.idProduct.id == idProduct);
                 if (indexOfItem >= 0)
                 {
                     tempList[indexOfItem] = dataForWareHouse; // Обновляем элемент в списке с учетом продажи

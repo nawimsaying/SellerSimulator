@@ -29,7 +29,7 @@ namespace Assets.Scripts.Architecture.WareHouse
         }
         
 
-        public bool PutOnSale(ulong id, int countProduct, int priceSale)
+        public bool PutOnSale(int id, int countProduct, int priceSale)
         {
             var result = _local.PutOnSale(id, countProduct, priceSale);
 
