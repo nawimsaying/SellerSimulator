@@ -96,7 +96,7 @@ public class ScriptFrameBuy : MonoBehaviour
                 displayedItems.Add(elementItem);
 
                 // Установка спрайта
-                elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[i].imageName);
+                elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/"+allItems[i].imageName);
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
                 elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
 
@@ -152,7 +152,7 @@ public class ScriptFrameBuy : MonoBehaviour
 
         // Обновите содержимое существующего окна
         _popWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[id].productName;
-        _popWindow.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[id].imageName);
+        _popWindow.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/" + allItems[id].imageName);
         string textFromCounter = _counterForWindowPop.text;
         int result = allItems[id].price * int.Parse(textFromCounter);
         Button button = _popWindow.transform.GetChild(5).GetComponent<Button>();

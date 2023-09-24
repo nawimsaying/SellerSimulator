@@ -44,7 +44,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 2,
                     name = "USB Flash 32gb",
-                    imageName = "iconIphone",
+                    imageName = "flash32Gb",
                     lvlUnlock = 1
                 },
             },
@@ -62,7 +62,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 3,
                     name = "Клавиатура",
-                    imageName = "iconIphone",
+                    imageName = "oldKeyboard",
                     lvlUnlock = 1,
                     lockForGold = true,
                     goldenPrice = 20
@@ -100,7 +100,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 5,
                     name = "Обычные часы",
-                    imageName = "iconIphone",
+                    imageName = "watch",
                     lvlUnlock = 4,
                 },
             },
@@ -118,7 +118,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 6,
                     name = "Маленькая колонка",
-                    imageName = "iconIphone",
+                    imageName = "smallBluetoothSpeaker",
                     lvlUnlock = 6,
                     lockForGold = true,
                     goldenPrice = 20
@@ -138,7 +138,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 7,
                     name = "USB Flash 256gb",
-                    imageName = "iconIphone",
+                    imageName = "flash256Gb",
                     lvlUnlock = 7,
                 },
             },
@@ -175,7 +175,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 9,
                     name = "Обычный ноут",
-                    imageName = "iconIphone",
+                    imageName = "oldLaptop",
                     lvlUnlock = 10,
                     lockForGold = true,
                     goldenPrice = 20
@@ -195,7 +195,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 10,
                     name = "Квадратный телевизор",
-                    imageName = "iconIphone",
+                    imageName = "oldTV",
                     lvlUnlock = 12,
                 },
             },
@@ -214,7 +214,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 11,
                     name = "USB Flash 1024gb",
-                    imageName = "iconIphone",
+                    imageName = "flash1024Gb",
                     lvlUnlock = 14,
                 },
             },
@@ -233,7 +233,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 12,
                     name = "Обычный компьютер",
-                    imageName = "iconIphone",
+                    imageName = "oldComputer",
                     lvlUnlock = 15,
                 },
             },
@@ -251,7 +251,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 13,
                     name = "Дешевая микроволновка",
-                    imageName = "iconIphone",
+                    imageName = "oldMicrov",
                     lvlUnlock = 18,
                     lockForGold = true,
                     goldenPrice = 20
@@ -272,7 +272,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 14,
                     name = "Сенсорные часы",
-                    imageName = "iconIphone",
+                    imageName = "smartWatch",
                     lvlUnlock = 20,
                     lockForGold = true,
                     goldenPrice = 20
@@ -293,7 +293,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 15,
                     name = "Наушники беспроводные",
-                    imageName = "iconIphone",
+                    imageName = "headphones",
                     lvlUnlock = 23
                 },
             },
@@ -312,7 +312,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 16,
                     name = "Обычный телевизор",
-                    imageName = "iconIphone",
+                    imageName = "middleTV",
                     lvlUnlock = 26,
                 },
             },
@@ -331,7 +331,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 17,
                     name = "Полу-Игровой Компьютер",
-                    imageName = "iconIphone",
+                    imageName = "middleComputer",
                     lvlUnlock = 29,
                     lockForGold = true,
                     goldenPrice = 20
@@ -352,7 +352,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 18,
                     name = "Холодильник",
-                    imageName = "iconIphone",
+                    imageName = "cooler",
                     lvlUnlock = 32,
                 },
             },
@@ -391,7 +391,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 20,
                     name = "Стиральная машина",
-                    imageName = "iconIphone",
+                    imageName = "washing",
                     lvlUnlock = 37,
                 },
             },
@@ -410,7 +410,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 21,
                     name = "Игровые Наушники",
-                    imageName = "iconIphone",
+                    imageName = "gameHeadphones",
                     lvlUnlock = 39,
                 },
             },
@@ -429,7 +429,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 22,
                     name = "Большая колонка",
-                    imageName = "iconIphone",
+                    imageName = "middleBluetoothSpeaker",
                     lvlUnlock = 42
                 },
             },
@@ -447,7 +447,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 23,
                     name = "Дорогая клавиатура",
-                    imageName = "iconIphone",
+                    imageName = "newKeyboard",
                     lvlUnlock = 45,
                 },
             },
@@ -465,7 +465,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 24,
                     name = "Дорогая микроволновка",
-                    imageName = "iconIphone",
+                    imageName = "newMicrov",
                     lvlUnlock = 48,
                 },
             },
@@ -484,7 +484,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 25,
                     name = "Игровой ноутбук",
-                    imageName = "iconIphone",
+                    imageName = "newLaptop",
                     lvlUnlock = 51,
                     lockForGold = true, 
                     goldenPrice = 20
@@ -504,7 +504,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 26,
                     name = "Игровой Компьютер",
-                    imageName = "iconIphone",
+                    imageName = "gameComputer",
                     lvlUnlock = 54,
                 },
             },
@@ -523,7 +523,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 27,
                     name = "Большая плазма",
-                    imageName = "iconIphone",
+                    imageName = "newTV",
                     lvlUnlock = 57,
                 },
             },
@@ -542,7 +542,7 @@ namespace Assets.Scripts.Architecture.MainDb
                 {
                     id = 28,
                     name = "Золотые часы",
-                    imageName = "iconIphone",
+                    imageName = "goldWatch",
                     lvlUnlock = 60,
                     lockForGold = true,
                     goldenPrice = 20
