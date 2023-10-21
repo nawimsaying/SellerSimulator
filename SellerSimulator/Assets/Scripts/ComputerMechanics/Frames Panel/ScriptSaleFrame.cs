@@ -28,6 +28,8 @@ public class ScriptSaleFrame : MonoBehaviour
     private SliderController _sliderController;
     [SerializeField] private GameObject _popWindow;
     private int _currentSliderValue = 0;
+    private List<GameObject> displayedItems = new List<GameObject>();
+
 
 
     // Start is called before the first frame update
@@ -42,7 +44,7 @@ public class ScriptSaleFrame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
 
@@ -63,7 +65,7 @@ public class ScriptSaleFrame : MonoBehaviour
                 
 
                 // Установка спрайта
-                elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[i].imageName);
+                elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/" + allItems[i].imageName);
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
                 elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"{allItems[i].countProduct} шт. ";
 
@@ -72,6 +74,8 @@ public class ScriptSaleFrame : MonoBehaviour
                     PlayerPrefs.SetInt("idForCounter", tempIndex);
                     PlayerPrefs.Save();
                 });
+
+                displayedItems.Add(elementItem);
 
                 /* Slider slider = elementItem.transform.GetChild(4).GetComponent<Slider>();
                  slider.maxValue = allItems[i].countProduct;*/
@@ -92,13 +96,11 @@ public class ScriptSaleFrame : MonoBehaviour
 
         // Обновите содержимое существующего окна
         _popWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[id].productName;
-        _popWindow.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load<Sprite>(allItems[id].imageName);
+        _popWindow.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/" + allItems[id].imageName);
         _popWindow.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = 0.ToString();
         Slider slider = _popWindow.transform.GetChild(10).GetComponent<Slider>();
         slider.value = 0;
-        slider.maxValue = allItems[id].countProduct;
-
-        
+        slider.maxValue = allItems[id].countProduct;     
 
         Button buttonSell = _popWindow.transform.GetChild(4).GetComponent<Button>();
         buttonSell.onClick.RemoveAllListeners(); // Удалить все предыдущие обработчики
@@ -108,13 +110,30 @@ public class ScriptSaleFrame : MonoBehaviour
 
     }
 
+    public void ClearDisplayedItems()
+    {
+        foreach (var item in displayedItems)
+        {
+            Destroy(item);
+        }
+
+        displayedItems.Clear(); // Очищаем список после удаления элементов
+        _itemProduct.SetActive(true);
+    }
+
 
 
     void ButtonSellClicked(int idProduct, int currentSliderValue)
     {
-        int tempPrice = 5000;
         Debug.Log("Item with id " + idProduct + "value slider" + currentSliderValue);
-        /*_saleFrameRepository.PutOnSale(idProduct, currentSliderValue, tempPrice);*/
+        bool result = _saleFrameRepository.PutOnSale(idProduct, currentSliderValue);
+                
+        if (result)
+        {
+            ClearDisplayedItems();
+            DisplayProduct();
+        }
+        _popWindow.SetActive(false);
     }
 
     void ButtonInstantSell(int idProduct, int currentSliderValue)

@@ -7,14 +7,11 @@ using System.Threading.Tasks;
 
 namespace Assets.Scripts.Architecture.OnSaleFrame
 {
-    class ModelsOnSaleFrame
+    public class ModelsOnSaleFrame
     {
-        ulong idSell;
-        ulong idBox;
-        string imageIcon; // или idProduct
-        int countProduct;
-        int price;
-        string Boost;
-        //доделать
+        public ulong idSell;
+        public int idProduct;
+        public int countProduct; 
+
     }
 }

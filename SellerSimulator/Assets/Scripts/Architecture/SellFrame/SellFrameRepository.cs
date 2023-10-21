@@ -29,9 +29,9 @@ namespace Assets.Scripts.Architecture.WareHouse
         }
         
 
-        public bool PutOnSale(int id, int countProduct, int priceSale)
+        public bool PutOnSale(int id, int countProduct)
         {
-            var result = _local.PutOnSale(id, countProduct, priceSale);
+            var result = _local.PutOnSale(id, countProduct);
 
             if (result.IsSuccess())
             {
