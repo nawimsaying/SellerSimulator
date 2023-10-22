@@ -6,35 +6,41 @@ public class ComputerPopWindowController : MonoBehaviour
 {
     [SerializeField] private GameObject popWindowForBuy;
     [SerializeField] private GameObject popWindowForSale;
-    [SerializeField] private GameObject background;
+    [SerializeField] private GameObject backgroundForBuy;
+    [SerializeField] private GameObject backgroundForSale;
 
     private void Start()
     {
-        popWindowForBuy.SetActive(false);
-        popWindowForSale.SetActive(false);
-        background.SetActive(false);
+        HideAll();
     }
 
     public void OpenPopWindowForBuy()
     {
         popWindowForBuy.SetActive(true);
-        background.SetActive(true);
+        backgroundForBuy.SetActive(true);
     }
     public void OpenPopWindowForSale()
     {
         popWindowForSale.SetActive(true);
-        background.SetActive(true);
+        backgroundForSale.SetActive(true);
     }
 
     public void ClosePopWindowForBuy()
     {
         popWindowForBuy.SetActive(false);
-        background.SetActive(false);
+        backgroundForBuy.SetActive(false);
     }
 
     public void ClosePopWindowForSale()
     {
         popWindowForSale.SetActive(false);
-        background.SetActive(false);
+        backgroundForSale.SetActive(false);
+    }
+    public void HideAll()
+    {
+        popWindowForBuy.SetActive(false);
+        popWindowForSale.SetActive(false);
+        backgroundForBuy.SetActive(false);
+        backgroundForSale.SetActive(false);
     }
 }

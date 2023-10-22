@@ -29,12 +29,15 @@ public class ScriptSaleFrame : MonoBehaviour
     [SerializeField] private GameObject _popWindow;
     private int _currentSliderValue = 0;
     private List<GameObject> displayedItems = new List<GameObject>();
+    [SerializeField] private ComputerPopWindowController _popWindowManager;
+
 
 
 
     // Start is called before the first frame update
     void Start()
     {
+        
         _saleFrameRepository = new SellFrameRepository(new SellFrameDbMock());
         _sliderController = new SliderController();
         DisplayProduct();
@@ -92,9 +95,6 @@ public class ScriptSaleFrame : MonoBehaviour
 
     public void LoadInfoPopWindow(int id, List<ModelsSaleFrame> allItems)
     {
-       
-
-        // Обновите содержимое существующего окна
         _popWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[id].productName;
         _popWindow.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/" + allItems[id].imageName);
         _popWindow.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = 0.ToString();
@@ -106,8 +106,11 @@ public class ScriptSaleFrame : MonoBehaviour
         buttonSell.onClick.RemoveAllListeners(); // Удалить все предыдущие обработчики
         buttonSell.onClick.AddListener(() => ButtonSellClicked(allItems[id].idProduct, Convert.ToInt32(slider.value)));
 
-        _popWindow.SetActive(true);
+        Button buttonClose = _popWindow.transform.GetChild(0).GetComponent<Button>();
+        buttonClose.onClick.RemoveAllListeners();
+        buttonClose.onClick.AddListener(() => _popWindowManager.ClosePopWindowForSale());
 
+        _popWindowManager.OpenPopWindowForSale();
     }
 
     public void ClearDisplayedItems()
@@ -133,7 +136,8 @@ public class ScriptSaleFrame : MonoBehaviour
             ClearDisplayedItems();
             DisplayProduct();
         }
-        _popWindow.SetActive(false);
+     
+        _popWindowManager.ClosePopWindowForSale();
     }
 
     void ButtonInstantSell(int idProduct, int currentSliderValue)

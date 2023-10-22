@@ -25,9 +25,8 @@ public class SamplesController : MonoBehaviour
         //PlayerPrefs.DeleteKey("wareHouseDbMockList"); //��� �������� ������� �� ������
         //PlayerPrefs.DeleteKey("toolBarList");
         //PlayerPrefs.DeleteKey("onSaleFrameDbMockList"); //Mock for cancel item for on sale
+       //PlayerPrefs.DeleteAll();
 
-
-        //PlayerPrefs.DeleteAll();
         PreparingTheScene();
     }
 

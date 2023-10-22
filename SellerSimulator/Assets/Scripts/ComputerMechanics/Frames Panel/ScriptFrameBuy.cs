@@ -34,6 +34,7 @@ public class ScriptFrameBuy : MonoBehaviour
     [SerializeField] private GameObject _unavailableItem; //Недоступный product для user
     [SerializeField] private GameObject _popWindow;
     [SerializeField] private TextMeshProUGUI _counterForWindowPop;
+    [SerializeField] private ComputerPopWindowController _popWindowManager;
     private ClickButtonPopWindow clickButtonPopWindow;
     private List<GameObject> displayedItems = new List<GameObject>(); // Список для хранения созданных элементов
     string tempTextFromCounter;
@@ -133,8 +134,6 @@ public class ScriptFrameBuy : MonoBehaviour
 
             }
 
-
-
             if (i == allItems.Count - 1)
             {
                 _unavailableItem.SetActive(true);
@@ -143,7 +142,6 @@ public class ScriptFrameBuy : MonoBehaviour
 
         _itemProduct.SetActive(false);
         _itemProductForGold.SetActive(false);
-
     }
 
     public void LoadInfoPopWindow(int id)
@@ -158,11 +156,16 @@ public class ScriptFrameBuy : MonoBehaviour
         Button button = _popWindow.transform.GetChild(5).GetComponent<Button>();
         button.GetComponentInChildren<TextMeshProUGUI>().text = result.ToString();
 
+
         Button buttonBuy = _popWindow.transform.GetChild(5).GetComponent<Button>();
         buttonBuy.onClick.RemoveAllListeners(); // Удалить все предыдущие обработчики
         buttonBuy.onClick.AddListener(() => ItemClicked(allItems[id].idProduct, int.Parse(_counterForWindowPop.text), result));
 
-        _popWindow.SetActive(true);
+        Button buttonClose = _popWindow.transform.GetChild(0).GetComponent<Button>();
+        buttonClose.onClick.RemoveAllListeners();
+        buttonClose.onClick.AddListener(() => _popWindowManager.ClosePopWindowForBuy());
+
+        _popWindowManager.OpenPopWindowForBuy();
 
     }
 
@@ -186,7 +189,7 @@ public class ScriptFrameBuy : MonoBehaviour
         Debug.Log("Item with id " + idProduct + " " + countProducts + " " + priceProducts+ " clicked");
 
         _buyFrameRepository.BuyItem(idProduct, countProducts, priceProducts, _playerData.Coins);
-        _popWindow.SetActive(false);
+        _popWindowManager.ClosePopWindowForBuy();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////
         /// For test. How much count box on WareHouse

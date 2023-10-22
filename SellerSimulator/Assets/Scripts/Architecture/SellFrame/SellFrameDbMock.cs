@@ -15,60 +15,50 @@ namespace Assets.Scripts.Architecture.WareHouse
 {
     class SellFrameDbMock : ISellFrameSource
     {
+
         List<ModelBox> listBoxFromWareHouse = new List<ModelBox>(); // хранит в себе id коробки, которая хранит уже все остальные данные самой коробки
 
         private WareHouseDbMock _listWareHouse;
         private OnSaleFrameDbMock _listOnSale;
 
-
         public SellFrameDbMock()
         {
-            _listWareHouse = SaveLoadManager.LoadWareHouseDbMockList();
             _listOnSale = SaveLoadManager.LoadOnSaleFrameDbMockList();
         }
 
-       
-
         public Result<List<ModelsSaleFrame>> GetAll()
         {
-            List<ModelsSaleFrame> resultList = new List<ModelsSaleFrame>();
-
             List<Sample> sampleList = SaveLoadManager.LoadSampleList(); // List stylage
 
             List<ulong> ChekIdBoxOnStylage(List<Sample> sampleList) // Local Method 
             {
                 List<ulong> idList = new List<ulong>();
 
-                if (sampleList.Count == 0 || sampleList[0].rackSample == null)
-                {
+                if (sampleList.Count == 0 || sampleList[0].rackSample == null)   
                     return idList;
-                }
+                
                 for (int i = 0; i < sampleList.Count; i++)
                 {
                     for (int j  = 0; j < sampleList[i].rackSample.Length; j++)
                     {
                         if (sampleList[i].rackSample[j] != 0)
-                        {
                             idList.Add(sampleList[i].rackSample[j]);
-                        }
                     }
                 }
-                //Переделать GetAll Создать доп лист, затем сложить каждый idProduct по кол-ву товара, добавить проверку на активные продажи. Затем вывести список 
 
                 return idList;
             }
 
             List<ulong> idListBox = ChekIdBoxOnStylage(sampleList);
 
+            _listWareHouse = SaveLoadManager.LoadWareHouseDbMockList();
             listBoxFromWareHouse = _listWareHouse.purchasedItems; //duplicate list
 
             List<ModelBox> listBoxFromStylageWareHouse = new List<ModelBox>();
 
             if (idListBox.Count == 0)
-            {
-                // Возвращаем пустой список или null, чтобы обозначить отсутствие данных
-                return Result<List<ModelsSaleFrame>>.Success(new List<ModelsSaleFrame>());
-            }
+                return Result<List<ModelsSaleFrame>>.Success(new List<ModelsSaleFrame>());  // Возвращаем пустой список или null, чтобы обозначить отсутствие данных
+
 
             for (int i = 0; i < idListBox.Count; i++)
             {
@@ -92,26 +82,19 @@ namespace Assets.Scripts.Architecture.WareHouse
                 }
             }
 
-            List<ModelBox> result = productCountDict.Values.ToList();
+            List<ModelBox> listSumProducts = productCountDict.Values.ToList();
 
-            // Теперь uniqueProducts содержит только уникальные idProduct, а productCountDict содержит суммарные countProduct
-
-            // Добавляем оставшиеся элементы из исходного списка
             foreach (var item in listBoxFromStylageWareHouse)
             {
                 if (!productCountDict.ContainsKey(item.idProduct.id))
                 {
-                    result.Add(item);
+                    listSumProducts.Add(item);
                 }
             }
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            //
-            /// !!!Добавить проверку на продажу товаров на данный момент. (Вычесть Весь список от списка продаж на данный момент) и вывести
-            //
-            ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-            ///
+    
+            List<ModelsSaleFrame> formattedListProducts = new List<ModelsSaleFrame>();
 
-            foreach (var item in result)
+            foreach (var item in listSumProducts)
             {
                 // Создаем экземпляр ModelsBuyFrame и заполняем его данными из modelBox
                 ModelsSaleFrame modelsSaleFrame = new ModelsSaleFrame()
@@ -124,13 +107,12 @@ namespace Assets.Scripts.Architecture.WareHouse
                     imageName = item.idProduct.imageName
                 };
 
-                resultList.Add(modelsSaleFrame);
+                formattedListProducts.Add(modelsSaleFrame);
             }
 
+            List<ModelsSaleFrame> resultList = new List<ModelsSaleFrame>(); //List contain item
 
-            List<ModelsSaleFrame> resultListBeta = new List<ModelsSaleFrame>();
-
-            foreach (var item in resultList)
+            foreach (var item in formattedListProducts)
             {
                 ModelsSaleFrame modelsSaleFrame = new ModelsSaleFrame()
                 {
@@ -144,26 +126,20 @@ namespace Assets.Scripts.Architecture.WareHouse
 
                 var matchingItems = _listOnSale.onSaleProduct
                     .Where(saleItem => saleItem.idProduct == item.idProduct)
-                    .ToList();
+                    .ToList(); //Содержит в себе повторяющиеся объекты из  _listOnSale.onSaleProduct, которые есть в resultListBoxs
 
                 if (matchingItems.Any())
                 {
                     // Если есть совпадения, вычисляем сумму countProduct для всех совпадающих элементов
                     int totalToSubtract = matchingItems.Sum(matchingItem => matchingItem.countProduct);
-
                     // Отнимаем сумму
-                    modelsSaleFrame.countProduct -= totalToSubtract;
-
-                    
+                    modelsSaleFrame.countProduct -= totalToSubtract;    
                 }
-
-                resultListBeta.Add(modelsSaleFrame);
+                resultList.Add(modelsSaleFrame);
             }
-            resultListBeta.RemoveAll(item => item.countProduct == 0);
-
-
-
-            return Result<List<ModelsSaleFrame>>.Success(resultListBeta);
+            resultList.RemoveAll(item => item.countProduct == 0);
+                     
+            return Result<List<ModelsSaleFrame>>.Success(resultList);
         }
 
         public Result<bool> PutOnSale(int idProduct, int countProduct)
@@ -178,14 +154,10 @@ namespace Assets.Scripts.Architecture.WareHouse
             };
 
             _listOnSale.onSaleProduct.Add(listOnSale);
-
             SaveLoadManager.SaveOnSaleFrameDbMockList(_listOnSale);          
 
             return Result<bool>.Success(true);
         }
-
-
-
 
     }
 }
