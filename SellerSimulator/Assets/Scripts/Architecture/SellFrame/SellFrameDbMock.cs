@@ -145,12 +145,16 @@ namespace Assets.Scripts.Architecture.WareHouse
         public Result<bool> PutOnSale(int idProduct, int countProduct)
         {            
             List<ModelsOnSaleFrame> list = _listOnSale.onSaleProduct; // duplicate
+      
+            ModelBox item = listBoxFromWareHouse.FirstOrDefault(item => item.idProduct.id == idProduct);
 
             ModelsOnSaleFrame listOnSale = new ModelsOnSaleFrame()
             {
                 idSell = list.Count == 0 ? 1 : list.Max(item => item.idSell) + 1,
                 idProduct = idProduct,
                 countProduct = countProduct,
+                imageName = item.idProduct.imageName,
+                nameProduct = item.idProduct.name,
             };
 
             _listOnSale.onSaleProduct.Add(listOnSale);

@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public static class ButtonExtensionBuyFrame
 {
-    public static void AddEventListenerForBuyFrame(this Button button, Action onClick)
+    public static void AddEventListenere(this Button button, Action onClick)
     {
         button.onClick.AddListener(() => {
             onClick();
@@ -101,7 +101,7 @@ public class ScriptFrameBuy : MonoBehaviour
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
                 elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
 
-                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForBuyFrame(() => {
+                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenere(() => {
                     clickButtonPopWindow.ResetCounter();
                     LoadInfoPopWindow(tempIndex);
                     PlayerPrefs.SetInt("idForCounter", tempIndex);
@@ -128,7 +128,7 @@ public class ScriptFrameBuy : MonoBehaviour
                 textComponent.text = allItems[i].goldenPrice.ToString();
                 /////////////////////////////////////////////////////////////////////
 
-                elementItemForGold.transform.GetChild(0).GetComponent<Button>().AddEventListenerForBuyFrame(() => UnlockItem(allItems[tempIndex].idProduct));
+                elementItemForGold.transform.GetChild(0).GetComponent<Button>().AddEventListenere(() => UnlockItem(allItems[tempIndex].idProduct));
 
                 displayedProductIds.Add(allItems[i].idProduct);
 

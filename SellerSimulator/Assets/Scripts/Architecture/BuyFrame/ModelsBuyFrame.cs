@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ModelsBuyFrame 
+public class ModelsBuyFrame
 {
     public int idProduct;
     public string productName;

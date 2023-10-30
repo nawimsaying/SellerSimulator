@@ -11,7 +11,9 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
     {
         public ulong idSell;
         public int idProduct;
-        public int countProduct; 
+        public int countProduct;
+        public string nameProduct;
+        public string imageName;
 
     }
 }

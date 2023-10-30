@@ -12,12 +12,7 @@ using UnityEngine.UI;
 
 public static class ButtonExtensionSaleFrame
 {
-    public static void AddEventListenerForSaleFrame(this Button button, Action onClick)
-    {
-        button.onClick.AddListener(() => {
-            onClick();
-        });
-    }
+ 
 }
 
 public class ScriptSaleFrame : MonoBehaviour
@@ -72,7 +67,7 @@ public class ScriptSaleFrame : MonoBehaviour
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
                 elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"{allItems[i].countProduct} רע. ";
 
-                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenerForBuyFrame(() => {
+                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenere(() => {
                     LoadInfoPopWindow(tempIndex, allItems);
                     PlayerPrefs.SetInt("idForCounter", tempIndex);
                     PlayerPrefs.Save();
