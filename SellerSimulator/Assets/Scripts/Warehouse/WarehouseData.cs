@@ -5,7 +5,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using Palmmedia.ReportGenerator.Core.Common;
 
 public class WarehouseData : MonoBehaviour
 {

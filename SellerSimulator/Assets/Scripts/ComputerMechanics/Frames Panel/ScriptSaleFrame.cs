@@ -62,10 +62,10 @@ public class ScriptSaleFrame : MonoBehaviour
 
                 
 
-                // Установка спрайта
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/" + allItems[i].imageName);
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
-                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"{allItems[i].countProduct} шт. ";
+                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"{allItems[i].countProduct} С€С‚. ";
 
                 elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenere(() => {
                     LoadInfoPopWindow(tempIndex, allItems);
@@ -98,7 +98,7 @@ public class ScriptSaleFrame : MonoBehaviour
         slider.maxValue = allItems[id].countProduct;     
 
         Button buttonSell = _popWindow.transform.GetChild(4).GetComponent<Button>();
-        buttonSell.onClick.RemoveAllListeners(); // Удалить все предыдущие обработчики
+        buttonSell.onClick.RemoveAllListeners(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         buttonSell.onClick.AddListener(() => ButtonSellClicked(allItems[id].idProduct, Convert.ToInt32(slider.value)));
 
         Button buttonClose = _popWindow.transform.GetChild(0).GetComponent<Button>();
@@ -115,7 +115,7 @@ public class ScriptSaleFrame : MonoBehaviour
             Destroy(item);
         }
 
-        displayedItems.Clear(); // Очищаем список после удаления элементов
+        displayedItems.Clear(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         _itemProduct.SetActive(true);
     }
 

@@ -21,7 +21,7 @@ public class ScriptOnSaleFrame : MonoBehaviour
 {
     [SerializeField] private GameObject _itemProduct;
     private OnSaleFrameRepository _onSaleFrameRepository;
-    private List<GameObject> displayedItems = new List<GameObject>(); // Список для хранения созданных элементов
+    private List<GameObject> displayedItems = new List<GameObject>(); // пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 
     private int _tempLength;
 
@@ -62,10 +62,10 @@ public class ScriptOnSaleFrame : MonoBehaviour
                 int tempIndex = i;
                 elementItem = Instantiate(itemProduct, transform);
 
-                // Установка спрайта
+                // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                 elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/" + allItems[i].imageName);
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].nameProduct;
-                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"На продаже {allItems[i].countProduct} шт. ";
+                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"РќР° РїСЂРѕРґР°Р¶Рµ {allItems[i].countProduct} С€С‚. ";
 
                 elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenere(() => {
                     ItemCliked(tempIndex);
@@ -93,14 +93,14 @@ public class ScriptOnSaleFrame : MonoBehaviour
             Destroy(item);
         }
 
-        displayedItems.Clear(); // Очищаем список после удаления элементов
+        displayedItems.Clear(); // пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
         _itemProduct.SetActive(true);
     }
 
     public void ItemCliked(int id)
     {
 
-        Debug.Log("Нажал кнопку: " + id);
+        Debug.Log("РќР°Р¶Р°Р» РєРЅРѕРїРєСѓ: " + id);
     }
 
 
