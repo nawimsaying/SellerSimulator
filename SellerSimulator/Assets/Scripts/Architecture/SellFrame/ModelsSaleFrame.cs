@@ -11,7 +11,7 @@ namespace Assets.Scripts.Architecture.WareHouse
     {
         public ulong idBox;
         public int idProduct;
-        public int countProduct;
+        public int countProduct; 
         public string productName;
         public int price;
         public string imageName;

@@ -9,11 +9,13 @@ namespace Assets.Scripts.Architecture.WareHouse
 {
     public class SellFrameRepository
     {
+
+
         private ISellFrameSource _local;
 
         public SellFrameRepository(ISellFrameSource local) => _local = local;
 
-    
+
         public List<ModelsSaleFrame> GetAll()
         {
             var result = _local.GetAll();
@@ -27,7 +29,7 @@ namespace Assets.Scripts.Architecture.WareHouse
                 throw new Exception(result.Exception);
             }
         }
-        
+
 
         public bool PutOnSale(int id, int countProduct)
         {
@@ -37,12 +39,14 @@ namespace Assets.Scripts.Architecture.WareHouse
             {
                 return result.Data;
             }
-            else 
-            { 
-                throw new Exception(result.Exception); 
+            else
+            {
+                throw new Exception(result.Exception);
             }
+
+
+
         }
     }
 
- 
 }

@@ -36,7 +36,7 @@ namespace Assets.Scripts.Architecture.WareHouse
 
                 if (sampleList.Count == 0 || sampleList[0].rackSample == null)   
                     return idList;
-                
+                                                                                            
                 for (int i = 0; i < sampleList.Count; i++)
                 {
                     for (int j  = 0; j < sampleList[i].rackSample.Length; j++)
