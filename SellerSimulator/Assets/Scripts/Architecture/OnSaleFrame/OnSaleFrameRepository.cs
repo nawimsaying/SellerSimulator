@@ -28,6 +28,20 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
             }
         }
 
+        public bool SaveDataList(List<ModelsOnSaleFrame> list)
+        {
+            var result = _local.SaveDataList(list);
+
+            if (result.IsSuccess())
+            {
+                return result.Data;
+            }
+            else
+            {
+                throw new Exception(result.Exception);
+            }
+        }
+
 
     }
 }

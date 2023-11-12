@@ -43,5 +43,22 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
 
             return Result<List<ModelsOnSaleFrame>>.Success(resultList);
         }
+
+        public Result<bool> SaveDataList(List<ModelsOnSaleFrame> list)
+        {
+            if(list != null)
+            {
+                _listOnSale.onSaleProduct = list;
+
+                SaveLoadManager.SaveOnSaleFrameDbMockList(_listOnSale);
+
+                return Result<bool>.Success(true);
+            }
+            return Result<bool>.Error("List null");      
+            
+            //Переделать реализацию метода. Нужно удалять кол-во из склада выбраной коробки. 
+
+        }  
+
     }
 }

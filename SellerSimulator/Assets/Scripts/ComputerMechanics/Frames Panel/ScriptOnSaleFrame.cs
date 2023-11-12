@@ -23,7 +23,7 @@ public class ScriptOnSaleFrame : MonoBehaviour
     private OnSaleFrameRepository _onSaleFrameRepository;
     private List<GameObject> displayedItems = new List<GameObject>(); // ������ ��� �������� ��������� ���������
 
-    private int _tempLength;
+    private List<ModelsOnSaleFrame> _tempAllItems;
 
     List<ModelsOnSaleFrame> allItems;
     void Start()
@@ -38,7 +38,7 @@ public class ScriptOnSaleFrame : MonoBehaviour
     void Update()
     {
         allItems = _onSaleFrameRepository.GetAll();
-        if (allItems.Count > _tempLength)
+        if (allItems != _tempAllItems)
         {
             ClearDisplayedItems();
             DisplayProduct();
@@ -48,9 +48,9 @@ public class ScriptOnSaleFrame : MonoBehaviour
 
 
     void DisplayProduct()
-    {       
-        
-        _tempLength = allItems.Count;
+    {
+
+        _tempAllItems = allItems;
 
         if (allItems.Count > 0)
         {

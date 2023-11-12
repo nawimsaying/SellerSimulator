@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Architecture.MainDB;
+using Assets.Scripts.Architecture.OnSaleFrame;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -43,10 +44,9 @@ namespace Assets.Scripts.Architecture.WareHouse
             {
                 throw new Exception(result.Exception);
             }
-
-
-
         }
+
+        
     }
 
 }
