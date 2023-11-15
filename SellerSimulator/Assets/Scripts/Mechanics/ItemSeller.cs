@@ -2,10 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Architecture.OnSaleFrame;
-using System.Runtime.CompilerServices;
 
 public class ItemSeller : MonoBehaviour
 {
+    private static ItemSeller instance;
     private OnSaleFrameRepository _onSaleFrameRepository;
     public List<ModelsOnSaleFrame> itemsToSell;
     private int _saleDelay = 1;
@@ -13,10 +13,19 @@ public class ItemSeller : MonoBehaviour
     private bool _isSelling;
     private bool _listNull;
 
-    private void Start()
+    private void OnEnable()
     {
-        _onSaleFrameRepository = new OnSaleFrameRepository(new OnSaleFrameDbMock());
-        StartCoroutine(SellItems());
+        if (instance == null)
+        {
+            instance = this;
+            _onSaleFrameRepository = new OnSaleFrameRepository(new OnSaleFrameDbMock());
+            StartCoroutine(SellItems());
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
     }
 
     private void Update()
@@ -27,13 +36,6 @@ public class ItemSeller : MonoBehaviour
             StartCoroutine(SellItems());
         }
     }
-
-    private void Awake()
-    {
-        DontDestroyOnLoad(this.gameObject);
-    }
-
-   
 
     private IEnumerator SellItems()
     {
