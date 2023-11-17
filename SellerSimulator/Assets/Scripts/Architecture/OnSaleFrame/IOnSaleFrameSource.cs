@@ -11,6 +11,6 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
         Result<string> CancelSell(int idSell);
         Result<List<ModelsOnSaleFrame>> GetAll();
 
-        Result<bool> SaveDataList(List<ModelsOnSaleFrame> list);
+        Result<bool> SaveDataList(List<ModelsOnSaleFrame> newListOnSaleFrame, List<ModelsOnSaleFrame> listSaleItems);
     }
 }

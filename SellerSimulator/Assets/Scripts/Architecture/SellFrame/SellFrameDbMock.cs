@@ -63,7 +63,9 @@ namespace Assets.Scripts.Architecture.WareHouse
             for (int i = 0; i < idListBox.Count; i++)
             {
                 ModelBox item = listBoxFromWareHouse.FirstOrDefault(item => item.id == idListBox[i]);
-                listBoxFromStylageWareHouse.Add(item);
+                if(item != null)
+                    listBoxFromStylageWareHouse.Add(item);
+
             }
 
             Dictionary<int, ModelBox> productCountDict = new Dictionary<int, ModelBox>();

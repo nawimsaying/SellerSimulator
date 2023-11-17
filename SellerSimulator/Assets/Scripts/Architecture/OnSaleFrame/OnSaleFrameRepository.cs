@@ -28,9 +28,9 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
             }
         }
 
-        public bool SaveDataList(List<ModelsOnSaleFrame> list)
+        public bool SaveDataList(List<ModelsOnSaleFrame> list, List<ModelsOnSaleFrame> listSaleItems)
         {
-            var result = _local.SaveDataList(list);
+            var result = _local.SaveDataList(list, listSaleItems);
 
             if (result.IsSuccess())
             {

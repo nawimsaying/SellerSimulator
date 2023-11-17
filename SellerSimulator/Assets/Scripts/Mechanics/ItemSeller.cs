@@ -82,12 +82,20 @@ public class ItemSeller : MonoBehaviour
                     }
                 }
 
+                List<ModelsOnSaleFrame> listOnSaleInDataBase = _onSaleFrameRepository.GetAll();
+
+                for (int i = 0; i < itemsToSell.Count; i++)
+                {
+                    listOnSaleInDataBase[i].countProduct -= itemsToSell[i].countProduct;
+                }
+
                 foreach (ModelsOnSaleFrame itemToRemove in itemsToRemove)
                 {
                     itemsToSell.Remove(itemToRemove);
                 }
 
-                _onSaleFrameRepository.SaveDataList(itemsToSell);
+                _onSaleFrameRepository.SaveDataList(itemsToSell, listOnSaleInDataBase);
+                listOnSaleInDataBase.Clear();
                 yield return new WaitForSeconds(_saleDelay);
                 _isSelling = false;
             }

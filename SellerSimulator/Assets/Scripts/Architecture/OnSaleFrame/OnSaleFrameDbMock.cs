@@ -1,9 +1,11 @@
-﻿using Assets.Scripts.Architecture.MainDb.ModelsDb;
+﻿using Assets.Scripts.Architecture.MainDb;
+using Assets.Scripts.Architecture.MainDb.ModelsDb;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 
 namespace Assets.Scripts.Architecture.OnSaleFrame
 {
@@ -12,6 +14,7 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
         public List<ModelsOnSaleFrame> onSaleProduct = new List<ModelsOnSaleFrame>(); // stores the products on display for sale
 
         OnSaleFrameDbMock _listOnSale;
+        WareHouseDbMock _mainDbMock;
 
         public Result<string> CancelSell(int idSell)
         {
@@ -44,13 +47,44 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
             return Result<List<ModelsOnSaleFrame>>.Success(resultList);
         }
 
-        public Result<bool> SaveDataList(List<ModelsOnSaleFrame> list)
+        public Result<bool> SaveDataList(List<ModelsOnSaleFrame> newListOnSaleFrame, List<ModelsOnSaleFrame> listSaleItems)
         {
-            if(list != null)
+            if(newListOnSaleFrame != null && listSaleItems != null)
             {
-                _listOnSale.onSaleProduct = list;
 
+                List<ModelBox> listWareHouse = new List<ModelBox>();
+
+                _mainDbMock = SaveLoadManager.LoadWareHouseDbMockList();
+                listWareHouse = _mainDbMock.purchasedItems;
+
+                foreach (var saleItem in listSaleItems)
+                {
+                    var matchingBoxes = listWareHouse.Where(box => box.idProduct.id == saleItem.idProduct);
+
+                    if (matchingBoxes.Any())
+                    {
+                        // Находим коробку с минимальным количеством countProduct
+                        ModelBox boxWithMinCount = matchingBoxes.OrderBy(box => box.countProduct).First();
+
+
+                        boxWithMinCount.countProduct -= saleItem.countProduct;
+
+                        if(boxWithMinCount.countProduct == 0)
+                        {
+                            listWareHouse.Remove(boxWithMinCount);
+                        }
+                        
+                    }
+                }
+
+                _mainDbMock.purchasedItems = listWareHouse;
+                SaveLoadManager.SaveWareHouseDbMockList(_mainDbMock);
+                ////////////////////////////////////////////////////////
+                // Save OnSaleFrame
+                /////////////////////////////////////////////////////////
+                _listOnSale.onSaleProduct = newListOnSaleFrame;
                 SaveLoadManager.SaveOnSaleFrameDbMockList(_listOnSale);
+                /////////////////////////////////////////////////////////
 
                 return Result<bool>.Success(true);
             }
