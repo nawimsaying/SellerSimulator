@@ -84,7 +84,12 @@ public class ScriptSaleFrame : MonoBehaviour
             _itemProduct.SetActive(false);
         }
         else
+        {
+            ClearDisplayedItems();
             _itemProduct.SetActive(false);
+        }
+           
+
     }
 
 

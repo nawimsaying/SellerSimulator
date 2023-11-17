@@ -76,15 +76,16 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
                         
                     }
                 }
-
-                _mainDbMock.purchasedItems = listWareHouse;
-                SaveLoadManager.SaveWareHouseDbMockList(_mainDbMock);
                 ////////////////////////////////////////////////////////
                 // Save OnSaleFrame
                 /////////////////////////////////////////////////////////
                 _listOnSale.onSaleProduct = newListOnSaleFrame;
                 SaveLoadManager.SaveOnSaleFrameDbMockList(_listOnSale);
                 /////////////////////////////////////////////////////////
+
+                _mainDbMock.purchasedItems = listWareHouse;
+                SaveLoadManager.SaveWareHouseDbMockList(_mainDbMock);
+                
 
                 return Result<bool>.Success(true);
             }

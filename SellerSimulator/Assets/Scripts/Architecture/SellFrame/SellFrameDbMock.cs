@@ -23,11 +23,13 @@ namespace Assets.Scripts.Architecture.WareHouse
 
         public SellFrameDbMock()
         {
-            _listOnSale = SaveLoadManager.LoadOnSaleFrameDbMockList();
+            
         }
 
         public Result<List<ModelsSaleFrame>> GetAll()
         {
+            _listOnSale = SaveLoadManager.LoadOnSaleFrameDbMockList();
+
             List<Sample> sampleList = SaveLoadManager.LoadSampleList(); // List stylage
 
             List<ulong> ChekIdBoxOnStylage(List<Sample> sampleList) // Local Method 
@@ -145,7 +147,8 @@ namespace Assets.Scripts.Architecture.WareHouse
         }
 
         public Result<bool> PutOnSale(int idProduct, int countProduct)
-        {            
+        {
+            _listOnSale = SaveLoadManager.LoadOnSaleFrameDbMockList();
             List<ModelsOnSaleFrame> list = _listOnSale.onSaleProduct; // duplicate
       
             ModelBox item = listBoxFromWareHouse.FirstOrDefault(item => item.idProduct.id == idProduct);
