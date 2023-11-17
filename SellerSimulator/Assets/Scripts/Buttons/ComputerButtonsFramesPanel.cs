@@ -16,7 +16,7 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
 
     private void Start()
     {
-        _textBanner.text = "Оптовый рынок";
+        _textBanner.text = "РћРїС‚РѕРІС‹Р№ СЂС‹РЅРѕРє";
 
         _frameBuy.SetActive(true);
         _frameSale.SetActive(false);
@@ -27,7 +27,7 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
 
     public void OpenFrameBuy()
     {
-        _textBanner.text = "Оптовый рынок";
+        _textBanner.text = "РћРїС‚РѕРІС‹Р№ СЂС‹РЅРѕРє";
 
         _frameBuy.SetActive(true);
         _frameSale.SetActive(false);
@@ -38,7 +38,7 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
 
     public void OpenFrameSale()
     {
-        _textBanner.text = "Склад";
+        _textBanner.text = "РЎРєР»Р°Рґ";
 
         _frameBuy.SetActive(false);
         _frameSale.SetActive(true);
@@ -49,7 +49,7 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
 
     public void OpenFrameOnSale()
     {
-        _textBanner.text = "Активные продажи";
+        _textBanner.text = "РђРєС‚РёРІРЅС‹Рµ РїСЂРѕРґР°Р¶Рё";
 
         _frameBuy.SetActive(false);
         _frameSale.SetActive(false);
@@ -60,7 +60,7 @@ public class ComputerButtonsFramesPanel : MonoBehaviour
 
     public void OpenFrameContracts()
     {
-        _textBanner.text = "Контракты";
+        _textBanner.text = "РљРѕРЅС‚СЂР°РєС‚С‹";
 
         _frameBuy.SetActive(false);
         _frameSale.SetActive(false);

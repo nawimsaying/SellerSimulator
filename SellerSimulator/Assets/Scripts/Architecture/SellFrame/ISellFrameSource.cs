@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Architecture.OnSaleFrame;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,8 @@ namespace Assets.Scripts.Architecture.WareHouse
     {
 
         Result <List<ModelsSaleFrame>>GetAll();
-        Result<bool> PutOnSale(ulong idBox, int countProduct, int priceSale);
+        Result<bool> PutOnSale(int idBox, int countProduct);
+
+
     }
 }

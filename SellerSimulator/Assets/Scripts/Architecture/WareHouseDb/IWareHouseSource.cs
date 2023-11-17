@@ -11,5 +11,8 @@ namespace Assets.Scripts.Architecture.WareHouseDb
     {
         void AddPurchasedItem(ModelBox item);
         Result<List<ModelWareHouse>> GetAll();
+
+
+        
     }
 }

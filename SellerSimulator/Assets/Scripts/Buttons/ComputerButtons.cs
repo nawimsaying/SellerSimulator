@@ -7,24 +7,20 @@ using UnityEngine;
 public class ComputerButtons : MonoBehaviour
 {
 
-    [SerializeField] private GameObject _canvasMain;
     [SerializeField] private GameObject _canvasComputer;
 
     private void Start()
     {
-        _canvasMain.SetActive(true);
-        _canvasComputer.SetActive(false);
+        _canvasComputer.SetActive(true);
     }
 
     public void OpenCanvasComputer()
     {
-        _canvasMain.SetActive(false);
         _canvasComputer.SetActive(true);
     }
 
     public void CloseCanvasComputer()
     {
-        _canvasMain.SetActive(true);
         _canvasComputer.SetActive(false);
     }
 

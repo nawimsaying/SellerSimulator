@@ -9,5 +9,8 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
     public interface IOnSaleFrameSource
     {
         Result<string> CancelSell(int idSell);
+        Result<List<ModelsOnSaleFrame>> GetAll();
+
+        Result<bool> SaveDataList(List<ModelsOnSaleFrame> newListOnSaleFrame, List<ModelsOnSaleFrame> listSaleItems);
     }
 }

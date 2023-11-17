@@ -1,12 +1,8 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Text.Json;
-using Palmmedia.ReportGenerator.Core.Common;
 using Assets.Scripts.Architecture.WareHouseDb;
 using Newtonsoft.Json;
 using Assets.Scripts.Architecture.MainDb;
-using Unity.VisualScripting;
 using Assets.Scripts.Architecture.MainDb.ModelsDb;
 using Assets.Scripts.Architecture.OnSaleFrame;
 
@@ -116,7 +112,7 @@ public static class SaveLoadManager
 
     public static void SaveOnSaleFrameDbMockList(OnSaleFrameDbMock saveData)
     {
-        string key = "wareHouseDbMockList";
+        string key = "onSaleFrameDbMockList";
         string jsonDataString = null;
 
         for (int i = 0; i < saveData.onSaleProduct.Count; i++)
@@ -299,11 +295,11 @@ public static class SaveLoadManager
                 string[] jsonArray = loadedString.Split("$");
 
                 OnSaleFrameDbMock result = new OnSaleFrameDbMock();
-                List<ModelBox> modelBoxList = new List<ModelBox>();
+                List<ModelsOnSaleFrame> modelBoxList = new List<ModelsOnSaleFrame>();
 
                 for (int i = 0; i < jsonArray.Length; i++)
                 {
-                    ModelBox objectMy = JsonConvert.DeserializeObject<ModelBox>(jsonArray[i]);
+                    ModelsOnSaleFrame objectMy = JsonConvert.DeserializeObject<ModelsOnSaleFrame>(jsonArray[i]);
 
                     modelBoxList.Add(objectMy);
 

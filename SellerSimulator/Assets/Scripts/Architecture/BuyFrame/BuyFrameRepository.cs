@@ -29,9 +29,9 @@ namespace Assets.Scripts.Architecture.MainDB
             }
         }
 
-        public string BuyItem(int id,int money)
+        public string BuyItem(int id, int countProducts, int priceProducts,int money)
         {
-            var result = _local.BuyItem(id,money);
+            var result = _local.BuyItem(id, countProducts, priceProducts, money);
 
             if(result.IsSuccess())
             {

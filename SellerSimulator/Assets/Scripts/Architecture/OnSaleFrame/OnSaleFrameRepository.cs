@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Architecture.WareHouse;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,35 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
         private IOnSaleFrameSource _local;
 
         public OnSaleFrameRepository(IOnSaleFrameSource local)=> _local = local;
+
+        public List<ModelsOnSaleFrame> GetAll()
+        {
+            var result = _local.GetAll();
+
+            if (result.IsSuccess())
+            {
+                return result.Data;
+            }
+            else
+            {
+                throw new Exception(result.Exception);
+            }
+        }
+
+        public bool SaveDataList(List<ModelsOnSaleFrame> list, List<ModelsOnSaleFrame> listSaleItems)
+        {
+            var result = _local.SaveDataList(list, listSaleItems);
+
+            if (result.IsSuccess())
+            {
+                return result.Data;
+            }
+            else
+            {
+                throw new Exception(result.Exception);
+            }
+        }
+
+
     }
 }
