@@ -19,7 +19,8 @@ public class ItemSeller : MonoBehaviour
         {
             instance = this;
             _onSaleFrameRepository = new OnSaleFrameRepository(new OnSaleFrameDbMock());
-            StartCoroutine(SellItems());
+            OfflineItemSeller.SalesCompleted += StartSellingItems;
+            
             DontDestroyOnLoad(gameObject);
         }
         else
@@ -35,6 +36,12 @@ public class ItemSeller : MonoBehaviour
             _listNull = false;
             StartCoroutine(SellItems());
         }
+    }
+
+    private void StartSellingItems()
+    {
+        CheckStatus.HasRun = true;
+        StartCoroutine(SellItems());
     }
 
     private IEnumerator SellItems()
@@ -54,8 +61,6 @@ public class ItemSeller : MonoBehaviour
                     yield break;
                 }
 
-                List<ModelsOnSaleFrame> itemsToRemove = new List<ModelsOnSaleFrame>();
-
                 foreach (ModelsOnSaleFrame item in itemsToSell)
                 {
                     int resultRandom = Random.Range(1, 100);
@@ -68,12 +73,6 @@ public class ItemSeller : MonoBehaviour
                             item.countProduct--;
 
                             Debug.Log("Осталось: " + item.countProduct);
-
-                            if (item.countProduct == 0)
-                            {
-                                Debug.Log("Товар из карточки " + item.nameProduct + " закончился.");
-                                itemsToRemove.Add(item);
-                            }
                         }
                     }
                     else
@@ -82,20 +81,7 @@ public class ItemSeller : MonoBehaviour
                     }
                 }
 
-                List<ModelsOnSaleFrame> listOnSaleInDataBase = _onSaleFrameRepository.GetAll();
-
-                for (int i = 0; i < itemsToSell.Count; i++)
-                {
-                    listOnSaleInDataBase[i].countProduct -= itemsToSell[i].countProduct;
-                }
-
-                foreach (ModelsOnSaleFrame itemToRemove in itemsToRemove)
-                {
-                    itemsToSell.Remove(itemToRemove);
-                }
-
-                _onSaleFrameRepository.SaveDataList(itemsToSell, listOnSaleInDataBase);
-                listOnSaleInDataBase.Clear();
+                _onSaleFrameRepository.SaveDataList(itemsToSell);
                 yield return new WaitForSeconds(_saleDelay);
                 _isSelling = false;
             }
