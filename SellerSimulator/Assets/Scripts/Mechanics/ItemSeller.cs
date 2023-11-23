@@ -31,7 +31,7 @@ public class ItemSeller : MonoBehaviour
 
     private void Update()
     {
-        if (!_isSelling && _listNull)
+        if (!_isSelling && _listNull && !CheckStatus.ClickerHasRun)
         {
             _listNull = false;
             StartCoroutine(SellItems());
@@ -48,7 +48,7 @@ public class ItemSeller : MonoBehaviour
     {
         while (true)
         {
-            if (!_isSelling)
+            if (!_isSelling && !CheckStatus.ClickerHasRun)
             {
                 _isSelling = true;
                 itemsToSell = _onSaleFrameRepository.GetAll();

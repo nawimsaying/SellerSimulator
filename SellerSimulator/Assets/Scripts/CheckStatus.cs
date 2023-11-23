@@ -6,8 +6,10 @@ public static class CheckStatus
 {
     static CheckStatus()
     {
-        HasRun = false; 
+        HasRun = false;
+        ClickerHasRun = false;
     }
 
     public static bool HasRun { get; set; }
+    public static bool ClickerHasRun { get; set; }
 }

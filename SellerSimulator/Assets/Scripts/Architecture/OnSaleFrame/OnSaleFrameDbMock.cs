@@ -69,7 +69,6 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
 
             if (newListOnSaleFrame != null && listSaleItems.Count != 0)
             {
-
                 List<ModelBox> listWareHouse = new List<ModelBox>();
 
                 _mainDbMock = SaveLoadManager.LoadWareHouseDbMockList();
