@@ -15,5 +15,6 @@ namespace Assets.Scripts.Architecture.WareHouse
         public string productName;
         public int price;
         public string imageName;
+        public double liquidity;
     }
 }

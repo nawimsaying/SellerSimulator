@@ -164,10 +164,10 @@ namespace Assets.Scripts.Architecture.MainDB
                     return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
                 }
                 else
-                    return Result<string>.Error($"Не достаточно средств");
+                    return Result<string>.Success($"Не достаточно средств");
             }
             else
-                return Result<string>.Error("Не достаточно места на складе");
+                return Result<string>.Success("Не достаточно места на складе");
         }
 
         Result<List<ModelsBuyFrame>> IBuyFrameSource.GetAll()
@@ -187,10 +187,11 @@ namespace Assets.Scripts.Architecture.MainDB
                     imageName = item.idProduct.imageName,
                     levelUnlock = item.idProduct.lvlUnlock,
                     lockForGold = item.idProduct.lockForGold,
-                    goldenPrice = item.idProduct.goldenPrice
+                    goldenPrice = item.idProduct.goldenPrice,
+                    liquidity = item.idProduct.liquidity
+                    
                 };
-
-
+                
                 // Добавляем экземпляр ModelsBuyFrame в результирующий лист
                 resultList.Add(modelsBuyFrame);
             }

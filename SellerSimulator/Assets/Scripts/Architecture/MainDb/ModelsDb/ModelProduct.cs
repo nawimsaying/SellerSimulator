@@ -14,5 +14,6 @@ namespace Assets.Scripts.Architecture.MainDb.ModelsDb
         public int lvlUnlock;
         public bool lockForGold;
         public int goldenPrice;
+        public double liquidity;
     }
 }

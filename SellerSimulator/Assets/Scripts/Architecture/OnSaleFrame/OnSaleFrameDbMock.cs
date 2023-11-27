@@ -38,7 +38,8 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
                     idProduct = item.idProduct,
                     imageName = item.imageName,
                     countProduct = item.countProduct,
-                    nameProduct = item.nameProduct
+                    nameProduct = item.nameProduct,
+                    liquidity = item.liquidity
                 };
 
                 // Добавляем экземпляр ModelsBuyFrame в результирующий лист

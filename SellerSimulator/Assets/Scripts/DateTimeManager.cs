@@ -28,4 +28,21 @@ public static class DateTimeManager
         }        
     }
 
+    public static DateTime GetDayTimeForLiquid(string key)
+    {
+        if (PlayerPrefs.HasKey(key))
+        {
+            string stored = PlayerPrefs.GetString(key);
+            DateTime result = DateTime.ParseExact(stored, "u", CultureInfo.InvariantCulture);
+            return result;
+        }
+        else
+        {
+            SetDayTime(key, DateTime.UtcNow);
+            string stored = PlayerPrefs.GetString(key);
+            DateTime result = DateTime.ParseExact(stored, "u", CultureInfo.InvariantCulture);
+            return result;
+        }
+    }
+
 }
