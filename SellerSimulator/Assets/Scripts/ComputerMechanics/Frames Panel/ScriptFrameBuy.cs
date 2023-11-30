@@ -188,7 +188,12 @@ public class ScriptFrameBuy : MonoBehaviour
     {
         Debug.Log("Item with id " + idProduct + " " + countProducts + " " + priceProducts+ " clicked");
 
-        _buyFrameRepository.BuyItem(idProduct, countProducts, priceProducts, _playerData.Coins);
+        string result = _buyFrameRepository.BuyItem(idProduct, countProducts, priceProducts, _playerData.Coins);
+        Debug.Log(result);
+
+        ChangeLiquidity changeLiquid = new ChangeLiquidity();
+        changeLiquid.ChangeLiquidForBuy();
+
         _popWindowManager.ClosePopWindowForBuy();
 
         ////////////////////////////////////////////////////////////////////////////////////////////////

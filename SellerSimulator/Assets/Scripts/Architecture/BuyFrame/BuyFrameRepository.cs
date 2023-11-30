@@ -39,7 +39,7 @@ namespace Assets.Scripts.Architecture.MainDB
             }
             else
             { 
-                throw new Exception(result.Exception); 
+                return result.Exception; 
             }
         }
 

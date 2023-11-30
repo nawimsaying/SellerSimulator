@@ -14,6 +14,7 @@ namespace Assets.Scripts.Architecture.WareHouseDb
         public string sizeBox;
         public int productCount;
         public string productName;
+        public double liquidity;
 
     }
 }

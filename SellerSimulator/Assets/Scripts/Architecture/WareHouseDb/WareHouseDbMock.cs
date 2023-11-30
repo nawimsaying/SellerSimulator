@@ -10,12 +10,7 @@ using UnityEngine;
 public class WareHouseDbMock : IWareHouseSource
 {
     private WareHouseDbMock _dataList;
-    private ulong currentMaxId = 0;
-
- 
-
-
-    
+    private ulong currentMaxId = 0;    
 
     //���� � ������� ����� �������� ��������� �������
      public List<ModelBox> purchasedItems = new List<ModelBox>();
@@ -76,6 +71,7 @@ public class WareHouseDbMock : IWareHouseSource
                 sizeBox = wareHouseBox.sizeBox,
                 productCount = wareHouseBox.countProduct,
                 productName = wareHouseBox.idProduct.name,
+                liquidity = wareHouseBox.idProduct.liquidity
             };
 
             result.Add(modelWareHouse);

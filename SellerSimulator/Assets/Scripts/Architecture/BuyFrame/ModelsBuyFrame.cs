@@ -11,5 +11,6 @@ public class ModelsBuyFrame
     public int levelUnlock;
     public bool lockForGold;
     public int goldenPrice;
+    public double liquidity;
 
 }

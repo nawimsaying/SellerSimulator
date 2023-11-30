@@ -108,7 +108,8 @@ namespace Assets.Scripts.Architecture.WareHouse
                     countProduct = item.countProduct,
                     productName = item.idProduct.name,
                     price = item.price,
-                    imageName = item.idProduct.imageName
+                    imageName = item.idProduct.imageName,
+                    liquidity = item.idProduct.liquidity
                 };
 
                 formattedListProducts.Add(modelsSaleFrame);
@@ -125,7 +126,8 @@ namespace Assets.Scripts.Architecture.WareHouse
                     countProduct = item.countProduct,
                     productName = item.productName,
                     price = item.price,
-                    imageName = item.imageName
+                    imageName = item.imageName,
+                    liquidity = item.liquidity
                 };
 
                 var matchingItems = _listOnSale.onSaleProduct
@@ -160,6 +162,7 @@ namespace Assets.Scripts.Architecture.WareHouse
                 countProduct = countProduct,
                 imageName = item.idProduct.imageName,
                 nameProduct = item.idProduct.name,
+                liquidity = item.idProduct.liquidity
             };
 
             _listOnSale.onSaleProduct.Add(listOnSale);

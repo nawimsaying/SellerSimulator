@@ -30,7 +30,7 @@ public class ScriptSaleFrame : MonoBehaviour
 
 
     // Start is called before the first frame update
-    void Start()
+    void OnEnable()
     {
         
         _saleFrameRepository = new SellFrameRepository(new SellFrameDbMock());
