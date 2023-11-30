@@ -2,6 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Assets.Scripts.Architecture.OnSaleFrame;
+using Unity.VisualScripting;
+using System;
+using Random = UnityEngine.Random;
 
 public class ItemSeller : MonoBehaviour
 {
@@ -63,9 +66,11 @@ public class ItemSeller : MonoBehaviour
 
                 foreach (ModelsOnSaleFrame item in itemsToSell)
                 {
+                    int chance = Convert.ToInt32(item.liquidity * 100);
+
                     int resultRandom = Random.Range(1, 100);
 
-                    if (resultRandom > _successThreshold)
+                    if (resultRandom <= chance)
                     {
                         if (item.countProduct > 0)
                         {

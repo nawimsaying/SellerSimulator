@@ -98,9 +98,11 @@ public class Clicker : MonoBehaviour
             Debug.Log("Start");
             foreach (ModelsOnSaleFrame item in itemsToSell)
             {
+                int chance = Convert.ToInt32(item.liquidity * 100);
+
                 int resultRandom = Random.Range(1, 100);
 
-                if (resultRandom > _successThreshold)
+                if (resultRandom <= chance)
                 {
                     if (item.countProduct > 0)
                     {

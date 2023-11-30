@@ -21,11 +21,6 @@ public class OfflineItemSeller : MonoBehaviour
         }
     }
 
-    void Update()
-    {
-
-    }
-
     void ÑalculationItemSaled()
     {
         itemsToSell = _onSaleFrameRepository.GetAll();
@@ -34,7 +29,9 @@ public class OfflineItemSeller : MonoBehaviour
         int countSaleItem = 0;
         foreach (var item in itemsToSell)
         {
-            int sellItemTime = UnityEngine.Random.Range(3, 5);
+            int chance = Convert.ToInt32(item.liquidity * 100);
+            int sellItemTime = 100 / chance;
+
             countSaleItem = (int)timePassed.TotalSeconds / sellItemTime;
 
             if (countSaleItem >= item.countProduct)
