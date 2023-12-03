@@ -27,7 +27,7 @@ public class WarehouseMechanics : MonoBehaviour
         if (Physics.Raycast(_ray, out _hit))
         {
             // Checking that the collision happened with an object with a specific tag
-            if (_hit.collider.CompareTag("SpaceForBox"))
+            if (_hit.collider.CompareTag("SpaceForBox") && PlayerPrefs.GetString("dragging") == "small")
             {
                 // Update count of boxes in tool bar
                 int smallBoxes = PlayerPrefs.GetInt("smallBoxes");
@@ -35,8 +35,20 @@ public class WarehouseMechanics : MonoBehaviour
                 PlayerPrefs.SetInt("smallBoxes", smallBoxes);
 
                 ToolBarList _toolBarList = SaveLoadManager.LoadToolBarList();
-                ulong idBox = _toolBarList.toolBarList[0].idBox;
-                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[0]);
+
+                ulong idBox = 0;
+                for (int i = 0; i < _toolBarList.toolBarList.Count; i++)
+                {
+                    if (_toolBarList.toolBarList[i].sizeBox == "Small")
+                    {
+                        idBox = (ulong)i;
+                        break;
+                    }
+                }
+
+                // Convert to int may be a problem
+                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[(int)idBox]);
+
                 WarehouseData warehouseData = new WarehouseData();
                 var item = warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList);
                 SaveLoadManager.SaveToolBarList(warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList));
@@ -47,7 +59,7 @@ public class WarehouseMechanics : MonoBehaviour
                 WarehouseButtons warehouseButtons = new WarehouseButtons();
                 warehouseButtons.SpawnBoxesInToolBar();
             }
-            else if (_hit.collider.CompareTag("SpaceForBigBox"))
+            else if (_hit.collider.CompareTag("SpaceForBigBox") && PlayerPrefs.GetString("dragging") == "big")
             {
                 // Update count of boxes in tool bar
                 int bigBoxes = PlayerPrefs.GetInt("bigBoxes");
@@ -55,8 +67,20 @@ public class WarehouseMechanics : MonoBehaviour
                 PlayerPrefs.SetInt("bigBoxes", bigBoxes);
 
                 ToolBarList _toolBarList = SaveLoadManager.LoadToolBarList();
-                ulong idBox = _toolBarList.toolBarList[0].idBox;
-                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[0]);
+
+                ulong idBox = 0;
+                for (int i = 0; i < _toolBarList.toolBarList.Count; i++)
+                {
+                    if (_toolBarList.toolBarList[i].sizeBox == "Big")
+                    {
+                        idBox = (ulong)i;
+                        break;
+                    }
+                }
+
+                // Convert to int may be a problem
+                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[(int)idBox]);
+
                 WarehouseData warehouseData = new WarehouseData();
                 var item = warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList);
                 SaveLoadManager.SaveToolBarList(warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList));
@@ -68,6 +92,7 @@ public class WarehouseMechanics : MonoBehaviour
                 warehouseButtons.SpawnBoxesInToolBar();
             }
         }
+        PlayerPrefs.SetString("dragging", "none");
     }
 
     private static void SpawnBox(RaycastHit hit, ulong idBox)

@@ -66,7 +66,8 @@ public class ItemSeller : MonoBehaviour
 
                 foreach (ModelsOnSaleFrame item in itemsToSell)
                 {
-                    int chance = Convert.ToInt32(item.liquidity * 100);
+                    //int chance = Convert.ToInt32(item.liquidity * 100);
+                    int chance = 100;
 
                     int resultRandom = Random.Range(1, 100);
 
