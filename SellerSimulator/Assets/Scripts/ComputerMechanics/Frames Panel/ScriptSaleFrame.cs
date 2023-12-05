@@ -48,6 +48,8 @@ public class ScriptSaleFrame : MonoBehaviour
 
     void DisplayProduct()
     {
+        ClearDisplayedItems();
+
         List<ModelsSaleFrame> allItems = _saleFrameRepository.GetAll();
 
         if (allItems.Count > 0)
@@ -60,18 +62,27 @@ public class ScriptSaleFrame : MonoBehaviour
                 int tempIndex = i;
                 elementItem = Instantiate(itemProduct, transform);
 
-                
+                if (allItems[i].liquidity <= 0.1)
+                {
+                    elementItem.transform.GetChild(0).gameObject.SetActive(true);
+                }
+                else if (allItems[i].liquidity >= 0.11)
+                {
+                    elementItem.transform.GetChild(1).gameObject.SetActive(true);
+                }
 
                 // ��������� �������
-                elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/" + allItems[i].imageName);
-                elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
-                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = $"{allItems[i].countProduct} шт. ";
+                elementItem.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/" + allItems[i].imageName);
+                elementItem.transform.GetChild(3).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
+                elementItem.transform.GetChild(4).GetComponent<TextMeshProUGUI>().text = $"{allItems[i].countProduct} шт. ";
 
-                elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenere(() => {
+                elementItem.transform.GetChild(5).GetComponent<Button>().AddEventListenere(() => {
                     LoadInfoPopWindow(tempIndex, allItems);
                     PlayerPrefs.SetInt("idForCounter", tempIndex);
                     PlayerPrefs.Save();
                 });
+
+               
 
                 displayedItems.Add(elementItem);
 
@@ -100,11 +111,15 @@ public class ScriptSaleFrame : MonoBehaviour
         _popWindow.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = 0.ToString();
         Slider slider = _popWindow.transform.GetChild(10).GetComponent<Slider>();
         slider.value = 0;
-        slider.maxValue = allItems[id].countProduct;     
+        slider.maxValue = allItems[id].countProduct;
+
+        Button buttonInstantSell = _popWindow.transform.GetChild(5).GetComponent<Button>();
+        buttonInstantSell.onClick.RemoveAllListeners(); // ������� ��� ���������� �����������
+        buttonInstantSell.onClick.AddListener(() => ButtonInstantSell(allItems[id].idProduct, Convert.ToInt32(slider.value)));
 
         Button buttonSell = _popWindow.transform.GetChild(4).GetComponent<Button>();
         buttonSell.onClick.RemoveAllListeners(); // ������� ��� ���������� �����������
-        buttonSell.onClick.AddListener(() => ButtonSellClicked(allItems[id].idProduct, Convert.ToInt32(slider.value)));
+        buttonSell.onClick.AddListener(() => ButtonSellClicked(allItems[id].idProduct, Convert.ToInt32(slider.value)));             
 
         Button buttonClose = _popWindow.transform.GetChild(0).GetComponent<Button>();
         buttonClose.onClick.RemoveAllListeners();
@@ -142,7 +157,16 @@ public class ScriptSaleFrame : MonoBehaviour
 
     void ButtonInstantSell(int idProduct, int currentSliderValue)
     {
+        Debug.Log("Click" + idProduct + " " + currentSliderValue);
+        bool result = _saleFrameRepository.InstantSale(idProduct, currentSliderValue);
 
+        if (result)
+        {
+            ClearDisplayedItems();
+            DisplayProduct();
+        }
+
+        _popWindowManager.ClosePopWindowForSale();
     }
 
 }

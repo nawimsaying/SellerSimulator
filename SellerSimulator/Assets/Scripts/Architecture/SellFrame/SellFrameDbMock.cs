@@ -148,6 +148,44 @@ namespace Assets.Scripts.Architecture.WareHouse
             return Result<List<ModelsSaleFrame>>.Success(resultList);
         }
 
+        public Result<bool> InstantSale(int idProduct, int countProduct)
+        {
+            List<ModelBox> listWareHouse = new List<ModelBox>();
+
+            _listWareHouse = SaveLoadManager.LoadWareHouseDbMockList();
+            listWareHouse = _listWareHouse.purchasedItems;
+
+            while (countProduct > 0)
+            {
+                var matchingBoxes = listWareHouse.Where(box => box.idProduct.id == idProduct);
+
+                if (matchingBoxes.Any())
+                {
+                    // Находим коробку с минимальным количеством countProduct
+                    ModelBox boxWithMinCount = matchingBoxes.OrderBy(box => box.countProduct).First();
+
+                    if(boxWithMinCount.countProduct >= countProduct)
+                    {
+                        boxWithMinCount.countProduct -= countProduct;
+                        countProduct = 0;
+                    }else if (boxWithMinCount.countProduct < countProduct)
+                    {
+                        countProduct -= boxWithMinCount.countProduct;
+                        boxWithMinCount.countProduct = 0;
+                    }                   
+
+                    if (boxWithMinCount.countProduct == 0)
+                    {
+                        listWareHouse.Remove(boxWithMinCount);
+                    }
+                }
+            }
+            _listWareHouse.purchasedItems = listWareHouse;
+            SaveLoadManager.SaveWareHouseDbMockList(_listWareHouse);
+
+            return Result<bool>.Success(true);
+        }
+
         public Result<bool> PutOnSale(int idProduct, int countProduct)
         {
             _listOnSale = SaveLoadManager.LoadOnSaleFrameDbMockList();
