@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -121,5 +122,9 @@ public class SceneSettings : MonoBehaviour
 
         // Changing graphics settings
         QualitySettings.SetQualityLevel(3);
+    }
+    private void OnApplicationQuit()
+    {
+        DateTimeManager.SetDayTime("LastSaveTime", DateTime.UtcNow);
     }
 }

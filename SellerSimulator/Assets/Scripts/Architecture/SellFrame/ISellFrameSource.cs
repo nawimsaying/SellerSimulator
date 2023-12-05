@@ -13,7 +13,7 @@ namespace Assets.Scripts.Architecture.WareHouse
         Result <List<ModelsSaleFrame>>GetAll();
         Result<bool> PutOnSale(int idBox, int countProduct);
 
-        Result<bool> InstantSale(int idProduct, int countProduct);
+        Result<bool> InstantSale(int idProduct, int countProduct, int currentPrice);
 
 
     }

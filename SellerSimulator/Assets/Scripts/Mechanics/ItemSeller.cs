@@ -5,10 +5,12 @@ using Assets.Scripts.Architecture.OnSaleFrame;
 using Unity.VisualScripting;
 using System;
 using Random = UnityEngine.Random;
+using Assets.Scripts.Player;
 
 public class ItemSeller : MonoBehaviour
 {
     private static ItemSeller instance;
+    private PlayerData _playerData;
     private OnSaleFrameRepository _onSaleFrameRepository;
     public List<ModelsOnSaleFrame> itemsToSell;
     private int _saleDelay = 1;
@@ -66,8 +68,10 @@ public class ItemSeller : MonoBehaviour
 
                 foreach (ModelsOnSaleFrame item in itemsToSell)
                 {
-                    //int chance = Convert.ToInt32(item.liquidity * 100);
-                    int chance = 100;
+                    int chance = Convert.ToInt32(item.liquidity * 100);
+                    // contarct = 1 - 1.75
+                    //поднять ликвидность изначальную
+                    //int chance = 50;
 
                     int resultRandom = Random.Range(1, 100);
 
@@ -77,6 +81,8 @@ public class ItemSeller : MonoBehaviour
                         {
                             Debug.Log("Продан товар из карточки " + item.nameProduct);
                             item.countProduct--;
+                            _playerData = PlayerDataHolder.playerData;
+                            _playerData.AddCoins(item.priceProduct);
 
                             Debug.Log("Осталось: " + item.countProduct);
                         }
@@ -97,4 +103,12 @@ public class ItemSeller : MonoBehaviour
             }
         }
     }
+
+    private int SalePrice(int countProduct, int priceBox)
+    {
+        double result = (priceBox / countProduct) * 1.2;
+
+        return Convert.ToInt32(result);
+    }
+
 }

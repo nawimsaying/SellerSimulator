@@ -1,4 +1,5 @@
 using Assets.Scripts.Architecture.OnSaleFrame;
+using Assets.Scripts.Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,6 +16,7 @@ public class Clicker : MonoBehaviour
     [SerializeField] private GameObject _canvasMain;
     [SerializeField] private GameObject _canvasClickerMode;
     [SerializeField] private TextMeshProUGUI _clickerCounterText;
+    private PlayerData _playerData;
     private bool _listNull;
     private int _successThreshold = 1;
     private OnSaleFrameRepository _onSaleFrameRepository;
@@ -108,6 +110,8 @@ public class Clicker : MonoBehaviour
                     {
                         Debug.Log("Продан товар из карточки " + item.nameProduct + " Клик " + _clickCount);
                         item.countProduct--;
+                        _playerData = PlayerDataHolder.playerData;
+                        _playerData.AddCoins(item.priceProduct);
 
                         Debug.Log($"idSell: {item.idSell} Осталось: {item.countProduct}  Клик: {_clickCount}");
                     }

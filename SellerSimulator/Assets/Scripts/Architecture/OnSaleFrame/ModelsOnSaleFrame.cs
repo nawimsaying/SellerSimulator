@@ -14,6 +14,7 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
         public int countProduct;
         public string nameProduct;
         public string imageName;
+        public int priceProduct;
         public double liquidity;
 
     }

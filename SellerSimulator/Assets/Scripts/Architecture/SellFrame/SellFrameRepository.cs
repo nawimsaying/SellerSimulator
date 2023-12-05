@@ -46,9 +46,9 @@ namespace Assets.Scripts.Architecture.WareHouse
             }
         }
 
-        public bool InstantSale(int idProduct, int countProduct)
+        public bool InstantSale(int idProduct, int countProduct, int currentPrice)
         {
-            var result = _local.InstantSale(idProduct, countProduct);
+            var result = _local.InstantSale(idProduct, countProduct, currentPrice);
 
             if (result.IsSuccess())
             {

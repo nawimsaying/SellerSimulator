@@ -35,6 +35,7 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
                 ModelsOnSaleFrame listProductsOnSale = new ModelsOnSaleFrame()
                 {
                     idSell = item.idSell,
+                    priceProduct = item.priceProduct,
                     idProduct = item.idProduct,
                     imageName = item.imageName,
                     countProduct = item.countProduct,

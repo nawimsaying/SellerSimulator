@@ -36,14 +36,26 @@ namespace Assets.Scripts.Player
             SavePlayerData();
         }
 
+        public void RemoveCoins(int amount)
+        {
+            Coins -= amount;
+            SavePlayerData();
+        }
 
-        public void SetCoins(int amount)
+        public void RemoveGold(int amount)
+        {
+            Gold -= amount;
+            SavePlayerData();
+        }
+
+
+        private void SetCoins(int amount)
         {
             Coins = amount;
             SavePlayerData();
         }
 
-        public void SetGold(int amount)
+        private void SetGold(int amount)
         {
             Gold = amount;
             SavePlayerData();

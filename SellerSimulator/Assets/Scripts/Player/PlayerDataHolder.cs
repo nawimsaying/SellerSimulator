@@ -6,7 +6,7 @@ namespace Assets.Scripts.Player
     {
         public static PlayerData playerData;
 
-        void Start()
+        void Awake()
         {
             LoadPlayerData();
         }

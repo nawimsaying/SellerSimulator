@@ -45,9 +45,7 @@ namespace Assets.Scripts.Architecture.MainDB
 
             if (gold >= itemToBuy.idProduct.goldenPrice)
             {
-                    int newGold = gold - itemToBuy.idProduct.goldenPrice;
-
-                    PlayerPrefs.SetInt("Gold", newGold);
+                    _playerData.RemoveGold(itemToBuy.idProduct.goldenPrice);
 
                     foreach (var modelBuyFrame in _listLocal.ListBox)
                     {
@@ -60,7 +58,7 @@ namespace Assets.Scripts.Architecture.MainDB
 
                     SaveLoadManager.SaveMainDbMockList(_listLocal);
 
-                    _playerData.SetGold(newGold);
+                    //_playerData.SetGold(newGold);
 
                     return Result<bool>.Success(true);
             }else
@@ -131,7 +129,6 @@ namespace Assets.Scripts.Architecture.MainDB
 
             string resultMessageEmpty = GetEmptyCellCountMessage(sampleList); //Получаем кол-во о пустых ячеек 
             string resultMessageTest = GetPlaceStylageMessage(sampleList); // Кол-во мест
-
             
             if (resultMessageEmpty == "Установите стеллаж" || resultMessageTest == "Установите стеллаж")
                 return Result<string>.Error($"Установите стеллаж");
@@ -144,14 +141,11 @@ namespace Assets.Scripts.Architecture.MainDB
 
             countWareHousePlace = countEmptyCells - temp; 
 
-
-
-
             if (countWareHousePlace >= countProducts)
             {
                 if (money >= priceProducts)
                 {
-                    int newMoney = money - priceProducts;
+                    _playerData.RemoveCoins(priceProducts);
 
                     for (int i = 0; i < countProducts; i++) // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
                     {
@@ -159,7 +153,7 @@ namespace Assets.Scripts.Architecture.MainDB
                         
                         _playerData.AddExperience(250); // опыт временно / temp exp
                     }
-                    _playerData.SetCoins(newMoney);
+                    
 
                     return Result<string>.Success($"Товар куплен успешно: {itemToBuy.idProduct.name}");
                 }

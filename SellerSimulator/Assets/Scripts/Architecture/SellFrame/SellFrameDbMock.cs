@@ -1,6 +1,7 @@
 ﻿using Assets.Scripts.Architecture.MainDb;
 using Assets.Scripts.Architecture.MainDb.ModelsDb;
 using Assets.Scripts.Architecture.OnSaleFrame;
+using Assets.Scripts.Player;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -20,10 +21,11 @@ namespace Assets.Scripts.Architecture.WareHouse
 
         private WareHouseDbMock _listWareHouse;
         private OnSaleFrameDbMock _listOnSale;
+        private PlayerData _playerData;
 
         public SellFrameDbMock()
         {
-            
+            _playerData = PlayerDataHolder.playerData;
         }
 
         public Result<List<ModelsSaleFrame>> GetAll()
@@ -148,7 +150,7 @@ namespace Assets.Scripts.Architecture.WareHouse
             return Result<List<ModelsSaleFrame>>.Success(resultList);
         }
 
-        public Result<bool> InstantSale(int idProduct, int countProduct)
+        public Result<bool> InstantSale(int idProduct, int countProduct, int currentPrice)
         {
             List<ModelBox> listWareHouse = new List<ModelBox>();
 
@@ -183,6 +185,8 @@ namespace Assets.Scripts.Architecture.WareHouse
             _listWareHouse.purchasedItems = listWareHouse;
             SaveLoadManager.SaveWareHouseDbMockList(_listWareHouse);
 
+            _playerData.AddCoins(currentPrice);
+
             return Result<bool>.Success(true);
         }
 
@@ -196,6 +200,7 @@ namespace Assets.Scripts.Architecture.WareHouse
             ModelsOnSaleFrame listOnSale = new ModelsOnSaleFrame()
             {
                 idSell = list.Count == 0 ? 1 : list.Max(item => item.idSell) + 1,
+                priceProduct = SalePrice(item.countProduct, item.price),
                 idProduct = idProduct,
                 countProduct = countProduct,
                 imageName = item.idProduct.imageName,
@@ -207,6 +212,13 @@ namespace Assets.Scripts.Architecture.WareHouse
             SaveLoadManager.SaveOnSaleFrameDbMockList(_listOnSale);          
 
             return Result<bool>.Success(true);
+        }
+
+        private int SalePrice(int countProduct, int priceBox)
+        {
+            double result = (priceBox / countProduct) * 1.2;
+
+            return Convert.ToInt32(result);
         }
 
     }
