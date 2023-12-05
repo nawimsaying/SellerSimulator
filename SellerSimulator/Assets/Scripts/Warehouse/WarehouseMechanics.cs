@@ -36,18 +36,20 @@ public class WarehouseMechanics : MonoBehaviour
 
                 ToolBarList _toolBarList = SaveLoadManager.LoadToolBarList();
 
+                int index = 0;
                 ulong idBox = 0;
                 for (int i = 0; i < _toolBarList.toolBarList.Count; i++)
                 {
                     if (_toolBarList.toolBarList[i].sizeBox == "Small")
                     {
-                        idBox = (ulong)i;
+                        idBox = _toolBarList.toolBarList[i].idBox;
+                        index = i;
                         break;
                     }
                 }
 
                 // Convert to int may be a problem
-                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[(int)idBox]);
+                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[index]);
 
                 WarehouseData warehouseData = new WarehouseData();
                 var item = warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList);
@@ -68,18 +70,20 @@ public class WarehouseMechanics : MonoBehaviour
 
                 ToolBarList _toolBarList = SaveLoadManager.LoadToolBarList();
 
+                int index = 0;
                 ulong idBox = 0;
                 for (int i = 0; i < _toolBarList.toolBarList.Count; i++)
                 {
                     if (_toolBarList.toolBarList[i].sizeBox == "Big")
                     {
-                        idBox = (ulong)i;
+                        idBox = _toolBarList.toolBarList[i].idBox;
+                        index = i;
                         break;
                     }
                 }
 
                 // Convert to int may be a problem
-                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[(int)idBox]);
+                _toolBarList.toolBarList.Remove(_toolBarList.toolBarList[index]);
 
                 WarehouseData warehouseData = new WarehouseData();
                 var item = warehouseData.GetSaveSnapshotToolBarList(_toolBarList.toolBarList);
