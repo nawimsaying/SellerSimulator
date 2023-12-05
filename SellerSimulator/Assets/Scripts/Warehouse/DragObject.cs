@@ -36,6 +36,8 @@ public class DragObject : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             // Creating a prefab and linking it to the player's cursor
             _instantiatedPrefab = Instantiate(_prefabToInstantiate[0]);
+
+            PlayerPrefs.SetString("dragging", "small");
         }
         else if (eventData.pointerEnter.gameObject.name == "ImageBigBox")
         {
@@ -44,6 +46,8 @@ public class DragObject : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
             // Creating a prefab and linking it to the player's cursor
             _instantiatedPrefab = Instantiate(_prefabToInstantiate[1]);
+
+            PlayerPrefs.SetString("dragging", "big");
         }
         UpdatePrefabPosition();
     }
