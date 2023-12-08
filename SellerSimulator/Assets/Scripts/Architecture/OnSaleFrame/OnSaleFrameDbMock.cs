@@ -1,5 +1,8 @@
-﻿using Assets.Scripts.Architecture.MainDb;
+﻿using Assets.Scripts.Architecture.DataBases.AdvertisingDb;
+using Assets.Scripts.Architecture.MainDb;
 using Assets.Scripts.Architecture.MainDb.ModelsDb;
+using Assets.Scripts.Architecture.MainDB;
+using Assets.Scripts.Player;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +19,7 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
 
         OnSaleFrameDbMock _listOnSale;
         WareHouseDbMock _mainDbMock;
+        private PlayerData _playerData;
 
         public Result<string> CancelSell(int idSell)
         {
@@ -40,7 +44,10 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
                     imageName = item.imageName,
                     countProduct = item.countProduct,
                     nameProduct = item.nameProduct,
-                    liquidity = item.liquidity
+                    liquidity = item.liquidity,
+                    buffLiquidity = item.buffLiquidity,
+                    bufAds = item.bufAds,
+                    uniqueOrderId = item.uniqueOrderId
                 };
 
                 // Добавляем экземпляр ModelsBuyFrame в результирующий лист
@@ -50,8 +57,38 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
             return Result<List<ModelsOnSaleFrame>>.Success(resultList);
         }
 
+
+        public Result<List<ModelAdvertising>> GetAllAds()
+        {
+            List<ModelAdvertising> listAds = AdvertisingDbMock.ListAds;
+
+            List<ModelAdvertising> resultListAds = new List<ModelAdvertising>();
+
+            foreach (var item in listAds)
+            {
+                ModelAdvertising listProductsOnSale = new ModelAdvertising()
+                {
+                    id = item.id,
+                    nameAds = item.nameAds,
+                    description = item.description,
+                    imageName = item.imageName,
+                    priceWatchAds = item.priceWatchAds,
+                    goldenPrice = item.goldenPrice,
+                    buffLiquidity = item.buffLiquidity,
+
+                };
+
+                resultListAds.Add(listProductsOnSale);
+            }
+
+            return Result<List<ModelAdvertising>>.Success(resultListAds);
+        }
+
+
+
+
         public Result<bool> SaveDataList(List<ModelsOnSaleFrame> newListOnSaleFrame)
-        { 
+        {
             OnSaleFrameRepository onSaleFrameRepository = new OnSaleFrameRepository(new OnSaleFrameDbMock());
             List<ModelsOnSaleFrame> listSaleItems = onSaleFrameRepository.GetAll();
 
@@ -88,11 +125,11 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
 
                         boxWithMinCount.countProduct -= saleItem.countProduct;
 
-                        if(boxWithMinCount.countProduct == 0)
+                        if (boxWithMinCount.countProduct == 0)
                         {
                             listWareHouse.Remove(boxWithMinCount);
                         }
-                        
+
                     }
                 }
                 ////////////////////////////////////////////////////////
@@ -104,14 +141,61 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
 
                 _mainDbMock.purchasedItems = listWareHouse;
                 SaveLoadManager.SaveWareHouseDbMockList(_mainDbMock);
-                
+
 
                 return Result<bool>.Success(true);
             }
-            return Result<bool>.Error("List null");      
+            return Result<bool>.Error("List null");
+
+
+        }
+
+
+
+
+        public Result<bool> SetBuffForItem(ModelsOnSaleFrame item, ModelAdvertising ads)
+        {
+            _playerData = PlayerDataHolder.playerData;
+
+            if (ads.priceWatchAds)
+            {
+                //implementation of advertising display to the user
+            }
+            else if (_playerData.Gold >= ads.goldenPrice)
+            {
+                _playerData.RemoveGold(ads.goldenPrice);
+            }
+            else
+            {
+                return Result<bool>.Success(false);
+            }
+
+            OnSaleFrameRepository onSaleFrameRepository = new OnSaleFrameRepository(new OnSaleFrameDbMock());
+            List<ModelsOnSaleFrame> listSaleItems = onSaleFrameRepository.GetAll();
+
+            var saleItem = listSaleItems.FirstOrDefault(sale => sale.uniqueOrderId == item.uniqueOrderId);            
             
+            if(saleItem != null)
+            {
+                if (saleItem.bufAds == false)
+                {
+                    saleItem.buffLiquidity = ads.buffLiquidity;
+                    saleItem.bufAds = true;
+                }
+                else
+                {
+                    return Result<bool>.Error("Buff advertising is already connected");
+                }               
+            }
+            else
+            {
+                return Result<bool>.Success(false);
+            }
+            _listOnSale = new OnSaleFrameDbMock();
+            _listOnSale.onSaleProduct = listSaleItems;
+            SaveLoadManager.SaveOnSaleFrameDbMockList(_listOnSale);
 
-        }  
-
+            return Result<bool>.Success(true);
+        }
     }
 }

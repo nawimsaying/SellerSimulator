@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Assets.Scripts.Architecture.DataBases.AdvertisingDb;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,6 +12,8 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
         Result<string> CancelSell(int idSell);
         Result<List<ModelsOnSaleFrame>> GetAll();
 
+        Result<List<ModelAdvertising>> GetAllAds();
+        Result<bool> SetBuffForItem(ModelsOnSaleFrame item, ModelAdvertising ads); //Revork
         Result<bool> SaveDataList(List<ModelsOnSaleFrame> newListOnSaleFrame);
     }
 }

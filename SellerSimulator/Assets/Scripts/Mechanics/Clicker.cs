@@ -100,7 +100,7 @@ public class Clicker : MonoBehaviour
             Debug.Log("Start");
             foreach (ModelsOnSaleFrame item in itemsToSell)
             {
-                int chance = Convert.ToInt32(item.liquidity * 100);
+                int chance = Convert.ToInt32(item.liquidity * 100 * item.buffLiquidity);
 
                 int resultRandom = Random.Range(1, 100);
 

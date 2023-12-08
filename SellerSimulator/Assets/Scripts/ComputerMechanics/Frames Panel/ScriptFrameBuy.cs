@@ -99,7 +99,7 @@ public class ScriptFrameBuy : MonoBehaviour
                 // Установка спрайта
                 elementItem.transform.GetChild(0).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/"+allItems[i].imageName);
                 elementItem.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[i].productName;
-                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = allItems[i].price.ToString();
+                elementItem.transform.GetChild(2).GetComponent<TextMeshProUGUI>().text = "$" + allItems[i].price.ToString();
 
                 elementItem.transform.GetChild(3).GetComponent<Button>().AddEventListenere(() => {
                     clickButtonPopWindow.ResetCounter();
