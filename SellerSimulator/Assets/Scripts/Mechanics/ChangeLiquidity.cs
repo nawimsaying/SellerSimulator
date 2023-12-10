@@ -71,7 +71,7 @@ public class ChangeLiquidity : MonoBehaviour
 
                 if (item.idProduct.liquidity == 0)
                 {
-                    item.idProduct.liquidity = Math.Round(Random.Range(0.01f, 0.2f), 2);
+                    item.idProduct.liquidity = Math.Round(Random.Range(0.25f, 0.5f), 2);
                     SaveLoadManager.SaveWareHouseDbMockList(wareHouseDbMock);
                 }
             }
@@ -108,7 +108,7 @@ public class ChangeLiquidity : MonoBehaviour
 
                 if (item.idProduct.liquidity == 0)
                 {
-                    item.idProduct.liquidity = Math.Round(Random.Range(0.01f, 0.2f), 2);
+                    item.idProduct.liquidity = Math.Round(Random.Range(0.25f, 0.5f), 2);
                     SaveLoadManager.SaveWareHouseDbMockList(wareHouseDbMock);
                 }
             }

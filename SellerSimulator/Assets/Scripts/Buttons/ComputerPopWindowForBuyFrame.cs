@@ -5,8 +5,11 @@ public class ComputerPopWindowController : MonoBehaviour
 {
     [SerializeField] private GameObject popWindowForBuy;
     [SerializeField] private GameObject popWindowForSale;
+    [SerializeField] private GameObject popWindowForOnSale;
     [SerializeField] private GameObject backgroundForBuy;
     [SerializeField] private GameObject backgroundForSale;
+    [SerializeField] private GameObject backgroundForOnSale;
+
 
     private void Start()
     {
@@ -23,6 +26,11 @@ public class ComputerPopWindowController : MonoBehaviour
         popWindowForSale.SetActive(true);
         backgroundForSale.SetActive(true);
     }
+    public void OpenPopWindowForOnSale()
+    {
+        popWindowForOnSale.SetActive(true);
+        backgroundForOnSale.SetActive(true);
+    }
 
     public void ClosePopWindowForBuy()
     {
@@ -35,11 +43,19 @@ public class ComputerPopWindowController : MonoBehaviour
         popWindowForSale.SetActive(false);
         backgroundForSale.SetActive(false);
     }
+
+    public void ClosePopWindowForOnSale()
+    {
+        popWindowForOnSale.SetActive(false);
+        backgroundForOnSale.SetActive(false);
+    }
     public void HideAll()
     {
         popWindowForBuy.SetActive(false);
         popWindowForSale.SetActive(false);
+        popWindowForOnSale.SetActive(false);
         backgroundForBuy.SetActive(false);
         backgroundForSale.SetActive(false);
+        backgroundForOnSale.SetActive(false);
     }
 }

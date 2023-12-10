@@ -91,7 +91,7 @@ public class ScriptSaleFrame : MonoBehaviour
         _popWindow.transform.GetChild(1).GetComponent<TextMeshProUGUI>().text = allItems[id].productName;
         _popWindow.transform.GetChild(2).GetComponent<Image>().sprite = Resources.Load<Sprite>("IconProducts/" + allItems[id].imageName);
         _popWindow.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = 0.ToString();
-        _popWindow.transform.GetChild(9).GetComponent<TextMeshProUGUI>().text = $"На складе: {allItems[id].countProduct}";
+        _popWindow.transform.GetChild(9).GetComponent<TextMeshProUGUI>().text = $"На складе: <color=#8F4B0D>{allItems[id].countProduct}</color> шт."; 
         Slider slider = _popWindow.transform.GetChild(10).GetComponent<Slider>();
         slider.value = 0;
         slider.maxValue = allItems[id].countProduct;
@@ -124,21 +124,22 @@ public class ScriptSaleFrame : MonoBehaviour
         _currentPriceProducts = priceProducts;
         _currentInstantPriceProducts = instantPriceProducts;
 
+
         _popWindow.transform.GetChild(6).GetComponent<TextMeshProUGUI>().text = ((int)slider.value).ToString();
-        _popWindow.transform.GetChild(8).GetComponent<TextMeshProUGUI>().text = $"Продажа: {priceProducts }";
-        _popWindow.transform.GetChild(7).GetComponent<TextMeshProUGUI>().text = $"Моментально: {instantPriceProducts}";
+        _popWindow.transform.GetChild(8).GetComponent<TextMeshProUGUI>().text = $"Продажа: <color=#3A8B2D>${priceProducts}</color>";
+        _popWindow.transform.GetChild(7).GetComponent<TextMeshProUGUI>().text = $"Моментально: <color=#B63636>${instantPriceProducts}</color>";
     }
 
     private int InstantSalePrice(int countProduct, int priceBox)
     {
-        double result = (priceBox / countProduct) * 0.8;
+        double result = (priceBox / countProduct) * 0.6;
 
         return Convert.ToInt32(result);
     }
 
     private int SalePrice(int countProduct, int priceBox)
     {
-        double result = (priceBox / countProduct) * 1.2;
+        double result = (priceBox / countProduct) * 1.9;
 
         return Convert.ToInt32(result);
     }

@@ -22,6 +22,7 @@ namespace Assets.Scripts.Architecture.WareHouse
         private WareHouseDbMock _listWareHouse;
         private OnSaleFrameDbMock _listOnSale;
         private PlayerData _playerData;
+        double defaultValue = 1;
 
         public SellFrameDbMock()
         {
@@ -205,7 +206,10 @@ namespace Assets.Scripts.Architecture.WareHouse
                 countProduct = countProduct,
                 imageName = item.idProduct.imageName,
                 nameProduct = item.idProduct.name,
-                liquidity = item.idProduct.liquidity
+                liquidity = item.idProduct.liquidity,
+                bufAds = false,
+                buffLiquidity = defaultValue,
+                uniqueOrderId = Guid.NewGuid()
             };
 
             _listOnSale.onSaleProduct.Add(listOnSale);

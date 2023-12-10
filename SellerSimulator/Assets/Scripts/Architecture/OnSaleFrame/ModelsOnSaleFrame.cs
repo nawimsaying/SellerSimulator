@@ -16,6 +16,9 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
         public string imageName;
         public int priceProduct;
         public double liquidity;
+        public bool bufAds;
+        public double buffLiquidity;
+        public Guid uniqueOrderId;
 
     }
 }

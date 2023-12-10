@@ -1,4 +1,5 @@
-﻿using Assets.Scripts.Architecture.WareHouse;
+﻿using Assets.Scripts.Architecture.DataBases.AdvertisingDb;
+using Assets.Scripts.Architecture.WareHouse;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,6 +18,34 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
         public List<ModelsOnSaleFrame> GetAll()
         {
             var result = _local.GetAll();
+
+            if (result.IsSuccess())
+            {
+                return result.Data;
+            }
+            else
+            {
+                throw new Exception(result.Exception);
+            }
+        }
+
+        public List<ModelAdvertising> GetAllAds()
+        {
+            var result = _local.GetAllAds();
+
+            if (result.IsSuccess())
+            {
+                return result.Data;
+            }
+            else
+            {
+                throw new Exception(result.Exception);
+            }
+        }
+
+        public bool SetBuffForItem(ModelsOnSaleFrame item, ModelAdvertising ads)
+        {
+            var result = _local.SetBuffForItem(item, ads);
 
             if (result.IsSuccess())
             {
