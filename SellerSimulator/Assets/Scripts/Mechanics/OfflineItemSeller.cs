@@ -36,7 +36,7 @@ public class OfflineItemSeller : MonoBehaviour
             _playerData = PlayerDataHolder.playerData;
             int chance = Convert.ToInt32(item.liquidity * 100 * item.buffLiquidity);
             //int chance = 100;
-            int sellItemTime = 100 / chance;
+            int sellItemTime = (100 / chance) * 20;
 
             countSaleItemForTime = (int)timePassed.TotalSeconds / sellItemTime;
 

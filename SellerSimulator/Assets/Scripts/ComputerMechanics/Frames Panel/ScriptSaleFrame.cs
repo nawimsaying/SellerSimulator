@@ -132,14 +132,14 @@ public class ScriptSaleFrame : MonoBehaviour
 
     private int InstantSalePrice(int countProduct, int priceBox)
     {
-        double result = (priceBox / countProduct) * 0.8;
+        double result = (priceBox / countProduct) * 0.6;
 
         return Convert.ToInt32(result);
     }
 
     private int SalePrice(int countProduct, int priceBox)
     {
-        double result = (priceBox / countProduct) * 1.2;
+        double result = (priceBox / countProduct) * 1.9;
 
         return Convert.ToInt32(result);
     }

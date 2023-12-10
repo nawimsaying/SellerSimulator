@@ -13,7 +13,7 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
         Result<List<ModelsOnSaleFrame>> GetAll();
 
         Result<List<ModelAdvertising>> GetAllAds();
-        Result<bool> SetBuffForItem(ModelsOnSaleFrame item, ModelAdvertising ads); //Revork
+        Result<bool> SetBuffForItem(ModelsOnSaleFrame item, ModelAdvertising ads); 
         Result<bool> SaveDataList(List<ModelsOnSaleFrame> newListOnSaleFrame);
     }
 }

@@ -158,11 +158,6 @@ public class ScriptOnSaleFrame : MonoBehaviour
     }
 
 
-
-
-
-
-
     void ClearDisplayedAds()
     {
         foreach (var item in displayedAds)

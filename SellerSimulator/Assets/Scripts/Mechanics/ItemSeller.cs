@@ -13,7 +13,7 @@ public class ItemSeller : MonoBehaviour
     private PlayerData _playerData;
     private OnSaleFrameRepository _onSaleFrameRepository;
     public List<ModelsOnSaleFrame> itemsToSell;
-    private int _saleDelay = 1;
+    private int _saleDelay = 20;
     private int _successThreshold = 1;
     private bool _isSelling;
     private bool _listNull;
