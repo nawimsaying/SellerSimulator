@@ -97,11 +97,13 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
                 listSaleItems[i].countProduct -= newListOnSaleFrame[i].countProduct;
             }
 
+
             for (int i = 0; i < newListOnSaleFrame.Count; i++)
             {
                 if (newListOnSaleFrame[i].countProduct == 0)
                 {
                     newListOnSaleFrame.Remove(newListOnSaleFrame[i]);
+                    i--;
                 }
 
             }
@@ -115,20 +117,34 @@ namespace Assets.Scripts.Architecture.OnSaleFrame
 
                 foreach (var saleItem in listSaleItems)
                 {
-                    var matchingBoxes = listWareHouse.Where(box => box.idProduct.id == saleItem.idProduct);
-
-                    if (matchingBoxes.Any())
+                    while (saleItem.countProduct > 0)
                     {
-                        // Находим коробку с минимальным количеством countProduct
-                        ModelBox boxWithMinCount = matchingBoxes.OrderBy(box => box.countProduct).First();
+                        var matchingBoxes = listWareHouse.Where(box => box.idProduct.id == saleItem.idProduct);
 
-
-                        boxWithMinCount.countProduct -= saleItem.countProduct;
-
-                        if (boxWithMinCount.countProduct == 0)
+                        if (matchingBoxes.Any())
                         {
-                            listWareHouse.Remove(boxWithMinCount);
+                            ModelBox boxWithMinCount = matchingBoxes.OrderBy(box => box.countProduct).First();
+
+                            if (boxWithMinCount.countProduct >= saleItem.countProduct)
+                            {
+                                boxWithMinCount.countProduct -= saleItem.countProduct;
+                                saleItem.countProduct = 0;
+                            }
+                            else if (boxWithMinCount.countProduct < saleItem.countProduct)
+                            {
+                                saleItem.countProduct -= boxWithMinCount.countProduct;
+                                boxWithMinCount.countProduct = 0;
+                            }
+
+                            if (boxWithMinCount.countProduct == 0)
+                            {
+                                listWareHouse.Remove(boxWithMinCount);
+                            }
                         }
+
+                    
+                        // Находим коробку с минимальным количеством countProduct
+
 
                     }
                 }
