@@ -39,7 +39,7 @@ public class OfflineItemSeller : MonoBehaviour
             int sellItemTime = (100 / chance) * 20;
 
             countSaleItemForTime = (int)timePassed.TotalSeconds / sellItemTime;
-
+            
             if (countSaleItemForTime >= item.countProduct)
             {
                 resultMoney = item.priceProduct * item.countProduct;
