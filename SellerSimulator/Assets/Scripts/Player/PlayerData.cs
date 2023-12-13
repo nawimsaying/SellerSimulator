@@ -68,7 +68,7 @@ namespace Assets.Scripts.Player
         }
 
         // Метод для добавления опыта
-        public void AddExperience(int amount)
+        public void AddExperience(int amount = 32)
         {
             Experience += amount;
 
@@ -84,7 +84,7 @@ namespace Assets.Scripts.Player
         {
             Level++;
             Experience -= ExperienceToNextLevel;
-            ExperienceToNextLevel += 50;
+            // ExperienceToNextLevel += 50;
 
             SavePlayerData();
         }

@@ -1,4 +1,5 @@
 ﻿using Assets.Scripts.Player;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,7 @@ namespace Assets.Scripts.Player
         [SerializeField] private TextMeshProUGUI textMoney;
         [SerializeField] private TextMeshProUGUI textGold;
         [SerializeField] private TextMeshProUGUI textLevel;
+        [SerializeField] private Image expBar;
 
         void Update()
         {
@@ -29,8 +31,17 @@ namespace Assets.Scripts.Player
             textMoney.text = playerData.Coins.ToString();
             textGold.text = playerData.Gold.ToString();
             textLevel.text = playerData.Level.ToString();
+
+            // Обновляем полоску опыта
+            if (expBar != null)
+            {
+                int currentExp = playerData.Experience;
+                int neededExp = playerData.ExperienceToNextLevel;
+
+                float currentFill = (float)currentExp / (float)neededExp;
+                expBar.fillAmount = currentFill;
+                Debug.Log(Convert.ToString(expBar.fillAmount));
+            }
         }
-
-
     }
 }
