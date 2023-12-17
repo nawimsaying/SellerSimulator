@@ -9,7 +9,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Unity.VisualScripting;
-using static UnityEditor.Progress;
 
 namespace Assets.Scripts.Architecture.OnSaleFrame
 {

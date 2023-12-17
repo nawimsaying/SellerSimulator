@@ -155,6 +155,8 @@ namespace Assets.Scripts.Architecture.WareHouse
         {
             List<ModelBox> listWareHouse = new List<ModelBox>();
 
+            int countProductForExp = countProduct;
+
             _listWareHouse = SaveLoadManager.LoadWareHouseDbMockList();
             listWareHouse = _listWareHouse.purchasedItems;
 
@@ -186,8 +188,9 @@ namespace Assets.Scripts.Architecture.WareHouse
             _listWareHouse.purchasedItems = listWareHouse;
             SaveLoadManager.SaveWareHouseDbMockList(_listWareHouse);
 
+            int expForSale = countProductForExp * 32;
             _playerData.AddCoins(currentPrice);
-
+            _playerData.AddExperience(expForSale);
             return Result<bool>.Success(true);
         }
 

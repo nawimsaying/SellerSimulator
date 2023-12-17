@@ -150,8 +150,6 @@ namespace Assets.Scripts.Architecture.MainDB
                     for (int i = 0; i < countProducts; i++) // Добавляем купленный товар (весь объект itemToBuy) в список класса WareHouseDbMock
                     {
                         _wareHouseDbMock.AddPurchasedItem(itemToBuy); 
-                        
-                        _playerData.AddExperience(250); // опыт временно / temp exp
                     }
                     
 

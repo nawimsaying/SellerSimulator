@@ -60,7 +60,7 @@ public class ItemSeller : MonoBehaviour
 
                 if (itemsToSell.Count == 0)
                 {
-                    Debug.Log("Все предметы проданы.");
+                    Debug.Log("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
                     _isSelling = false;
                     _listNull = true;
                     yield break;
@@ -70,7 +70,7 @@ public class ItemSeller : MonoBehaviour
                 {
                     int chance = Convert.ToInt32(item.liquidity * 100 * item.buffLiquidity);
                     // contarct = 1 - 1.75
-                    //поднять ликвидность изначальную
+                    //пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
                     //int chance = 100;
 
                     int resultRandom = Random.Range(1, 100);
@@ -79,17 +79,18 @@ public class ItemSeller : MonoBehaviour
                     {
                         if (item.countProduct > 0)
                         {
-                            Debug.Log("Продан товар из карточки " + item.nameProduct);
+                            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + item.nameProduct);
                             item.countProduct--;
                             _playerData = PlayerDataHolder.playerData;
                             _playerData.AddCoins(item.priceProduct);
+                            _playerData.AddExperience();
 
-                            Debug.Log("Осталось: " + item.countProduct);
+                            Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: " + item.countProduct);
                         }
                     }
                     else
                     {
-                        Debug.Log("Продажа из карточки " + item.nameProduct + " не удалась.");
+                        Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + item.nameProduct + " пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.");
                     }
                 }
 

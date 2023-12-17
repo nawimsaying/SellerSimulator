@@ -19,11 +19,11 @@ public class OfflineItemSeller : MonoBehaviour
         if (!CheckStatus.HasRun)
         {
             _onSaleFrameRepository = new OnSaleFrameRepository(new OnSaleFrameDbMock());
-            СalculationItemSaled();
+            CalculationItemSaled();
         }
     }
 
-    void СalculationItemSaled()
+    void CalculationItemSaled()
     {
         int resultMoney = 0;
         itemsToSell = _onSaleFrameRepository.GetAll();
@@ -44,6 +44,8 @@ public class OfflineItemSeller : MonoBehaviour
             {
                 resultMoney = item.priceProduct * item.countProduct;
                 _playerData.AddCoins(resultMoney);
+                int expForSale = item.countProduct * 32;
+                _playerData.AddExperience(expForSale);
                 countSaleItem += item.countProduct;
                 item.countProduct = 0;
             }
@@ -51,16 +53,18 @@ public class OfflineItemSeller : MonoBehaviour
             {
                 resultMoney = item.priceProduct * countSaleItemForTime;
                 _playerData.AddCoins(resultMoney);
+                int expForSale = countSaleItemForTime * 32;
+                _playerData.AddExperience(expForSale);
                 countSaleItem += countSaleItemForTime;
                 item.countProduct -= countSaleItemForTime;
             }
 
         }
 
-        Debug.Log($"Продал предметов {countSaleItem} за {(int)timePassed.TotalSeconds} секунд");
+        Debug.Log($"пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ {countSaleItem} пїЅпїЅ {(int)timePassed.TotalSeconds} пїЅпїЅпїЅпїЅпїЅпїЅ");
         
         _onSaleFrameRepository.SaveDataList(itemsToSell);
-        // Вызываем событие после завершения продаж
+        // пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
         SalesCompleted?.Invoke();
     }
 

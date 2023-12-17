@@ -7,7 +7,6 @@ using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using static UnityEditor.Progress;
 using Debug = UnityEngine.Debug;
 using Random = UnityEngine.Random;
 
@@ -90,7 +89,7 @@ public class Clicker : MonoBehaviour
 
         if (itemsToSell.Count == 0)
         {
-            Debug.Log("Все предметы проданы. " + _clickCount);
+            Debug.Log("пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ. " + _clickCount);
             _listNull = true;
             return;
         }
@@ -108,17 +107,18 @@ public class Clicker : MonoBehaviour
                 {
                     if (item.countProduct > 0)
                     {
-                        Debug.Log("Продан товар из карточки " + item.nameProduct + " Клик " + _clickCount);
+                        Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + item.nameProduct + " пїЅпїЅпїЅпїЅ " + _clickCount);
                         item.countProduct--;
                         _playerData = PlayerDataHolder.playerData;
                         _playerData.AddCoins(item.priceProduct);
+                        _playerData.AddExperience();
 
-                        Debug.Log($"idSell: {item.idSell} Осталось: {item.countProduct}  Клик: {_clickCount}");
+                        Debug.Log($"idSell: {item.idSell} пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ: {item.countProduct}  пїЅпїЅпїЅпїЅ: {_clickCount}");
                     }
                 }
                 else
                 {
-                    Debug.Log("Продажа из карточки " + item.nameProduct + " не удалась." + " Клик " + _clickCount);
+                    Debug.Log("пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ " + item.nameProduct + " пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ." + " пїЅпїЅпїЅпїЅ " + _clickCount);
                 }
 
              
@@ -128,7 +128,7 @@ public class Clicker : MonoBehaviour
         }
 
         stopwatch.Stop();
-        Debug.Log("Время выполнения SellItems: " + stopwatch.ElapsedMilliseconds + " миллисекунд." + _clickCount);
+        Debug.Log("пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ SellItems: " + stopwatch.ElapsedMilliseconds + " пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ." + _clickCount);
 
         Debug.Log("////////////////////////////////////////////////////////////////////////////////////" + _clickCount);
     }
