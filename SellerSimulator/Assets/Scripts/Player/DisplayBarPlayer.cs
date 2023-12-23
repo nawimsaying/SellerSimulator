@@ -16,6 +16,8 @@ namespace Assets.Scripts.Player
         [SerializeField] private TextMeshProUGUI textMoney;
         [SerializeField] private TextMeshProUGUI textGold;
         [SerializeField] private TextMeshProUGUI textLevel;
+        [SerializeField] private TextMeshProUGUI textBox;
+
         [SerializeField] private Image expBar;
 
         void Update()
@@ -31,6 +33,10 @@ namespace Assets.Scripts.Player
             textMoney.text = playerData.Coins.ToString();
             textGold.text = playerData.Gold.ToString();
             textLevel.text = playerData.Level.ToString();
+            string numberАvailableCells = playerData.NumberАvailableCells.ToString();
+            string numberAllCells = playerData.NumberAllCells.ToString();
+            textBox.text = $"{numberАvailableCells}/{numberAllCells}";
+
 
             // Обновляем полоску опыта
             if (expBar != null)

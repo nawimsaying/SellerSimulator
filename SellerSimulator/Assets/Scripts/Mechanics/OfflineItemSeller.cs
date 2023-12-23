@@ -64,6 +64,8 @@ public class OfflineItemSeller : MonoBehaviour
         Debug.Log($"������ ��������� {countSaleItem} �� {(int)timePassed.TotalSeconds} ������");
         
         _onSaleFrameRepository.SaveDataList(itemsToSell);
+
+        InfoBoxCells.BarBoxUpdate();
         // �������� ������� ����� ���������� ������
         SalesCompleted?.Invoke();
     }

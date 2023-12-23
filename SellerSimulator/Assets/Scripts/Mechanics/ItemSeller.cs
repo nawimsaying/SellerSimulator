@@ -95,6 +95,7 @@ public class ItemSeller : MonoBehaviour
                 }
 
                 _onSaleFrameRepository.SaveDataList(itemsToSell);
+                InfoBoxCells.BarBoxUpdate();
                 yield return new WaitForSeconds(_saleDelay);
                 _isSelling = false;
             }

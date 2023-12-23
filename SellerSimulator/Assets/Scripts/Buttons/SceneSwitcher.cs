@@ -6,6 +6,7 @@ public class SceneSwitcher : MonoBehaviour
 {
     public void SceneSwitch(int _idScene)
     {
+        InfoBoxCells.BarBoxUpdate();
         SceneManager.LoadScene(_idScene);
     }
 }

@@ -14,14 +14,19 @@ namespace Assets.Scripts.Player
         public int Gold { get; private set; }
         public int Experience { get; private set; }
         public int ExperienceToNextLevel { get; private set; }
+        public int NumberАvailableCells { get; private set; }
 
-        public PlayerData(int initLevel, int initCoins, int initGold, int initExperience, int initExperienceToNextLevel)
+        public int NumberAllCells { get; private set; }
+
+        public PlayerData(int initLevel, int initCoins, int initGold, int initExperience, int initExperienceToNextLevel,int numberАvailableCells, int numberAllCells)
         {
             Level = initLevel;
             Coins = initCoins;
             Gold = initGold;
             Experience = initExperience;
             ExperienceToNextLevel = initExperienceToNextLevel;
+            NumberАvailableCells = numberАvailableCells;
+            NumberAllCells = numberAllCells;
         }
 
         public void AddCoins(int amount)
@@ -67,6 +72,18 @@ namespace Assets.Scripts.Player
             SavePlayerData();
         }
 
+        public void ChangeNumberАvailableCells(int amount)
+        {
+            NumberАvailableCells = amount;
+            SavePlayerData();
+        }
+
+        public void ChangeNumberAllCells(int amount)
+        {
+            NumberAllCells = amount;
+            SavePlayerData();
+        }
+
         // Метод для добавления опыта
         public void AddExperience(int amount = 32)
         {
@@ -96,6 +113,8 @@ namespace Assets.Scripts.Player
             PlayerPrefs.SetInt("Gold", Gold);
             PlayerPrefs.SetInt("Experience", Experience);
             PlayerPrefs.SetInt("ExperienceToNextLevel", ExperienceToNextLevel);
+            PlayerPrefs.SetInt("NumberАvailableCells", NumberАvailableCells);
+            PlayerPrefs.SetInt("NumberAllCells", NumberAllCells);
             PlayerPrefs.Save();
         }
     }

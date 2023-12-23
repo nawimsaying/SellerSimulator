@@ -125,6 +125,7 @@ public class Clicker : MonoBehaviour
             }
                        
             _onSaleFrameRepository.SaveDataList(itemsToSell);
+            InfoBoxCells.BarBoxUpdate();
         }
 
         stopwatch.Stop();
