@@ -183,7 +183,7 @@ public class ScriptFrameBuy : MonoBehaviour
         _itemProductForGold.SetActive(true);
     }
 
-    // Сейчас метод проверяет, на ту ли мы кнопку нажимаем. Затем по нажатию кнопка будет покупать товар
+ 
     void ItemClicked(int idProduct, int countProducts, int priceProducts)
     {
         Debug.Log("Item with id " + idProduct + " " + countProducts + " " + priceProducts+ " clicked");

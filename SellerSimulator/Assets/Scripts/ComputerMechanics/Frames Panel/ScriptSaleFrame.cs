@@ -55,11 +55,11 @@ public class ScriptSaleFrame : MonoBehaviour
                 int tempIndex = i;
                 elementItem = Instantiate(itemProduct, transform);
 
-                if (allItems[i].liquidity <= 0.1)
+                if (allItems[i].liquidity <= 0.375)
                 {
                     elementItem.transform.GetChild(0).gameObject.SetActive(true);
                 }
-                else if (allItems[i].liquidity >= 0.11)
+                else if (allItems[i].liquidity >= 0.376)
                 {
                     elementItem.transform.GetChild(1).gameObject.SetActive(true);
                 }
