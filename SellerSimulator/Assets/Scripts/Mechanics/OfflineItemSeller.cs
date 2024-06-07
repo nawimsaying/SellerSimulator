@@ -31,6 +31,8 @@ public class OfflineItemSeller : MonoBehaviour
         TimeSpan timePassed = DateTime.UtcNow - lastSaveTime;
         int countSaleItem = 0;
         int countSaleItemForTime = 0;
+        int coinPlayerForSell = 0;
+        int expPlayerForSell = 0;
         foreach (var item in itemsToSell)
         {
             _playerData = PlayerDataHolder.playerData;
