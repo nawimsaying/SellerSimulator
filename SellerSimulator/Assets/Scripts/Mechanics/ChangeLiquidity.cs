@@ -9,7 +9,7 @@ using Random = UnityEngine.Random;
 
 public class ChangeLiquidity : MonoBehaviour
 {
-    private int _timeUpdateLiquid = 1;
+    private int _timeUpdateLiquid = 30;
 
     private static ChangeLiquidity _instance;
 
