@@ -95,8 +95,13 @@ public class OfflineItemSeller : MonoBehaviour
         Button buttonSell = _popWindow.transform.GetChild(2).GetComponent<Button>();
         buttonSell.onClick.RemoveAllListeners(); // ������� ��� ���������� �����������
         buttonSell.onClick.AddListener(() => ButtonContinueClicked());
-        _popWindow.SetActive(true);
-        _background.SetActive(true);
+
+        if(_coinPlayerForSell > 0)
+        {
+            _popWindow.SetActive(true);
+            _background.SetActive(true);
+        }
+        
 
     }
 
